@@ -53,4 +53,4 @@ before_deploy:
 
 notifications:
   - provider: Webhook
-    url: http://appharborservicehookendpoint.apphb.com/build/appveyor/rewardle
+    url: http://appharborservicehookendpoint.apphb.com/build/appveyor/jazz
