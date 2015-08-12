@@ -117,8 +117,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\Infrastructure\Authentication\RolesFeatures.json" />
-    <Content Include="Client\build\index.html" />
-    <Content Include="Client\src\index.html" />
     <None Include="favicon.ico" />
     <Content Include="favicon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -205,10 +203,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="smtp.config" />
-    <Content Include="Client\.bowerrc" />
-    <Content Include="Client\bower.json" />
-    <Content Include="Client\package.json" />
-    <Content Include="Client\tslint.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -244,13 +238,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Client\build\app\common\" />
-    <Folder Include="Client\build\app\users\" />
-    <Folder Include="Client\src\app\common\" />
-    <Folder Include="Client\src\app\users\" />
-    <Folder Include="Client\src\styles\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -291,7 +279,8 @@ IF NOT EXIST "$(ProjectDir)smtp.config" copy "$(ProjectDir)smtp.config.default" 
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)\Client\build\*.*" "$(TargetDir)\Client" /Y /I /E</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

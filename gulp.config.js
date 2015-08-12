@@ -10,15 +10,6 @@ module.exports = function() {
 		buildPath: process.cwd() + '/build',
 		specsPath: process.cwd() + '/specs',
 		deployPath: process.cwd() + '/deploy',
-		reportsPath: process.cwd() + '/reports',
-		solutions: [
-			{
-				path: "src",
-				sln: "Rewardle.Accounts.sln",
-				config: "Debug",
-				artifactFiles: 'build/**/*',
-				artifactNameBase: 'Rewardle.Accounts',				
-			}
-		]		
+		reportsPath: process.cwd() + '/reports',		
 	}
 };
