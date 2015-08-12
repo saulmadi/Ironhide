@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<div class="modal" tabindex="-1" role="dialog" ng-controller="userRegisterController as vm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind-html="title"></h4>
+            </div>
+            <div class="modal-body">
+                <form name = "userRegister" ng-hide="vm.Success" ng-submit="vm.Register()">
+                    <div class="form-group"
+                         ng-class="{ 'has-error has-feedback' : userRegister.name.$invalid && !userRegister.name.$pristine }">
+                        <div>
+                            <input type="text" name="name" class="form-control" ng-model="vm.Name" placeholder="Your Name" required/>
+                            <label class="fa xerror"
+                                   ng-class="{ 'fa-exclamation-circle' : userRegister.name.$invalid && !userRegister.name.$pristine }"></label>
+                            <div class="help-block" ng-messages="userRegister.name.$error">
+                                <div ng-message="required">You must enter your name</div>
+                                <div ng-message="maxlength">Your name cannot be longer than 30 characters</div>
+                                <div ng-message="minlength">Your name is required to be at least 1 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error has-feedback' : userRegister.phone.$invalid && !userRegister.phone.$pristine }">
+                        <div>
+                            <input type="tel" name="phone" class="form-control" ng-model="vm.PhoneNumber" placeholder="Your phone number" required/>
+                            <label class="fa xerror"
+                                   ng-class="{ 'fa-exclamation-circle' : userRegister.phone.$invalid && !userRegister.phone.$pristine }"></label>
+                            <div class="help-block" ng-messages="userRegister.phone.$error">
+                                <div ng-message="required">You must enter your phone number</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error has-feedback' : userRegister.email.$invalid && !userRegister.email.$pristine }">
+                        <div>
+                            <input type="email" name="email" class="form-control" ng-model="vm.Email" placeholder="Email Address" required/>
+                            <label class="fa xerror"
+                                   ng-class="{ 'fa-exclamation-circle' : userRegister.email.$invalid && !userRegister.email.$pristine }"></label>
+                            <div class="help-block" ng-messages="userRegister.email.$error">
+                                <div ng-message="required">You must enter the email</div>
+                                <div ng-message="email">Please input a valid email</div>
+                                <div ng-message="maxlength">Your email cannot be longer than 30 characters</div>
+                                <div ng-message="minlength">Your email is required to be at least 3 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error has-feedback' : userRegister.password.$invalid && !userRegister.password.$pristine }">
+                        <div>
+                            <input type="password" name="password" class="form-control" ng-model="vm.Password" placeholder="Password" required ng-minlength="8" ng-maxlength="30"/>
+                            <label class="fa xerror"
+                                   ng-class="{ 'fa-exclamation-circle' : userRegister.password.$invalid && !userRegister.password.$pristine }"></label>
+                            <div class="help-block" ng-messages="userRegister.password.$error">
+                                <div ng-message="required">You must enter the password</div>
+                                <div ng-message="maxlength">Your password cannot be longer than 30 characters</div>
+                                <div ng-message="minlength">Your password is required to be at least 8 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{ 'has-error has-feedback' : userRegister.confirmpassword.$invalid && !userRegister.confirmpassword.$pristine }">
+                        <div>
+                            <input type="password" name="confirmpassword" class="form-control" ng-model="vm.ConfirmPassword" placeholder="Confirm Password"  compare-to="vm.Password" ng-minlength="8" ng-maxlength="30" required/>
+                            <label class="fa xerror"
+                                   ng-class="{ 'fa-exclamation-circle' : userRegister.confirmpassword.$invalid && !userRegister.confirmpassword.$pristine }"></label>
+                            <div class="help-block" ng-messages="userRegister.confirmpassword.$error">
+                                <div ng-message="compareTo">Passwords must match</div>
+                                <div ng-message="required">You must confirm your password</div>
+                                <div ng-message="maxlength">Your password cannot be longer than 30 characters</div>
+                                <div ng-message="minlength">Your password is required to be at least 8 characters</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group for-form-user-Register">
+                        <button type="submit" class="btn btn-primary" ng-hide="userRegister.$invalid">Register</button>
+                    </div>
+
+                </form>
+                <div ng-show="vm.Success" class="row alert alert-info">
+                    <strong>Thanks!</strong>
+                    Your user account has been registered. You can now <a href="/#/login">log in</a> with the email address and password you just created.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

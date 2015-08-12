@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+   <div ng-controller="Sidebar as vm">
+    <span ng-if="vm.showSideBar()">
+       <aa-sidebar when-done-animating="vm.sidebarReady()">
+           <div class="sidebar-filler"></div>
+           <div class="sidebar-dropdown"><a href="#">Menu</a></div>
+           <div class="sidebar-inner">
+               <div class="sidebar-widget"></div>
+               <ul class="navi" ng-if="vm.isUserLogged()">
+                   <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)"
+                       ng-repeat="r in vm.navRoutes">
+                       <a ui-sref="{{r.name}}"
+                          ng-bind-html="r.settings.content"></a>
+                   </li>
+               </ul>
+           </div>
+       </aa-sidebar>
+   </span>
+</div>
