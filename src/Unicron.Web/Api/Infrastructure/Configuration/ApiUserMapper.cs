@@ -1,11 +1,11 @@
 using System;
+using Ironhide.Users.Domain.Entities;
+using Ironhide.Users.Domain.Exceptions;
+using Ironhide.Users.Domain.Services;
+using Ironhide.Web.Api.Infrastructure.Authentication;
 using Nancy.Security;
-using Unicron.Users.Domain.Entities;
-using Unicron.Users.Domain.Exceptions;
-using Unicron.Users.Domain.Services;
-using Unicron.Web.Api.Infrastructure.Authentication;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public class ApiUserMapper : IApiUserMapper<Guid>
     {

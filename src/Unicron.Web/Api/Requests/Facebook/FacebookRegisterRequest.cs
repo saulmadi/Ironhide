@@ -1,4 +1,4 @@
-﻿namespace Unicron.Web.Api.Requests.Facebook
+﻿namespace Ironhide.Web.Api.Requests.Facebook
 {
     public class FacebookRegisterRequest
     {

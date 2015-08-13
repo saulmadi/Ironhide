@@ -7,8 +7,8 @@
     <ProjectGuid>{EABDB5FE-FD37-4C87-BD52-67D7D996CA03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unicron.TemplateEngines.Razor</RootNamespace>
-    <AssemblyName>Unicron.TemplateEngines.Razor</AssemblyName>
+    <RootNamespace>Ironhide.TemplateEngines.Razor</RootNamespace>
+    <AssemblyName>Ironhide.TemplateEngines.Razor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

@@ -4,9 +4,9 @@ using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Helpers;
-using Unicron.Users.Domain;
+using Ironhide.Users.Domain;
 
-namespace Unicron.Data
+namespace Ironhide.Data
 {
     public class MappingScheme : IDatabaseMappingScheme<MappingConfiguration>
     {

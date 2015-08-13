@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Unicron.Users.Domain.Entities
+namespace Ironhide.Users.Domain.Entities
 {
     public class User : Entity
     {

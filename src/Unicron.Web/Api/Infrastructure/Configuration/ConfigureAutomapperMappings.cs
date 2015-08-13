@@ -1,11 +1,11 @@
 using System;
 using Autofac;
 using AutoMapper;
-using Unicron.Users.Domain.Entities;
-using Unicron.Web.Api.Requests;
-using Unicron.Web.Api.Responses.Admin;
+using Ironhide.Users.Domain.Entities;
+using Ironhide.Web.Api.Requests;
+using Ironhide.Web.Api.Responses.Admin;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public class ConfigureAutomapperMappings : IBootstrapperTask<ContainerBuilder>
     {

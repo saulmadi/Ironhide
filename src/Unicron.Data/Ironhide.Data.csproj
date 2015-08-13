@@ -7,8 +7,8 @@
     <ProjectGuid>{828BB611-5955-47C0-AB91-32374D8506E2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unicron.Data</RootNamespace>
-    <AssemblyName>Unicron.Data</AssemblyName>
+    <RootNamespace>Ironhide.Data</RootNamespace>
+    <AssemblyName>Ironhide.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -78,9 +78,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Unicron.Domain\Unicron.Users.Domain.csproj">
+    <ProjectReference Include="..\Unicron.Domain\Ironhide.Users.Domain.csproj">
       <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
-      <Name>Unicron.Users.Domain</Name>
+      <Name>Ironhide.Users.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

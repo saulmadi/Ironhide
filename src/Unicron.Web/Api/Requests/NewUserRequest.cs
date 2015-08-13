@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Unicron.Web.Api.Requests
+namespace Ironhide.Web.Api.Requests
 {
     public class NewUserRequest
     {

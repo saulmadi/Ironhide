@@ -93,13 +93,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Unicron.Data\Unicron.Data.csproj">
+    <ProjectReference Include="..\Unicron.Data\Ironhide.Data.csproj">
       <Project>{828BB611-5955-47C0-AB91-32374D8506E2}</Project>
-      <Name>Unicron.Data</Name>
+      <Name>Ironhide.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unicron.Domain\Unicron.Users.Domain.csproj">
+    <ProjectReference Include="..\Unicron.Domain\Ironhide.Users.Domain.csproj">
       <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
-      <Name>Unicron.Users.Domain</Name>
+      <Name>Ironhide.Users.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

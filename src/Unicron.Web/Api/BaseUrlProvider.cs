@@ -1,7 +1,7 @@
 using System;
 using System.Web;
 
-namespace Unicron.Web.Api
+namespace Ironhide.Web.Api
 {
     public class BaseUrlProvider : IBaseUrlProvider
     {

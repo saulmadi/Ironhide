@@ -1,6 +1,6 @@
-using Unicron.Users.Domain.ValueObjects;
+using Ironhide.Users.Domain.ValueObjects;
 
-namespace Unicron.Users.Domain.Entities
+namespace Ironhide.Users.Domain.Entities
 {
     public class UserEmailLogin : User
     {

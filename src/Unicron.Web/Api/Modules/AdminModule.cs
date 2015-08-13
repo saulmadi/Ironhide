@@ -4,17 +4,17 @@ using System.Linq;
 using System.Linq.Expressions;
 using AcklenAvenue.Commands;
 using AutoMapper;
+using Ironhide.Users.Domain.Application.Commands;
+using Ironhide.Users.Domain.Entities;
+using Ironhide.Users.Domain.Services;
+using Ironhide.Web.Api.Infrastructure;
+using Ironhide.Web.Api.Requests.Admin;
+using Ironhide.Web.Api.Responses.Admin;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
-using Unicron.Users.Domain.Application.Commands;
-using Unicron.Users.Domain.Entities;
-using Unicron.Users.Domain.Services;
-using Unicron.Web.Api.Infrastructure;
-using Unicron.Web.Api.Requests.Admin;
-using Unicron.Web.Api.Responses.Admin;
 
-namespace Unicron.Web.Api.Modules
+namespace Ironhide.Web.Api.Modules
 {
     public class AdminModule : NancyModule
     {

@@ -1,6 +1,6 @@
 using AcklenAvenue.Email;
 
-namespace Unicron.TemplateEngines.Razor
+namespace Ironhide.TemplateEngines.Razor
 {
     public class RazorViewEngine : IViewEngine
     {

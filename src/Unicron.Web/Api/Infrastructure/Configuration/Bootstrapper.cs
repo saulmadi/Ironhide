@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using Autofac;
+using Ironhide.Users.Domain;
+using Ironhide.Web.Api.Infrastructure.Authentication;
+using Ironhide.Web.Api.Infrastructure.RestExceptions;
 using Nancy;
 using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
@@ -12,13 +13,10 @@ using Nancy.Bootstrappers.Autofac;
 using Nancy.Conventions;
 using Nancy.Security;
 using Newtonsoft.Json;
-using Unicron.Users.Domain;
-using Unicron.Web.Api.Infrastructure.Authentication;
-using Unicron.Web.Api.Infrastructure.RestExceptions;
-using TokenDoesNotExistException = Unicron.Web.Api.Infrastructure.Authentication.TokenDoesNotExistException;
+using TokenDoesNotExistException = Ironhide.Web.Api.Infrastructure.Authentication.TokenDoesNotExistException;
 
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using AcklenAvenue.Email;
-using Unicron.Users.Domain;
+using Ironhide.Users.Domain;
 
-namespace Unicron.Web.Api.emails
+namespace Ironhide.Web.Api.emails
 {
     public class PasswordResetEmailTemplate : IEmailBodyTemplate, IEmailSubjectTemplate
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using AcklenAvenue.Commands;
 using log4net;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public class CommandDispatcherLogger:ICommandDispatcher
     {

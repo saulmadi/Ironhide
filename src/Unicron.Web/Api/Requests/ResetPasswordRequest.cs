@@ -1,4 +1,4 @@
-namespace Unicron.Web.Api.Requests
+namespace Ironhide.Web.Api.Requests
 {
     public class ResetPasswordRequest
     {

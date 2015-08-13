@@ -1,4 +1,4 @@
-namespace Unicron.Users.Domain.Entities
+namespace Ironhide.Users.Domain.Entities
 {
     public class ProfileAdministrator : IProfile
     {

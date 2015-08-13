@@ -1,5 +1,5 @@
 ﻿using System;
-using Unicron.Users.Domain.Entities;
+using Ironhide.Users.Domain.Entities;
 
 namespace Unicron.Domain.Specs.Stubs
 {

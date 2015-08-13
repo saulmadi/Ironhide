@@ -4,7 +4,7 @@ using AcklenAvenue.Commands;
 using BlingBag;
 using log4net;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     
 

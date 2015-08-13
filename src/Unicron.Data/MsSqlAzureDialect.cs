@@ -1,6 +1,6 @@
 using NHibernate.Dialect;
 
-namespace Unicron.Data
+namespace Ironhide.Data
 {
     public class MsSqlAzureDialect : MsSql2008Dialect
     {

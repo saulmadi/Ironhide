@@ -1,6 +1,6 @@
 using System;
 
-namespace Unicron.Web.Api.Responses
+namespace Ironhide.Web.Api.Responses
 {
     public class SuccessfulLoginResponse<T>
     {

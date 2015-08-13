@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Reflection;
 
-namespace Unicron.TemplateEngines.Razor
+namespace Ironhide.TemplateEngines.Razor
 {
     public static class DynamicExtensions
     {

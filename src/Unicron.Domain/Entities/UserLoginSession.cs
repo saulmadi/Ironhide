@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using AcklenAvenue.Commands;
 
-namespace Unicron.Users.Domain.Entities
+namespace Ironhide.Users.Domain.Entities
 {
     public class UserLoginSession : Entity, IUserSession
     {

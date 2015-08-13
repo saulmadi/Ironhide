@@ -1,4 +1,4 @@
-﻿namespace Unicron.Users.Domain
+﻿namespace Ironhide.Users.Domain
 {
     public enum ValidationFailureType
     {

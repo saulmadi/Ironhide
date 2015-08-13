@@ -7,8 +7,8 @@
     <ProjectGuid>{B85057A5-F5AA-4397-85A3-EF3F21AEA76D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unicron.EmailClients.DotNet</RootNamespace>
-    <AssemblyName>Unicron.EmailClients.DotNet</AssemblyName>
+    <RootNamespace>Ironhide.EmailClients.DotNet</RootNamespace>
+    <AssemblyName>Ironhide.EmailClients.DotNet</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

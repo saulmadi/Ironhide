@@ -3,7 +3,7 @@ using System.Net.Mail;
 using AcklenAvenue.Email;
 using Typesafe.Mailgun;
 
-namespace Unicron.EmailClients.DotNet
+namespace Ironhide.EmailClients.DotNet
 {
     public class MailGunSmtpClient : ISmtpClient
     {

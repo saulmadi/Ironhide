@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Unicron.Web.Api.Responses.Admin
+namespace Ironhide.Web.Api.Responses.Admin
 {
     public class AdminUsersListResponse 
     {

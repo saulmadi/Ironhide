@@ -1,9 +1,9 @@
 using System.Diagnostics;
+using Ironhide.Users.Domain;
 using NHibernate;
 using NHibernate.Type;
-using Unicron.Users.Domain;
 
-namespace Unicron.Data
+namespace Ironhide.Data
 {
     public class EntityInterceptor : EmptyInterceptor
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Unicron.Users.Domain.Exceptions
+namespace Ironhide.Users.Domain.Exceptions
 {
     public class CommandValidationException : Exception
     {

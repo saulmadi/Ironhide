@@ -1,6 +1,6 @@
 using System;
 
-namespace Unicron.Users.Domain.Exceptions
+namespace Ironhide.Users.Domain.Exceptions
 {
     public class NoAvailableHandlerException : Exception
     {

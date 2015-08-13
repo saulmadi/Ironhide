@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unicron.Web.Api.Responses.Admin
+namespace Ironhide.Web.Api.Responses.Admin
 {
     public class AdminUserResponse
     {

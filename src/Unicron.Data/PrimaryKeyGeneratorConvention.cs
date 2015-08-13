@@ -1,7 +1,7 @@
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
-namespace Unicron.Data
+namespace Ironhide.Data
 {
     public class PrimaryKeyGeneratorConvention : IIdConvention
     {

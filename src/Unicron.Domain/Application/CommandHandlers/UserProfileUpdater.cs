@@ -1,10 +1,10 @@
 ﻿using AcklenAvenue.Commands;
-using Unicron.Users.Domain.Application.Commands;
-using Unicron.Users.Domain.DomainEvents;
-using Unicron.Users.Domain.Entities;
-using Unicron.Users.Domain.Services;
+using Ironhide.Users.Domain.Application.Commands;
+using Ironhide.Users.Domain.DomainEvents;
+using Ironhide.Users.Domain.Entities;
+using Ironhide.Users.Domain.Services;
 
-namespace Unicron.Users.Domain.Application.CommandHandlers
+namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserProfileUpdater : ICommandHandler<UpdateUserProfile>
     {

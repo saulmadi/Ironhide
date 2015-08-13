@@ -1,6 +1,6 @@
 using System;
 
-namespace Unicron.Web.Api.Infrastructure.Authentication
+namespace Ironhide.Web.Api.Infrastructure.Authentication
 {
     public class TokenExpiredException : Exception
     {

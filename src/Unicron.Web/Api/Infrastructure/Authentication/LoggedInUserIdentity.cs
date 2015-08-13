@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AcklenAvenue.Commands;
+using Ironhide.Users.Domain.Entities;
 using Nancy.Security;
-using Unicron.Users.Domain.Entities;
 
-namespace Unicron.Web.Api.Infrastructure.Authentication
+namespace Ironhide.Web.Api.Infrastructure.Authentication
 {
     public class LoggedInUserIdentity : IUserIdentity
     {

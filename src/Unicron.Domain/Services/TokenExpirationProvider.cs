@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 
-namespace Unicron.Users.Domain.Services
+namespace Ironhide.Users.Domain.Services
 {
     public class TokenExpirationProvider : ITokenExpirationProvider
     {

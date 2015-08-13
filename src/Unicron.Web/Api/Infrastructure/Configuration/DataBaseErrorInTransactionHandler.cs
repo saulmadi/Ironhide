@@ -4,7 +4,7 @@ using Nancy;
 using Nancy.Bootstrapper;
 using NHibernate;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public class DataBaseErrorInTransactionHandler
     {

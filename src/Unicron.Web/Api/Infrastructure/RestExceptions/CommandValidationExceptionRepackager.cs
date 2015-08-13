@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
+using Ironhide.Users.Domain.Exceptions;
 using Nancy;
-using Unicron.Users.Domain.Exceptions;
 
-namespace Unicron.Web.Api.Infrastructure.RestExceptions
+namespace Ironhide.Web.Api.Infrastructure.RestExceptions
 {
     public class CommandValidationExceptionRepackager : IExceptionRepackager
     {

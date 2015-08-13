@@ -1,4 +1,4 @@
-﻿namespace Unicron.Web.Api
+﻿namespace Ironhide.Web.Api
 {
     public interface IBaseUrlProvider
     {

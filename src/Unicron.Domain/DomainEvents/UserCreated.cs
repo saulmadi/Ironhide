@@ -1,6 +1,6 @@
 using System;
 
-namespace Unicron.Users.Domain.DomainEvents
+namespace Ironhide.Users.Domain.DomainEvents
 {
     public class UserCreated
     {

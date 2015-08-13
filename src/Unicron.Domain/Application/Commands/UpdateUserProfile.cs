@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unicron.Users.Domain.Application.Commands
+namespace Ironhide.Users.Domain.Application.Commands
 {
     public class UpdateUserProfile
     {

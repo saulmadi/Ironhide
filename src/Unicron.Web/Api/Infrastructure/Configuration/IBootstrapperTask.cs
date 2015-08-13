@@ -1,6 +1,6 @@
 using System;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public interface IBootstrapperTask<in T>
     {

@@ -1,8 +1,8 @@
 using System;
 using DomainDrivenDatabaseDeployer;
+using Ironhide.Users.Domain.Entities;
+using Ironhide.Users.Domain.Services;
 using NHibernate;
-using Unicron.Users.Domain.Entities;
-using Unicron.Users.Domain.Services;
 
 namespace DatabaseDeployer
 {

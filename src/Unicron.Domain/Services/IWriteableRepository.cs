@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Unicron.Users.Domain.Services
+namespace Ironhide.Users.Domain.Services
 {
     public interface IWriteableRepository
     {

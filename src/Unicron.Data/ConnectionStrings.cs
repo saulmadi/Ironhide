@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
-namespace Unicron.Data
+namespace Ironhide.Data
 {
     public class ConnectionStrings
     {

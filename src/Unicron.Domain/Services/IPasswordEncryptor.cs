@@ -1,6 +1,6 @@
-using Unicron.Users.Domain.ValueObjects;
+using Ironhide.Users.Domain.ValueObjects;
 
-namespace Unicron.Users.Domain.Services
+namespace Ironhide.Users.Domain.Services
 {
     public interface IPasswordEncryptor
     {

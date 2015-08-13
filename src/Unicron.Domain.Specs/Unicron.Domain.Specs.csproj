@@ -112,9 +112,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Unicron.Domain\Unicron.Users.Domain.csproj">
+    <ProjectReference Include="..\Unicron.Domain\Ironhide.Users.Domain.csproj">
       <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
-      <Name>Unicron.Users.Domain</Name>
+      <Name>Ironhide.Users.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

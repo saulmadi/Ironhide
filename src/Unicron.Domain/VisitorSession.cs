@@ -1,7 +1,7 @@
 using System;
 using AcklenAvenue.Commands;
 
-namespace Unicron.Users.Domain
+namespace Ironhide.Users.Domain
 {
     public class VisitorSession : IUserSession
     {

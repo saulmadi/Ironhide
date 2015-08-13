@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Unicron.Web</RootNamespace>
-    <AssemblyName>Unicron.Web</AssemblyName>
+    <RootNamespace>Ironhide.Web</RootNamespace>
+    <AssemblyName>Ironhide.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -215,21 +215,21 @@
       <Project>{8E8BC717-05D0-4B6E-A6D1-AA5F1CA59C67}</Project>
       <Name>AcklenAvenue.Email</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unicron.Data\Unicron.Data.csproj">
+    <ProjectReference Include="..\Unicron.Data\Ironhide.Data.csproj">
       <Project>{828BB611-5955-47C0-AB91-32374D8506E2}</Project>
-      <Name>Unicron.Data</Name>
+      <Name>Ironhide.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unicron.Domain\Unicron.Users.Domain.csproj">
+    <ProjectReference Include="..\Unicron.Domain\Ironhide.Users.Domain.csproj">
       <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
-      <Name>Unicron.Users.Domain</Name>
+      <Name>Ironhide.Users.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unicron.EmailClients.DotNet\Unicron.EmailClients.DotNet.csproj">
+    <ProjectReference Include="..\Unicron.EmailClients.DotNet\Ironhide.EmailClients.DotNet.csproj">
       <Project>{B85057A5-F5AA-4397-85A3-EF3F21AEA76D}</Project>
-      <Name>Unicron.EmailClients.DotNet</Name>
+      <Name>Ironhide.EmailClients.DotNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Unicron.TemplateEngines.Razor\Unicron.TemplateEngines.Razor.csproj">
+    <ProjectReference Include="..\Unicron.TemplateEngines.Razor\Ironhide.TemplateEngines.Razor.csproj">
       <Project>{EABDB5FE-FD37-4C87-BD52-67D7D996CA03}</Project>
-      <Name>Unicron.TemplateEngines.Razor</Name>
+      <Name>Ironhide.TemplateEngines.Razor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -256,7 +256,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52136</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:5976/</IISUrl>
+          <IISUrl>http://localhost:6666/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

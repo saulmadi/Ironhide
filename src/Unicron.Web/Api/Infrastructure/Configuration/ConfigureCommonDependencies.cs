@@ -8,17 +8,17 @@ using AcklenAvenue.Email;
 using Autofac;
 using AutoMapper;
 using BlingBag;
+using Ironhide.Data;
+using Ironhide.EmailClients.DotNet;
+using Ironhide.TemplateEngines.Razor;
+using Ironhide.Users.Domain;
+using Ironhide.Web.Api.emails;
+using Ironhide.Web.Api.Infrastructure.Authentication;
+using Ironhide.Web.Api.Infrastructure.Authentication.Roles;
 using log4net;
 using Newtonsoft.Json;
-using Unicron.Data;
-using Unicron.EmailClients.DotNet;
-using Unicron.TemplateEngines.Razor;
-using Unicron.Users.Domain;
-using Unicron.Web.Api.emails;
-using Unicron.Web.Api.Infrastructure.Authentication;
-using Unicron.Web.Api.Infrastructure.Authentication.Roles;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     
     public class ConfigureCommonDependencies : IBootstrapperTask<ContainerBuilder>

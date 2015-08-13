@@ -1,4 +1,4 @@
-namespace Unicron.Web.Api.Infrastructure.Authentication
+namespace Ironhide.Web.Api.Infrastructure.Authentication
 {
     public interface IMenuProvider
     {

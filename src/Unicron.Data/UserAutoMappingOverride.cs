@@ -1,8 +1,8 @@
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Automapping.Alterations;
-using Unicron.Users.Domain.Entities;
+using Ironhide.Users.Domain.Entities;
 
-namespace Unicron.Data
+namespace Ironhide.Data
 {
     public class UserAutoMappingOverride : IAutoMappingOverride<User>
     {

@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicron.Web", "Unicron.Web\Unicron.Web.csproj", "{EFD8559C-290D-45F6-A090-0ADE554A9065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.Web", "Unicron.Web\Ironhide.Web.csproj", "{EFD8559C-290D-45F6-A090-0ADE554A9065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicron.Data", "Unicron.Data\Unicron.Data.csproj", "{828BB611-5955-47C0-AB91-32374D8506E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.Data", "Unicron.Data\Ironhide.Data.csproj", "{828BB611-5955-47C0-AB91-32374D8506E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicron.Users.Domain", "Unicron.Domain\Unicron.Users.Domain.csproj", "{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.Users.Domain", "Unicron.Domain\Ironhide.Users.Domain.csproj", "{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseDeployer", "DatabaseDeployer\DatabaseDeployer.csproj", "{7F8F5F26-6F21-4C0A-9183-9140CA894E50}"
 EndProject
@@ -24,9 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D30E0F
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicron.TemplateEngines.Razor", "Unicron.TemplateEngines.Razor\Unicron.TemplateEngines.Razor.csproj", "{EABDB5FE-FD37-4C87-BD52-67D7D996CA03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.TemplateEngines.Razor", "Unicron.TemplateEngines.Razor\Ironhide.TemplateEngines.Razor.csproj", "{EABDB5FE-FD37-4C87-BD52-67D7D996CA03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicron.EmailClients.DotNet", "Unicron.EmailClients.DotNet\Unicron.EmailClients.DotNet.csproj", "{B85057A5-F5AA-4397-85A3-EF3F21AEA76D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.EmailClients.DotNet", "Unicron.EmailClients.DotNet\Ironhide.EmailClients.DotNet.csproj", "{B85057A5-F5AA-4397-85A3-EF3F21AEA76D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unicron.Web.Specs", "Unicron.Web.Specs\Unicron.Web.Specs.csproj", "{1E1E8DFC-FF92-4FB3-A2A6-ED5744129EC5}"
 EndProject

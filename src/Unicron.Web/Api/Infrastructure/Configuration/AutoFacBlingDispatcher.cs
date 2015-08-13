@@ -5,7 +5,7 @@ using System.Linq;
 using Autofac;
 using BlingBag;
 
-namespace Unicron.Web.Api.Infrastructure.Configuration
+namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public class AutoFacBlingDispatcher : BlingDispatcherBase
     {

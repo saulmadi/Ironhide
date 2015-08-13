@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Unicron.Users.Domain.Application.Commands
+namespace Ironhide.Users.Domain.Application.Commands
 {
     public class AddAbilitiesToUser
     {

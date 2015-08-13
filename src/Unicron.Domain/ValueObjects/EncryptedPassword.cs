@@ -1,4 +1,4 @@
-namespace Unicron.Users.Domain.ValueObjects
+namespace Ironhide.Users.Domain.ValueObjects
 {
     public class EncryptedPassword
     {

@@ -1,4 +1,4 @@
-﻿namespace Unicron.Web.Api.Requests.Google
+﻿namespace Ironhide.Web.Api.Requests.Google
 {
     public class GoogleRegisterRequest
         {

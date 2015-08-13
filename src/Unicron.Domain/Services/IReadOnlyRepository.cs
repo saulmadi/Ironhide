@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Unicron.Users.Domain.Services
+namespace Ironhide.Users.Domain.Services
 {
     public interface IReadOnlyRepository
     {

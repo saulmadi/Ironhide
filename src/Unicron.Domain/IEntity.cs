@@ -1,6 +1,6 @@
 using System;
 
-namespace Unicron.Users.Domain
+namespace Ironhide.Users.Domain
 {
     public interface IEntity
     {

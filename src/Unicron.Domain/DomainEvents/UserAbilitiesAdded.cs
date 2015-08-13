@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Unicron.Users.Domain.DomainEvents
+namespace Ironhide.Users.Domain.DomainEvents
 {
     public class UserAbilitiesAdded
     {

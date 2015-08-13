@@ -1,7 +1,7 @@
 using System;
-using Unicron.Users.Domain.Entities;
+using Ironhide.Users.Domain.Entities;
 
-namespace Unicron.Users.Domain.Services
+namespace Ironhide.Users.Domain.Services
 {
     public class UserSessionFactory : IUserSessionFactory
     {
