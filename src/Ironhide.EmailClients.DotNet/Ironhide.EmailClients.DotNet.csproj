@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AcklenAvenue.Email">
+      <HintPath>..\..\lib\AcklenAvenue.Email.1.0.0.2\lib\net45\AcklenAvenue.Email.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -51,12 +54,6 @@
   <ItemGroup>
     <Compile Include="MailGunSmtpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AcklenAvenue.Email\AcklenAvenue.Email.csproj">
-      <Project>{8E8BC717-05D0-4B6E-A6D1-AA5F1CA59C67}</Project>
-      <Name>AcklenAvenue.Email</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
