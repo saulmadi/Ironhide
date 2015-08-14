@@ -57,7 +57,7 @@ gulp.task('copy-logging-config', function(){
 
 gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-logging-config'], function () {
 
-	return gulp.src(['src/**/deploy.ps1','!src/**/bin/Debug/deploy.ps1'])
+	return gulp.src(['src/**/deployable.this'])
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);	
 			var pathParts = file.folder.split("\\");
@@ -156,4 +156,18 @@ gulp.task('clean-build', function(){
 
 gulp.task('clean-spec', function(){
 	return gulp.src(config.specsPath).pipe(clean());
+});
+
+gulp.task('dbDrop', function(){
+	return gulp.src('src/**/*.sln')
+		.pipe(tap(function(file){
+			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
+			console.log(file.folder);
+			console.log(config.buildPath);
+		}));
+	
+});
+gulp.task('dbCreate', function(){
+	shell.task[('cd build' 
+		+ ' /p:DatabaseDeployer.exe create')]
 });
