@@ -37,8 +37,7 @@ namespace Ironhide.Web.Api.Modules
                             if (!user.IsActive) throw new DisableUserAccountException();
                             UserLoginSession userLoginSession = userSessionFactory.Create(user);
 
-                            return new SuccessfulLoginResponse<Guid>(userLoginSession.Id, user.Name,
-                                                                     userLoginSession.Expires, menuProvider.getFeatures(userLoginSession.GetClaimsAsArray()));
+                            return new SuccessfulLoginResponse<string>(userLoginSession.JwtToken);
                         }
                         catch (ItemNotFoundException<UserEmailLogin>)
                         {
@@ -66,7 +65,7 @@ namespace Ironhide.Web.Api.Modules
 
                                               UserLoginSession userLoginSession = userSessionFactory.Create(user);
 
-                                              return new SuccessfulLoginResponse<Guid>(userLoginSession.Id, user.Name, userLoginSession.Expires, menuProvider.getFeatures(userLoginSession.GetClaimsAsArray()));
+                                              return new SuccessfulLoginResponse<string>(userLoginSession.JwtToken);
                                           }
                                           catch (ItemNotFoundException<UserEmailLogin>)
                                           {
@@ -102,7 +101,7 @@ namespace Ironhide.Web.Api.Modules
 
                     UserLoginSession userLoginSession = userSessionFactory.Create(user);
 
-                    return new SuccessfulLoginResponse<Guid>(userLoginSession.Id, user.Name, userLoginSession.Expires, menuProvider.getFeatures(userLoginSession.GetClaimsAsArray()));
+                    return new SuccessfulLoginResponse<string>(userLoginSession.JwtToken);
                 }
                 catch (ItemNotFoundException<UserEmailLogin>)
                 {

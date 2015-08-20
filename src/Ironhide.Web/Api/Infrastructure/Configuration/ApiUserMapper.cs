@@ -4,23 +4,26 @@ using Ironhide.Users.Domain.Exceptions;
 using Ironhide.Users.Domain.Services;
 using Ironhide.Web.Api.Infrastructure.Authentication;
 using Nancy.Security;
+using System.IdentityModel.Tokens;
 
 namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
-    public class ApiUserMapper : IApiUserMapper<Guid>
+    public class ApiUserMapper : IApiUserMapper<string>
     {
         readonly IReadOnlyRepository _readOnlyRepo;
         readonly ITimeProvider _timeProvider;
+        readonly IKeyProvider _keyProvider;
 
-        public ApiUserMapper(IReadOnlyRepository readOnlyRepo, ITimeProvider timeProvider)
+        public ApiUserMapper(IReadOnlyRepository readOnlyRepo, ITimeProvider timeProvider, IKeyProvider keyProvider)
         {
             _readOnlyRepo = readOnlyRepo;
             _timeProvider = timeProvider;
+            _keyProvider = keyProvider;
         }
 
         #region IApiUserMapper<Guid> Members
 
-        public IUserIdentity GetUserFromAccessToken(Guid token)
+        public IUserIdentity GetUserFromAccessToken(string token)
         {
             UserLoginSession userLoginSession = GetUserSessionFromToken(token);
             MakeSureTokenHasntExpiredYet(userLoginSession);
@@ -29,12 +32,27 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
         #endregion
 
-        UserLoginSession GetUserSessionFromToken(Guid token)
+        UserLoginSession GetUserSessionFromToken(string token)
         {
             UserLoginSession userLoginSession;
             try
             {
-                userLoginSession = _readOnlyRepo.First<UserLoginSession>(x => x.Id == token);
+                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+                TokenValidationParameters validationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    IssuerSigningKey = new InMemorySymmetricSecurityKey(_keyProvider.GetKey())
+                };
+
+                SecurityToken securityToken;
+                tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+
+                var jwtSecurityToken = (JwtSecurityToken) securityToken;
+
+                var guid = Guid.Parse(jwtSecurityToken.Id);
+
+                userLoginSession = _readOnlyRepo.First<UserLoginSession>(x => x.Id == guid);
             }
             catch (ItemNotFoundException<UserLoginSession> e)
             {

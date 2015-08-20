@@ -42,6 +42,10 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt">
+      <HintPath>..\..\lib\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\CommandHandlers\DisablingUser.cs" />
@@ -90,6 +94,8 @@
     <Compile Include="IEntity.cs" />
     <Compile Include="PasswordResetEmail.cs" />
     <Compile Include="Services\IEmailSender.cs" />
+    <Compile Include="Services\IKeyProvider.cs" />
+    <Compile Include="Services\JwtSymmetricKeyProvider.cs" />
     <Compile Include="ValidationFailure.cs" />
     <Compile Include="ValidationFailureType.cs" />
     <Compile Include="Validators\PassowrdResetValidator.cs" />

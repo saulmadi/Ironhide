@@ -10,18 +10,19 @@ namespace Ironhide.Users.Domain.Entities
         {            
         }
 
-        public UserLoginSession(Guid token, User user, DateTime expires)
+        public UserLoginSession(Guid token, User user, DateTime expires, string jwtToken)
         {
             Id = token;
             User = user;
             Expires = expires;
-
+            JwtToken = jwtToken;
             Claims = string.Join(",", user.UserRoles.Select(x => x.Description));
         }
 
         public virtual User User { get; protected set; }
         public virtual DateTime Expires { get; protected set; }
         public virtual string Claims { get; protected set; }
+        public virtual string JwtToken { get; protected set; }
 
         public virtual string[] GetClaimsAsArray()
         {

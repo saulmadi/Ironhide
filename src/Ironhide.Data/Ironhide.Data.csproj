@@ -69,6 +69,7 @@
     <Compile Include="ReadOnlyRepository.cs" />
     <Compile Include="UserAutoMappingOverride.cs" />
     <Compile Include="UserLoginSessionAutoMappingOverride.cs" />
+    <Compile Include="UserSessionAutoMappingOverride.cs" />
     <Compile Include="WriteableRepository.cs" />
   </ItemGroup>
   <ItemGroup>

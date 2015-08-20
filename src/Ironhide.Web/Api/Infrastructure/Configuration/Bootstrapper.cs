@@ -64,14 +64,13 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
                         if (hasToken)
                         {
-                            var apiUserMapper = container.Resolve<IApiUserMapper<Guid>>();
-                            Guid tokenGuid;
-                            if (!string.IsNullOrEmpty(token) && Guid.TryParse(token, out tokenGuid))
+                            var apiUserMapper = container.Resolve<IApiUserMapper<string>>();
+                            if (!string.IsNullOrEmpty(token))
                             {
                                 try
                                 {
                                     IUserIdentity userFromAccessToken =
-                                        apiUserMapper.GetUserFromAccessToken(tokenGuid);
+                                        apiUserMapper.GetUserFromAccessToken(token);
                                     return userFromAccessToken;
                                 }
                                 catch (TokenDoesNotExistException)

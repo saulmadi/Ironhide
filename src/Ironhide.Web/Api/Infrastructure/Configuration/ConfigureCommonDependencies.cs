@@ -34,7 +34,7 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
                            AutoRegisterDataAndDomain(container);
                            container.RegisterInstance(Mapper.Engine).As<IMappingEngine>();
                            container.RegisterType<BaseUrlProvider>().As<IBaseUrlProvider>();
-                           container.RegisterType<ApiUserMapper>().As<IApiUserMapper<Guid>>();
+                           container.RegisterType<ApiUserMapper>().As<IApiUserMapper<string>>();
                            container.RegisterInstance(LogManager.GetLogger("Logger")).As<ILog>();
                            log4net.Config.XmlConfigurator.Configure();
                           

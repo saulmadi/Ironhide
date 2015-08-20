@@ -6,7 +6,7 @@ namespace Ironhide.Web.Api.Infrastructure
     {
         public RootModule()
         {
-            Get["/"] = _ => View["index.html"];
+            Get["/"] = _ => "Ironhide";
         }
     }
 }
