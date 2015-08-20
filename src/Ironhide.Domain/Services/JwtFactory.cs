@@ -40,7 +40,6 @@ namespace Ironhide.Users.Domain.Services
             var claims = executor.UserRoles.Select(x => new Claim(ClaimTypes.Role, x.Description)).ToList();
             claims.Add(new Claim(ClaimTypes.Name, executor.Name));
             claims.Add(new Claim("userguid", executor.Id.ToString()));
-            claims.Add(new Claim("jti", id.ToString()));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

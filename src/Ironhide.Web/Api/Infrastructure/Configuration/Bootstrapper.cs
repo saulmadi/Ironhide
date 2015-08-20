@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using Autofac;
 using Ironhide.Users.Domain;
 using Ironhide.Web.Api.Infrastructure.Authentication;
@@ -79,7 +80,7 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
                             }
                         }
 
-                        return LoggedInUserIdentity.CreateVisitorUserIdentity();
+                        return new LoggedInUserIdentity(new List<Claim>());
                     });
 
             StatelessAuthentication.Enable(pipelines, configuration);

@@ -19,7 +19,7 @@ namespace Ironhide.Web.Api.Modules
     public class AdminModule : NancyModule
     {
         public AdminModule(IReadOnlyRepository readOnlyRepository, IMappingEngine mappingEngine,
-            ICommandDispatcher commandDispatcher)
+            ICommandDispatcher commandDispatcher, IUserSessionFactory userSessionFactory)
         {
             Get["/users"] =
                 _ =>
@@ -31,7 +31,7 @@ namespace Ironhide.Web.Api.Modules
                         var mySortExpression = Expression.Lambda<Func<User, object>>(Expression.Property(parameter, request.Field), parameter);
                         
                         IQueryable<User> users =
-                            readOnlyRepository.Query<User>(x => x.Name != this.UserIdentity().UserName).AsQueryable();
+                            readOnlyRepository.Query<User>(x => x.Name != this.Context.CurrentUser.UserName).AsQueryable();
 
                         var orderedUsers = users.OrderBy(mySortExpression);
 
@@ -50,11 +50,11 @@ namespace Ironhide.Web.Api.Modules
                     var request = this.Bind<AdminEnableUsersRequest>();
                     if (request.Enable)
                     {
-                        commandDispatcher.Dispatch(this.UserSession(), new EnableUser(request.Id)); 
+                        commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new EnableUser(request.Id)); 
                     }
                     else
                     {
-                        commandDispatcher.Dispatch(this.UserSession(), new DisableUser(request.Id));
+                        commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new DisableUser(request.Id));
                     }
                 
                     return null;
@@ -74,7 +74,7 @@ namespace Ironhide.Web.Api.Modules
                 _ =>
                 {
                     var request = this.Bind<AdminUpdateUserRequest>();
-                    commandDispatcher.Dispatch(this.UserSession(), new UpdateUserProfile(request.Id, request.Name, request.Email));
+                    commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new UpdateUserProfile(request.Id, request.Name, request.Email));
                     return null;
                 };
 

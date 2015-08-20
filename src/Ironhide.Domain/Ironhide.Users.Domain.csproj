@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminUserSession.cs" />
     <Compile Include="Application\CommandHandlers\DisablingUser.cs" />
     <Compile Include="Application\CommandHandlers\EnablingUser.cs" />
     <Compile Include="Application\CommandHandlers\PasswordResetter.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Application\Commands\EnableUser.cs" />
     <Compile Include="Application\Commands\ResetPassword.cs" />
     <Compile Include="Application\Commands\UpdateUserProfile.cs" />
+    <Compile Include="BasicUserSession.cs" />
     <Compile Include="DomainEvents\PasswordReset.cs" />
     <Compile Include="DomainEvents\PasswordResetTokenCreated.cs" />
     <Compile Include="DomainEvents\UserAbilitiesAdded.cs" />
