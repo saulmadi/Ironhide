@@ -16,7 +16,7 @@ namespace Ironhide.Web.Api.Modules
     public class LoginModule : NancyModule
     {
         public LoginModule(IPasswordEncryptor passwordEncryptor, IReadOnlyRepository readOnlyRepository,
-                           IUserSessionFactory userSessionFactory, IMenuProvider menuProvider)
+                           ITokenFactory tokenFactory, IMenuProvider menuProvider)
         {
             Post["/login"] =
                 _ =>
@@ -35,10 +35,9 @@ namespace Ironhide.Web.Api.Modules
                                     x => x.Email == loginInfo.Email && x.EncryptedPassword == encryptedPassword.Password);
 
                             if (!user.IsActive) throw new DisableUserAccountException();
-                            UserLoginSession userLoginSession = userSessionFactory.Create(user);
+                            var jwtoken = tokenFactory.Create(user);
 
-                            return new SuccessfulLoginResponse<Guid>(userLoginSession.Id, user.Name,
-                                                                     userLoginSession.Expires, menuProvider.getFeatures(userLoginSession.GetClaimsAsArray()));
+                            return new SuccessfulLoginResponse<string>(jwtoken);
                         }
                         catch (ItemNotFoundException<UserEmailLogin>)
                         {
@@ -64,9 +63,9 @@ namespace Ironhide.Web.Api.Modules
 
                                               if (!user.IsActive) throw new DisableUserAccountException();
 
-                                              UserLoginSession userLoginSession = userSessionFactory.Create(user);
+                                              var jwtoken = tokenFactory.Create(user);
 
-                                              return new SuccessfulLoginResponse<Guid>(userLoginSession.Id, user.Name, userLoginSession.Expires, menuProvider.getFeatures(userLoginSession.GetClaimsAsArray()));
+                                              return new SuccessfulLoginResponse<string>(jwtoken);
                                           }
                                           catch (ItemNotFoundException<UserEmailLogin>)
                                           {
@@ -100,9 +99,9 @@ namespace Ironhide.Web.Api.Modules
                     
                     if (!user.IsActive) throw new DisableUserAccountException();
 
-                    UserLoginSession userLoginSession = userSessionFactory.Create(user);
+                   var jwtoken = tokenFactory.Create(user);
 
-                    return new SuccessfulLoginResponse<Guid>(userLoginSession.Id, user.Name, userLoginSession.Expires, menuProvider.getFeatures(userLoginSession.GetClaimsAsArray()));
+                   return new SuccessfulLoginResponse<string>(jwtoken);
                 }
                 catch (ItemNotFoundException<UserEmailLogin>)
                 {

@@ -10,6 +10,7 @@ namespace Ironhide.Data
         {
             mapping.HasManyToMany<Role>(x => x.UserRoles).Cascade.All().Table("UsersRoles");
             mapping.HasManyToMany<UserAbility>(x => x.UserAbilities).Cascade.All().Table("UserAbilities");
+
         }
     }
 }

@@ -42,8 +42,13 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt">
+      <HintPath>..\..\lib\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminUserSession.cs" />
     <Compile Include="Application\CommandHandlers\DisablingUser.cs" />
     <Compile Include="Application\CommandHandlers\EnablingUser.cs" />
     <Compile Include="Application\CommandHandlers\PasswordResetter.cs" />
@@ -64,6 +69,7 @@
     <Compile Include="Application\Commands\EnableUser.cs" />
     <Compile Include="Application\Commands\ResetPassword.cs" />
     <Compile Include="Application\Commands\UpdateUserProfile.cs" />
+    <Compile Include="BasicUserSession.cs" />
     <Compile Include="DomainEvents\PasswordReset.cs" />
     <Compile Include="DomainEvents\PasswordResetTokenCreated.cs" />
     <Compile Include="DomainEvents\UserAbilitiesAdded.cs" />
@@ -90,6 +96,8 @@
     <Compile Include="IEntity.cs" />
     <Compile Include="PasswordResetEmail.cs" />
     <Compile Include="Services\IEmailSender.cs" />
+    <Compile Include="Services\IKeyProvider.cs" />
+    <Compile Include="Services\JwtSymmetricKeyProvider.cs" />
     <Compile Include="ValidationFailure.cs" />
     <Compile Include="ValidationFailureType.cs" />
     <Compile Include="Validators\PassowrdResetValidator.cs" />
@@ -102,14 +110,13 @@
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Services\ITokenExpirationProvider.cs" />
     <Compile Include="Services\IIdentityGenerator.cs" />
-    <Compile Include="Services\IUserSessionFactory.cs" />
+    <Compile Include="Services\ITokenFactory.cs" />
     <Compile Include="Services\IWriteableRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />
     <Compile Include="Services\TokenExpirationProvider.cs" />
     <Compile Include="Entities\UserEmailLogin.cs" />
-    <Compile Include="Entities\UserLoginSession.cs" />
-    <Compile Include="Services\UserSessionFactory.cs" />
+    <Compile Include="Services\JwtFactory.cs" />
     <Compile Include="VisitorSession.cs" />
   </ItemGroup>
   <ItemGroup>
