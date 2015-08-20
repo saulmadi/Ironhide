@@ -1,5 +1,6 @@
 ﻿using System;
 using AcklenAvenue.Commands;
+using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Application.CommandHandlers;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -38,7 +39,7 @@ namespace Ironhide.Domain.Specs
 
         Because of =
             () =>
-            _handler.Handle(new UserLoginSession(Guid.NewGuid(), _user, DateTime.Now, "JwtToken"), _command);
+            _handler.Handle(new VisitorSession(), _command);
 
         It should_throw_the_expected_event =
             () => _eventRaised.ShouldBeLike(_expectedEvent);

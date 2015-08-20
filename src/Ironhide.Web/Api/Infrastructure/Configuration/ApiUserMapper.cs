@@ -1,10 +1,15 @@
 using System;
+using System.Collections.Generic;
 using Ironhide.Users.Domain.Entities;
 using Ironhide.Users.Domain.Exceptions;
 using Ironhide.Users.Domain.Services;
 using Ironhide.Web.Api.Infrastructure.Authentication;
 using Nancy.Security;
 using System.IdentityModel.Tokens;
+using System.Linq;
+using System.Security.Claims;
+using NHibernate.Mapping;
+using NHibernate.Util;
 
 namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
@@ -25,45 +30,46 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
         public IUserIdentity GetUserFromAccessToken(string token)
         {
-            UserLoginSession userLoginSession = GetUserSessionFromToken(token);
-            MakeSureTokenHasntExpiredYet(userLoginSession);
-            return new LoggedInUserIdentity(userLoginSession);
+            IEnumerable<Claim> claims = GetClaimsFromToken(token);
+            return new LoggedInUserIdentity(claims.ToList());
         }
 
         #endregion
 
-        UserLoginSession GetUserSessionFromToken(string token)
+        JwtSecurityToken ValidateToken(string token)
         {
-            UserLoginSession userLoginSession;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters()
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                IssuerSigningKey = new InMemorySymmetricSecurityKey(_keyProvider.GetKey())
+            };
+
+            SecurityToken securityToken;
+            tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+
+            return (JwtSecurityToken)securityToken;
+        }
+
+        IEnumerable<Claim> GetClaimsFromToken(string token)
+        {
             try
             {
-                JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-                TokenValidationParameters validationParameters = new TokenValidationParameters()
-                {
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    IssuerSigningKey = new InMemorySymmetricSecurityKey(_keyProvider.GetKey())
-                };
+                var jwtSecurityToken = ValidateToken(token);
+                MakeSureTokenHasntExpiredYet(jwtSecurityToken);
+                return jwtSecurityToken.Claims;
 
-                SecurityToken securityToken;
-                tokenHandler.ValidateToken(token, validationParameters, out securityToken);
-
-                var jwtSecurityToken = (JwtSecurityToken) securityToken;
-
-                var guid = Guid.Parse(jwtSecurityToken.Id);
-
-                userLoginSession = _readOnlyRepo.First<UserLoginSession>(x => x.Id == guid);
             }
-            catch (ItemNotFoundException<UserLoginSession> e)
+            catch
             {
                 throw new TokenDoesNotExistException();
             }
-            return userLoginSession;
         }
 
-        void MakeSureTokenHasntExpiredYet(UserLoginSession userLoginSession)
+        void MakeSureTokenHasntExpiredYet(JwtSecurityToken token)
         {
-            DateTime expires = userLoginSession.Expires;
+            DateTime expires = token.ValidTo;
             DateTime now = _timeProvider.Now();
             if (expires < now)
             {

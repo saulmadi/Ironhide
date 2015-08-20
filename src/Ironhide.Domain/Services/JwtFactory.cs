@@ -7,30 +7,27 @@ using Ironhide.Users.Domain.Entities;
 
 namespace Ironhide.Users.Domain.Services
 {
-    public class UserSessionFactory : IUserSessionFactory
+    public class JwtFactory : ITokenFactory
     {
         readonly ITimeProvider _timeProvider;
         readonly ITokenExpirationProvider _tokenExpirationProvider;
         readonly IIdentityGenerator<Guid> _identityGenerator;
-        readonly IWriteableRepository _writeableRepository;
         readonly IKeyProvider _keyProvider;
 
-        public UserSessionFactory(IWriteableRepository writeableRepository,
-                                  ITimeProvider timeProvider,
+        public JwtFactory(ITimeProvider timeProvider,
                                   IIdentityGenerator<Guid> identityGenerator,
                                   ITokenExpirationProvider tokenExpirationProvider,
                                   IKeyProvider keyProvider)
         {
-            _writeableRepository = writeableRepository;
             _timeProvider = timeProvider;
             _identityGenerator = identityGenerator;
             _tokenExpirationProvider = tokenExpirationProvider;
             _keyProvider = keyProvider;
         }
 
-        #region IUserSessionFactory Members
+        #region ITokenFactory Members
 
-        public UserLoginSession Create(User executor)
+        public string Create(User executor)
         {
             var id = _identityGenerator.Generate();
 
@@ -42,6 +39,7 @@ namespace Ironhide.Users.Domain.Services
 
             var claims = executor.UserRoles.Select(x => new Claim(ClaimTypes.Role, x.Description)).ToList();
             claims.Add(new Claim(ClaimTypes.Name, executor.Name));
+            claims.Add(new Claim("userguid", executor.Id.ToString()));
             claims.Add(new Claim("jti", id.ToString()));
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -62,11 +60,7 @@ namespace Ironhide.Users.Domain.Services
 
             var tokenString = tokenHandler.WriteToken(token);
 
-            var userSession = new UserLoginSession(id, executor, expirationDateTime, tokenString);
-
-            _writeableRepository.Create(userSession);
-
-            return userSession;
+            return tokenString;
         }
 
         #endregion

@@ -4,56 +4,38 @@ using System.Linq;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Entities;
 using Nancy.Security;
+using System.Security.Claims;
+using NHibernate.Util;
 
 namespace Ironhide.Web.Api.Infrastructure.Authentication
 {
-    public class LoggedInUserIdentity : IUserIdentity
+    public class LoggedInUserIdentity : IUserIdentity, IUserSession
     {
-        public LoggedInUserIdentity(IUserSession userSession)
+        internal static LoggedInUserIdentity CreateVisitorUserIdentity()
         {
-            UserSession = userSession;
+            var visitor = new LoggedInUserIdentity();
+            return visitor;
         }
 
-        public IUserSession UserSession { get; private set; }
-
-        #region IUserIdentity Members
-
-        public string UserName
+        private LoggedInUserIdentity()
         {
-            get
-            {
-                if (UserSession is UserLoginSession)
-                {
-                    User executor = ((UserLoginSession) UserSession).User;
-                    if (executor == null)
-                    {
-                        throw new Exception("The user should not be null on the user session.");
-                    }
-                    return executor.Email;
-                }
-                return null;
-            }
+            this.JwTokenClaims = new List<Claim>();
+            this.Claims = new List<string>();
         }
 
-        public IEnumerable<string> Claims
+        public LoggedInUserIdentity(List<Claim> claims)
         {
-            get
-            {
-                if (UserSession is UserLoginSession)
-                {
-                    User executor = ((UserLoginSession)UserSession).User;
-                    if (executor == null)
-                    {
-                        throw new Exception("The user should not be null on the user session.");
-                    }
-                    return executor.UserRoles.Select(x => x.Description);
-                }
-                return null;
-
-
-            }
+            this.JwTokenClaims = claims;
+            this.Claims = claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value);
+            this.UserName = claims.First(x => x.Type == ClaimTypes.Name).Value;
+            this.Id = Guid.Parse(claims.First(x => x.Type == "jti").Value);
         }
 
-        #endregion
+        public IEnumerable<Claim> JwTokenClaims { get; private set; } 
+        public IEnumerable<string> Claims { get; private set; }
+
+        public string UserName { get; private set; }
+
+        public Guid Id { get; private set; }
     }
 }

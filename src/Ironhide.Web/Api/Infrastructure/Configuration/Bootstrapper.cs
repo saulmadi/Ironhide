@@ -79,7 +79,7 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
                             }
                         }
 
-                        return new LoggedInUserIdentity(new VisitorSession());
+                        return LoggedInUserIdentity.CreateVisitorUserIdentity();
                     });
 
             StatelessAuthentication.Enable(pipelines, configuration);

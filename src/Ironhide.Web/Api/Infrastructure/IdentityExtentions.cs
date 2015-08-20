@@ -12,14 +12,14 @@ namespace Ironhide.Web.Api.Infrastructure
         {
             var user = module.Context.CurrentUser as LoggedInUserIdentity;
             if (user == null) throw new NoCurrentUserException();
-            return user.UserSession;
+            return user;
         }
 
-        public static UserLoginSession UserLoginSession(this NancyModule module)
+        public static LoggedInUserIdentity UserIdentity(this NancyModule module)
         {
             var user = module.Context.CurrentUser as LoggedInUserIdentity;
-            if (user == null || user.UserSession.GetType() != typeof(UserLoginSession)) throw new NoCurrentUserException();
-            return (UserLoginSession) user.UserSession;
+            if (user == null) throw new NoCurrentUserException();
+            return user;
         }
     }
 }

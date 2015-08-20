@@ -6,7 +6,7 @@ namespace Ironhide.Web.Api.Infrastructure
     {
         public RootModule()
         {
-            Get["/"] = _ => "Ironhide";
+            Get["/"] = _ => "Ironhide API v" + GetType().Assembly.GetName().Version;
         }
     }
 }

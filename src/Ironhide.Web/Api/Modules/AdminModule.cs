@@ -31,7 +31,7 @@ namespace Ironhide.Web.Api.Modules
                         var mySortExpression = Expression.Lambda<Func<User, object>>(Expression.Property(parameter, request.Field), parameter);
                         
                         IQueryable<User> users =
-                            readOnlyRepository.Query<User>(x => x.Name != this.UserLoginSession().User.Name).AsQueryable();
+                            readOnlyRepository.Query<User>(x => x.Name != this.UserIdentity().UserName).AsQueryable();
 
                         var orderedUsers = users.OrderBy(mySortExpression);
 

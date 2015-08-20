@@ -108,14 +108,13 @@
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Services\ITokenExpirationProvider.cs" />
     <Compile Include="Services\IIdentityGenerator.cs" />
-    <Compile Include="Services\IUserSessionFactory.cs" />
+    <Compile Include="Services\ITokenFactory.cs" />
     <Compile Include="Services\IWriteableRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />
     <Compile Include="Services\TokenExpirationProvider.cs" />
     <Compile Include="Entities\UserEmailLogin.cs" />
-    <Compile Include="Entities\UserLoginSession.cs" />
-    <Compile Include="Services\UserSessionFactory.cs" />
+    <Compile Include="Services\JwtFactory.cs" />
     <Compile Include="VisitorSession.cs" />
   </ItemGroup>
   <ItemGroup>
