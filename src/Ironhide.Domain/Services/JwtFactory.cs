@@ -57,7 +57,6 @@ namespace Ironhide.Users.Domain.Services
             };
             
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
             var tokenString = tokenHandler.WriteToken(token);
 
             return tokenString;

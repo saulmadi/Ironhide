@@ -36,7 +36,7 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
         #endregion
 
-        JwtSecurityToken ValidateToken(string token)
+        ClaimsPrincipal ValidateToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = new TokenValidationParameters()
@@ -47,18 +47,19 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
             };
 
             SecurityToken securityToken;
-            tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+            var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
 
-            return (JwtSecurityToken)securityToken;
+            var jwtSecurityToken = (JwtSecurityToken) securityToken;
+            MakeSureTokenHasntExpiredYet(jwtSecurityToken);
+            return claimsPrincipal;
         }
 
         IEnumerable<Claim> GetClaimsFromToken(string token)
         {
             try
             {
-                var jwtSecurityToken = ValidateToken(token);
-                MakeSureTokenHasntExpiredYet(jwtSecurityToken);
-                return jwtSecurityToken.Claims;
+                var claimsPrincipal = ValidateToken(token);
+                return claimsPrincipal.Claims;
 
             }
             catch
