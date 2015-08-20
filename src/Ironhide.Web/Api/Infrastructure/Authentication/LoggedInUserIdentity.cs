@@ -4,56 +4,29 @@ using System.Linq;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Entities;
 using Nancy.Security;
+using System.Security.Claims;
+using NHibernate.Util;
 
 namespace Ironhide.Web.Api.Infrastructure.Authentication
 {
     public class LoggedInUserIdentity : IUserIdentity
     {
-        public LoggedInUserIdentity(IUserSession userSession)
+        public LoggedInUserIdentity(List<Claim> claims)
         {
-            UserSession = userSession;
-        }
+            this.JwTokenClaims = claims;
+            this.Claims = claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value);
 
-        public IUserSession UserSession { get; private set; }
+            var userName = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
 
-        #region IUserIdentity Members
-
-        public string UserName
-        {
-            get
+            if (userName != null)
             {
-                if (UserSession is UserLoginSession)
-                {
-                    User executor = ((UserLoginSession) UserSession).User;
-                    if (executor == null)
-                    {
-                        throw new Exception("The user should not be null on the user session.");
-                    }
-                    return executor.Email;
-                }
-                return null;
+                this.UserName = userName.Value;
             }
         }
 
-        public IEnumerable<string> Claims
-        {
-            get
-            {
-                if (UserSession is UserLoginSession)
-                {
-                    User executor = ((UserLoginSession)UserSession).User;
-                    if (executor == null)
-                    {
-                        throw new Exception("The user should not be null on the user session.");
-                    }
-                    return executor.UserRoles.Select(x => x.Description);
-                }
-                return null;
+        public IEnumerable<Claim> JwTokenClaims { get; private set; } 
+        public IEnumerable<string> Claims { get; private set; }
 
-
-            }
-        }
-
-        #endregion
+        public string UserName { get; private set; }
     }
 }

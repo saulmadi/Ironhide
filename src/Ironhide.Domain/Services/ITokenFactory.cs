@@ -2,8 +2,8 @@ using Ironhide.Users.Domain.Entities;
 
 namespace Ironhide.Users.Domain.Services
 {
-    public interface IUserSessionFactory
+    public interface ITokenFactory
     {
-        UserLoginSession Create(User executor);
+        string Create(User executor);
     }
 }

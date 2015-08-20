@@ -9,17 +9,11 @@ namespace Ironhide.Web.Api.Responses
 
         }
 
-        public SuccessfulLoginResponse(T token, string name, DateTime expires, string[] claims)
+        public SuccessfulLoginResponse(T token)
         {
             Token = token;
-            Name = name;
-            Expires = expires;
-            Claims = claims;
         }
 
         public T Token { get; set; }
-        public string Name { get; set; }
-        public DateTime Expires { get; set; }
-        public string[] Claims { get; set; }
     }
 }

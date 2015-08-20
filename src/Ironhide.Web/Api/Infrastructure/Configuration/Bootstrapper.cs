@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using Autofac;
 using Ironhide.Users.Domain;
 using Ironhide.Web.Api.Infrastructure.Authentication;
@@ -64,14 +65,13 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
                         if (hasToken)
                         {
-                            var apiUserMapper = container.Resolve<IApiUserMapper<Guid>>();
-                            Guid tokenGuid;
-                            if (!string.IsNullOrEmpty(token) && Guid.TryParse(token, out tokenGuid))
+                            var apiUserMapper = container.Resolve<IApiUserMapper<string>>();
+                            if (!string.IsNullOrEmpty(token))
                             {
                                 try
                                 {
                                     IUserIdentity userFromAccessToken =
-                                        apiUserMapper.GetUserFromAccessToken(tokenGuid);
+                                        apiUserMapper.GetUserFromAccessToken(token);
                                     return userFromAccessToken;
                                 }
                                 catch (TokenDoesNotExistException)
@@ -80,7 +80,7 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
                             }
                         }
 
-                        return new LoggedInUserIdentity(new VisitorSession());
+                        return new LoggedInUserIdentity(new List<Claim>());
                     });
 
             StatelessAuthentication.Enable(pipelines, configuration);
