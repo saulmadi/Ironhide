@@ -57,14 +57,14 @@ namespace Ironhide.Domain.Specs
 
                 Mock.Get(_writeableRepository)
                     .Setup(repository => repository.Update(Moq.It.Is<User>(user => user.Id == _userGuid)))
-                    .Returns(_userCreated);
+                    .ReturnsAsync(_userCreated);
 
                 Mock.Get(_readOnlyRepository)
-                    .Setup(repository => repository.GetById<User>(_userCreated.Id)).Returns(_userCreated);
+                    .Setup(repository => repository.GetById<User>(_userCreated.Id)).ReturnsAsync(_userCreated);
 
                 Mock.Get(_readOnlyRepository)
                     .Setup(repository => repository.GetById<UserAbility>(_abilityGuid))
-                    .Returns(_abilitiesAdded.FirstOrDefault);
+                    .ReturnsAsync(_abilitiesAdded.FirstOrDefault());
 
                 _handle = new UserAbilitiesAdder(_writeableRepository, _readOnlyRepository);
                 _userAbilitiesAdded = new UserAbilitiesAdded(_userGuid, _abilitiesAdded.Select(x => x.Id));

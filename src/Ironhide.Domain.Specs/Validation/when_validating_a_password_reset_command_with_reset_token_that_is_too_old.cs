@@ -16,7 +16,7 @@ namespace Ironhide.Domain.Specs.Validation
 {
     public class when_validating_a_password_reset_command_with_reset_token_that_is_too_old
     {
-        static ICommandValidator<ResetPassword> _validator;
+        static ICommandValidator<IUserSession, ResetPassword> _validator;
         static readonly EncryptedPassword EncryptedPassword = new EncryptedPassword("password");
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static List<ValidationFailure> _expectedFailures;
@@ -43,7 +43,7 @@ namespace Ironhide.Domain.Specs.Validation
                 Mock.Get(_timeProvider).Setup(x => x.Now()).Returns(_now);
 
                 Mock.Get(_readOnlyRepo).Setup(x => x.GetById<PasswordResetAuthorization>(ResetPasswordToken))
-                    .Returns(new PasswordResetAuthorization(ResetPasswordToken, Guid.NewGuid(), _now.AddDays(3)));
+                    .ReturnsAsync(new PasswordResetAuthorization(ResetPasswordToken, Guid.NewGuid(), _now.AddDays(3)));
             };
 
         Because of =

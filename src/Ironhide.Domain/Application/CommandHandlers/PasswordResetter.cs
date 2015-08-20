@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -6,7 +7,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
-    public class PasswordResetter : ICommandHandler<ResetPassword>
+    public class PasswordResetter : IEventedCommandHandler<IUserSession, ResetPassword>
     {
         readonly IReadOnlyRepository _readOnlyRepository;
         readonly IWriteableRepository _writeableRepository;
@@ -17,13 +18,13 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
             _writeableRepository = writeableRepository;
         }
 
-        public void Handle(IUserSession userIssuingCommand, ResetPassword command)
+        public async Task Handle(IUserSession userIssuingCommand, ResetPassword command)
         {
-            var passwordResetToken = _readOnlyRepository.GetById<PasswordResetAuthorization>(command.ResetPasswordToken);
-            var user = _readOnlyRepository.GetById<UserEmailLogin>(passwordResetToken.UserId);
+            var passwordResetToken = await _readOnlyRepository.GetById<PasswordResetAuthorization>(command.ResetPasswordToken);
+            var user = await _readOnlyRepository.GetById<UserEmailLogin>(passwordResetToken.UserId);
             user.ChangePassword(command.EncryptedPassword);
-            _writeableRepository.Update(user);
-            _writeableRepository.Delete<PasswordResetAuthorization>(command.ResetPasswordToken);
+            await _writeableRepository.Update(user);
+            await _writeableRepository.Delete<PasswordResetAuthorization>(command.ResetPasswordToken);
             NotifyObservers(new PasswordReset(passwordResetToken.UserId));
         }
 

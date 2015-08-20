@@ -87,7 +87,7 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
          
             
-            container.RegisterType<AutoFacBlingDispatcher>().As<IBlingDispatcher>();
+            container.RegisterType<IronhideBlingDispatcher>().As<IBlingDispatcher>();
           
             container.RegisterType<ImmediateCommandDispatcher>().Named<ICommandDispatcher>("CommandDispatcher");
 

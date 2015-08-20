@@ -34,7 +34,7 @@ namespace Ironhide.Web.Specs
                 var value = new UserEmailLogin("Bob", Email, new EncryptedPassword("something"));
                 Mock.Get(readOnlyRepository)
                     .Setup(x => x.GetById<UserEmailLogin>(UserId))
-                    .Returns(value);
+                    .ReturnsAsync(value);
             };
 
         Because of =

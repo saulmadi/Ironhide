@@ -13,8 +13,9 @@ namespace Ironhide.Domain.Specs.Validation
 {
     public class when_validating_a_password_reset_request_where_email_is_missing
     {
-        static ICommandValidator<CreatePasswordResetToken> _validator;
+        static ICommandValidator<IUserSession, CreatePasswordResetToken> _validator;
         static Exception _exception;
+        static IReadOnlyRepository _readOnlyRepsitory;
 
         Establish context =
             () =>
@@ -31,7 +32,5 @@ namespace Ironhide.Domain.Specs.Validation
                 _exception.As<CommandValidationException>().ValidationFailures
                     .ShouldContain(x => x.Property == "Email" &&
                                         x.FailureType == ValidationFailureType.Missing);
-
-        static IReadOnlyRepository _readOnlyRepsitory;
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Services;
 using NHibernate;
@@ -16,42 +17,54 @@ namespace Ironhide.Data
             _session = session;
         }
 
-        public T Create<T>(T itemToCreate) where T : IEntity
+        public async Task<T> Create<T>(T itemToCreate) where T : IEntity
         {
-            _session.Save(itemToCreate);
-            return itemToCreate;
+            return await Task.Factory.StartNew(
+                () =>
+                {
+                    _session.Save(itemToCreate);
+                    return itemToCreate;
+                });
         }
 
-        public void DeleteAll<T>() where T : class, IEntity
+        public async Task DeleteAll<T>() where T : class, IEntity
         {
             foreach (T item in _session.QueryOver<T>().List())
             {
-                Delete<T>(item.Id);
+                await Delete<T>(item.Id);
             }
         }
 
-        public IEnumerable<T> CreateAll<T>(IEnumerable<T> list) where T : IEntity
+        public async Task Delete<T>(Guid itemId) where T : IEntity
+        {
+            await Task.Factory.StartNew(
+                () =>
+                {
+                    var itemToDelete = _session.Get<T>(itemId);
+                    _session.Delete(itemToDelete);
+                });
+        }
+
+        public async Task<IEnumerable<T>> CreateAll<T>(IEnumerable<T> list) where T : IEntity
         {
             List<T> items = list as List<T> ?? list.ToList();
             foreach (T item in items)
             {
-                Create(item);
+                await Create(item);
             }
 
             return items;
         }
 
-        public T Update<T>(T itemToUpdate) where T : IEntity
+        public async Task<T> Update<T>(T itemToUpdate) where T : IEntity
         {
-            ISession session = _session;
-            session.Update(itemToUpdate);
-            return itemToUpdate;
-        }
-
-        public void Delete<T>(Guid itemId) where T : IEntity
-        {
-            var itemToDelete = _session.Get<T>(itemId);
-            _session.Delete(itemToDelete);
+            return await Task.Factory.StartNew(
+                () =>
+                {
+                    ISession session = _session;
+                    session.Update(itemToUpdate);
+                    return itemToUpdate;
+                });
         }
     }
 }

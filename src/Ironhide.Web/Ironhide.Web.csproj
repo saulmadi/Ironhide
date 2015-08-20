@@ -43,8 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcklenAvenue.Commands">
-      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.0.1\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+    <Reference Include="AcklenAvenue.Commands, Version=1.0.2.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.12\lib\net45\AcklenAvenue.Commands.dll</HintPath>
     </Reference>
     <Reference Include="AcklenAvenue.Data, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -67,8 +68,9 @@
     <Reference Include="AutoMapper">
       <HintPath>..\..\lib\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="BlingBag">
-      <HintPath>..\..\lib\BlingBag.1.3.3.0\lib\net40\BlingBag.dll</HintPath>
+    <Reference Include="BlingBag, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\BlingBag.1.4.0.14\lib\net45\BlingBag.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\lib\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
@@ -141,8 +143,7 @@
     <Compile Include="Api\Infrastructure\Authentication\MenuProvider.cs" />
     <Compile Include="Api\Infrastructure\Authentication\Roles\Feature.cs" />
     <Compile Include="Api\Infrastructure\Authentication\Roles\UsersRoles.cs" />
-    <Compile Include="Api\Infrastructure\Configuration\AutoFacBlingDispatcher.cs" />
-    <Compile Include="Api\Infrastructure\Configuration\BlingConfigurator.cs" />
+    <Compile Include="Api\Infrastructure\Configuration\IronhideBlingDispatcher.cs" />
     <Compile Include="Api\Infrastructure\Configuration\DataBaseErrorHandling.cs" />
     <Compile Include="Api\Infrastructure\Configuration\DataBaseErrorInTransactionHandler.cs" />
     <Compile Include="Api\Infrastructure\Configuration\CommandDispatcherLogger.cs" />

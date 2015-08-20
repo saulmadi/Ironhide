@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -7,7 +8,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
-    public class PasswordResetTokenCreator : ICommandHandler<CreatePasswordResetToken>
+    public class PasswordResetTokenCreator : IEventedCommandHandler<IUserSession, CreatePasswordResetToken>
     {
         readonly IReadOnlyRepository _readOnlyRepository;
         readonly ITimeProvider _timeProvider;
@@ -22,11 +23,11 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
             _idGenerator = idGenerator;
         }
 
-        public void Handle(IUserSession userIssuingCommand, CreatePasswordResetToken command)
+        public async Task Handle(IUserSession userIssuingCommand, CreatePasswordResetToken command)
         {
-            var user = _readOnlyRepository.First<UserEmailLogin>(x => x.Email == command.Email);
+            var user = await _readOnlyRepository.First<UserEmailLogin>(x => x.Email == command.Email);
             Guid tokenId = _idGenerator.Generate();
-            _writeableRepository.Create(new PasswordResetAuthorization(tokenId, user.Id, _timeProvider.Now()));
+            await _writeableRepository.Create(new PasswordResetAuthorization(tokenId, user.Id, _timeProvider.Now()));
             NotifyObservers(new PasswordResetTokenCreated(tokenId, user.Id));
         }
 

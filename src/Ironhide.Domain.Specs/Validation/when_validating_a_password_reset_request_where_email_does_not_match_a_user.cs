@@ -17,7 +17,7 @@ namespace Ironhide.Domain.Specs.Validation
     public class when_validating_a_password_reset_request_where_email_does_not_match_a_user
     {
         const string EmailAddress = "me@test.com";
-        static ICommandValidator<CreatePasswordResetToken> _validator;
+        static ICommandValidator<IUserSession, CreatePasswordResetToken> _validator;
         static Exception _exception;
         static IReadOnlyRepository _readOnlyRepsitory;
 

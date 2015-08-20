@@ -20,7 +20,7 @@ namespace Ironhide.Domain.Specs
         static CreateEmailLoginUser _command;
         static IWriteableRepository _writeableRepository;
          static IReadOnlyRepository _readOnlyRepository;
-        static ICommandHandler<CreateEmailLoginUser> _handler;
+        static IEventedCommandHandler<IUserSession, CreateEmailLoginUser> _handler;
         static UserEmailCreated _expectedEvent;
         static object _eventRaised;
         static UserEmailLogin _userCreated;
@@ -51,10 +51,10 @@ namespace Ironhide.Domain.Specs
                 _readOnlyRepository = Mock.Of<IReadOnlyRepository>();
 
                 Mock.Get(_readOnlyRepository)
-                    .Setup(repository => repository.GetById<UserAbility>(_userAbility.Id)).Returns(_userAbility);
+                    .Setup(repository => repository.GetById<UserAbility>(_userAbility.Id)).ReturnsAsync(_userAbility);
                 Mock.Get(_writeableRepository)
                     .Setup(repository => repository.Create(Moq.It.IsAny<UserEmailLogin>()))
-                    .Returns(_userCreated);
+                    .ReturnsAsync(_userCreated);
 
                 _handler = new UserEmailCreator(_writeableRepository, _readOnlyRepository);
 

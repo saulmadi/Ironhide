@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Exceptions;
 using Ironhide.Users.Domain.Services;
@@ -21,46 +22,56 @@ namespace Ironhide.Data
 
         #region IRepository Members
 
-        public T First<T>(Expression<Func<T, bool>> query) where T : class, IEntity
+        public async Task<T> First<T>(Expression<Func<T, bool>> query) where T : class, IEntity
         {
-            T item = _session.QueryOver<T>().Where(query).List().FirstOrDefault();
+            return await Task.Factory.StartNew(
+                () =>
+                {
+                    T item = _session.QueryOver<T>().Where(query).List().FirstOrDefault();
 
-            if (item == null)
-            {
-                throw new ItemNotFoundException<T>();
-            }
+                    if (item == null)
+                    {
+                        throw new ItemNotFoundException<T>();
+                    }
 
-            return item;
+                    return item;
+                });
         }
 
-        public T FirstOrDefault<T>(Expression<Func<T, bool>> query) where T : class, IEntity
+        public async Task<T> FirstOrDefault<T>(Expression<Func<T, bool>> query) where T : class, IEntity
         {
-            T item = _session.QueryOver<T>().Where(query).List().FirstOrDefault();
-            return item;
+            return await Task.Factory.StartNew(
+                () =>
+                {
+                    T item = _session.QueryOver<T>().Where(query).List().FirstOrDefault();
+                    return item;
+                });
         }
 
-        public T GetById<T>(Guid id) where T : IEntity
+        public async Task<T> GetById<T>(Guid id) where T : IEntity
         {
-            var item = _session.Get<T>(id);
+            return await Task.Factory.StartNew(
+                () =>
+                {
+                    var item = _session.Get<T>(id);
 
-            if (item == null)
-            {
-                throw new ItemNotFoundException<T>(id);
-            }
+                    if (item == null)
+                    {
+                        throw new ItemNotFoundException<T>(id);
+                    }
 
-            return item;
+                    return item;
+                });
         }
 
-        public IEnumerable<T> GetAll<T>() where T : IEntity
+        public async Task<IEnumerable<T>> GetAll<T>() where T : IEntity
         {
-            var items = _session.Query<T>();
-            return items;
+            return await Task.Factory.StartNew(() => _session.Query<T>());
         }
 
-        public IEnumerable<T> Query<T>(Expression<Func<T, bool>> expression) where T : IEntity
+        public async Task<IEnumerable<T>> Query<T>(Expression<Func<T, bool>> expression) where T : IEntity
         {
-            var session = _session;
-            return session.Query<T>().Where(expression);
+            return await Task.Factory.StartNew(() => _session.Query<T>().Where(expression));
         }
 
         #endregion

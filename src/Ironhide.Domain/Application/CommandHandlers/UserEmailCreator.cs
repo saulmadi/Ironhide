@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -7,7 +8,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
-    public class UserEmailCreator : ICommandHandler<CreateEmailLoginUser>
+    public class UserEmailCreator : IEventedCommandHandler<IUserSession, CreateEmailLoginUser>
     {
         readonly IWriteableRepository _writeableRepository;
         private readonly IReadOnlyRepository _readOnlyRepository;
@@ -20,16 +21,20 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 
         #region ICommandHandler Members
 
-        public void Handle(IUserSession userIssuingCommand, CreateEmailLoginUser command)
+        public async Task Handle(IUserSession userIssuingCommand, CreateEmailLoginUser command)
         {
             var userCreated = new UserEmailLogin(command.Name, command.Email, command.EncryptedPassword,
                 command.PhoneNumber);
 
-            command.abilities.ToList().ForEach(x => userCreated.AddAbility(_readOnlyRepository.GetById<UserAbility>(x.Id)));
+            foreach (var ability in command.abilities)
+            {
+                UserAbility userAbility = await _readOnlyRepository.GetById<UserAbility>(ability.Id);
+                userCreated.AddAbility(userAbility);
+            }
 
-            var basicRole = _readOnlyRepository.FirstOrDefault<Role>(x => x.Description == "Basic");
+            var basicRole = await _readOnlyRepository.FirstOrDefault<Role>(x => x.Description == "Basic");
             userCreated.AddRol(basicRole);
-            var userSaved = _writeableRepository.Create(userCreated);
+            var userSaved = await _writeableRepository.Create(userCreated);
 
             NotifyObservers(new UserEmailCreated(userSaved.Id, command.Email, command.Name, command.PhoneNumber));
         }

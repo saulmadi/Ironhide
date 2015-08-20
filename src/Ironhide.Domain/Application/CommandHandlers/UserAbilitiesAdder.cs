@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -7,26 +9,30 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
-    public class UserAbilitiesAdder: ICommandHandler<AddAbilitiesToUser>
+    public class UserAbilitiesAdder : IEventedCommandHandler<IUserSession, AddAbilitiesToUser>
     {
-        public IWriteableRepository WriteableRepository { get; private set; }
-        public IReadOnlyRepository ReadOnlyRepository { get; private set; }
+        readonly IWriteableRepository _writeableRepository;
+        readonly IReadOnlyRepository _readOnlyRepository;
 
         public UserAbilitiesAdder(IWriteableRepository writeableRepository, IReadOnlyRepository readOnlyRepository)
         {
-            WriteableRepository = writeableRepository;
-            ReadOnlyRepository = readOnlyRepository;
+            _writeableRepository = writeableRepository;
+            _readOnlyRepository = readOnlyRepository;
         }
 
-        public void Handle(IUserSession userIssuingCommand, AddAbilitiesToUser command)
+        public async Task Handle(IUserSession userIssuingCommand, AddAbilitiesToUser command)
         {
-            //TODO validate duplicate abilities
-            var user = ReadOnlyRepository.GetById<User>(command.UserId);
-            var abilities = command.AbilitiesID.ToList().Select(x => ReadOnlyRepository.GetById<UserAbility>(x));
+            var user = await _readOnlyRepository.GetById<User>(command.UserId);
+            var abilities = new List<UserAbility>();
+            foreach (var abilityId in command.Abilities)
+            {
+                UserAbility userAbility = await _readOnlyRepository.GetById<UserAbility>(abilityId);
+                abilities.Add(userAbility);
+                user.AddAbility(userAbility);
+            }
 
-            abilities.ToList().ForEach(user.AddAbility);
+            await _writeableRepository.Update(user);
 
-            WriteableRepository.Update(user);
             NotifyObservers(new UserAbilitiesAdded(user.Id, abilities.Select(x=>x.Id)));
         }
 

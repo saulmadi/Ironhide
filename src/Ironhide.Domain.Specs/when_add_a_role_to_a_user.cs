@@ -18,7 +18,7 @@ namespace Ironhide.Domain.Specs
         static AddRoleToUser _command;
         static IWriteableRepository _writeableRepository;
         static IReadOnlyRepository _readOnlyRepository;
-        static ICommandHandler<AddRoleToUser> _handler;
+        static IEventedCommandHandler<IUserSession, AddRoleToUser> _handler;
         static UserRoleAdded _expectedEvent;
         static object _eventRaised;
         static User _userCreated;
@@ -32,39 +32,25 @@ namespace Ironhide.Domain.Specs
                 _identityGenerator = Mock.Of<IIdentityGenerator<Guid>>();
                 Mock.Get(_identityGenerator).Setup(generator => generator.Generate()).Returns(Guid.NewGuid);
 
-                var _userId = _identityGenerator.Generate();
-                var _rolId = _identityGenerator.Generate();
-
-               
-                _command = new AddRoleToUser(_userId,_rolId);
-
-                _userCreated = Builder<User>.CreateNew()
-                    .With(user => user.Email, "a@a.com")
-                    .With(user => user.Name, "user")
-                    .With(user => user.Id, _userId)
-                    .Build();
-
-                _rolAdded = Builder<Role>.CreateNew()
-                    .With(role => role.Id, _rolId)
-                    .With(role => role.Description, "Test Role")
-                    .Build();
+                _command = Builder<AddRoleToUser>.CreateNew().Build();
+                _userCreated = Builder<User>.CreateNew().Build();
+                _rolAdded = Builder<Role>.CreateNew().Build();
 
                 _writeableRepository = Mock.Of<IWriteableRepository>();
                 _readOnlyRepository = Mock.Of<IReadOnlyRepository>();
 
                 
                 Mock.Get(_writeableRepository)
-                    .Setup(repository => repository.Update(Moq.It.Is<User>(user => user.Id == _userId)))
-                    .Returns(_userCreated);
+                    .Setup(repository => repository.Update(Moq.It.Is<User>(user => user.Id == _userCreated.Id)))
+                    .ReturnsAsync(_userCreated);
 
                 Mock.Get(_readOnlyRepository)
-                    .Setup(repository => repository.GetById<User>(_userCreated.Id)).Returns(_userCreated);
+                    .Setup(repository => repository.GetById<User>(_userCreated.Id)).ReturnsAsync(_userCreated);
 
                 Mock.Get(_readOnlyRepository)
-                    .Setup(repository => repository.GetById<Role>(_rolAdded.Id)).Returns(_rolAdded);
+                    .Setup(repository => repository.GetById<Role>(_rolAdded.Id)).ReturnsAsync(_rolAdded);
 
-
-                _handler = new UserRolAdder(_writeableRepository,_readOnlyRepository, _identityGenerator);
+                _handler = new UserRoleAdder(_writeableRepository,_readOnlyRepository);
 
                 _expectedEvent = new UserRoleAdded(_userCreated.Id, _rolAdded.Id);
                 _handler.NotifyObservers += x => _eventRaised = x;

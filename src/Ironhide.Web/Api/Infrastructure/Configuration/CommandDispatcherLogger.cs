@@ -1,11 +1,13 @@
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using log4net;
 
 namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
-    public class CommandDispatcherLogger:ICommandDispatcher
+    public class CommandDispatcherLogger : ICommandDispatcher
     {
         readonly ICommandDispatcher _decoratedDispatcher;
         readonly ILog _logger;
@@ -16,29 +18,26 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
             _logger = logger;
         }
 
-        public void Dispatch(IUserSession userSession, object command)
+        public async Task Dispatch(IUserSession userSession, object command)
         {
-
             try
             {
-             
-                _decoratedDispatcher.Dispatch(userSession,command);
-
-               
+                await _decoratedDispatcher.Dispatch(userSession, command);
             }
             catch (Exception e)
             {
-                var errorMessage = "1) Error calling " + command.GetType() + "\n";
-              
-              var properties = command.GetType().GetProperties();
-              var propertiesMessage = properties.Aggregate("", (current, property) => current + ("Property Name " + property.Name + " Property Value " + property.GetValue(command)));
+                string errorMessage = "1) Error calling " + command.GetType() + "\n";
 
-              errorMessage += "2) " + propertiesMessage + "\n";
-                errorMessage += "3) " + e.Message; 
-              _logger.Error(errorMessage);
-              
-              throw;
+                PropertyInfo[] properties = command.GetType().GetProperties();
+                string propertiesMessage = properties.Aggregate("",
+                    (current, property) =>
+                        current + ("Property Name " + property.Name + " Property Value " + property.GetValue(command)));
 
+                errorMessage += "2) " + propertiesMessage + "\n";
+                errorMessage += "3) " + e.Message;
+                _logger.Error(errorMessage);
+
+                throw;
             }
         }
     }

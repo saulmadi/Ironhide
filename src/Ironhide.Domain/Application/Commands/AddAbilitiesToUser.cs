@@ -8,7 +8,7 @@ namespace Ironhide.Users.Domain.Application.Commands
         public Guid UserId { get; protected set; }
 
  
-        public IEnumerable<Guid> AbilitiesID { get; protected set; }
+        public IEnumerable<Guid> Abilities { get; protected set; }
 
         protected AddAbilitiesToUser()
         {
@@ -18,7 +18,7 @@ namespace Ironhide.Users.Domain.Application.Commands
         public AddAbilitiesToUser(Guid userId, IEnumerable<Guid> abilities )
         {
             UserId = userId;
-            this.AbilitiesID = abilities;
+            this.Abilities = abilities;
         }
     }
 }

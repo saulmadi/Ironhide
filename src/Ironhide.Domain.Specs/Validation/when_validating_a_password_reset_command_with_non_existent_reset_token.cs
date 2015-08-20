@@ -16,7 +16,7 @@ namespace Ironhide.Domain.Specs.Validation
 {
     public class when_validating_a_password_reset_command_with_non_existent_reset_token
     {
-        static ICommandValidator<ResetPassword> _validator;
+        static ICommandValidator<IUserSession, ResetPassword> _validator;
         static readonly EncryptedPassword EncryptedPassword = new EncryptedPassword("password");
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static List<ValidationFailure> _expectedFailures;

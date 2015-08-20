@@ -1,4 +1,5 @@
-﻿using AcklenAvenue.Commands;
+﻿using System.Threading.Tasks;
+using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
 using Ironhide.Users.Domain.Entities;
@@ -6,7 +7,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
-    public  class DisablingUser : ICommandHandler<DisableUser>
+    public class DisablingUser : IEventedCommandHandler<IUserSession, DisableUser>
     {
         public IWriteableRepository writeableRepository { get; private set; }
         public IReadOnlyRepository readOnlyRepository { get; private set; }
@@ -17,12 +18,12 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
             this.readOnlyRepository = readOnlyRepository;
         }
 
-        public void Handle(IUserSession userIssuingCommand, DisableUser command)
+        public async Task Handle(IUserSession userIssuingCommand, DisableUser command)
         {
-            var user = readOnlyRepository.GetById<User>(command.id);
+            var user = await readOnlyRepository.GetById<User>(command.id);
             user.DisableUser();
 
-            writeableRepository.Update(user);
+            await writeableRepository.Update(user);
 
             NotifyObservers(new UserDisabled(user.Id));
 
