@@ -31,7 +31,7 @@ namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
                 };
 
         Because of =
-            () => _result = _readOnlyRepository.FirstOrDefault<UserEmailLogin>(x => x.Name == "test2-match");
+            () => _result = _readOnlyRepository.FirstOrDefault<UserEmailLogin>(x => x.Name == "test2-match").Await();
 
         It should_return_matching_user =
             () => ShouldExtensionMethods.ShouldBeNull(_result);

@@ -65,7 +65,7 @@ namespace Ironhide.Domain.Specs
                     x =>
                         x.Create(
                             WithExpected.Object(new PasswordResetAuthorization(TokenId, _userWithMatchingEmailAddress.Id,
-                                _now))));
+                                _now), AllowAnonymous.No)));
 
         It should_raise_the_expected_event =
             () => _eventRaised.ShouldBeLike(_expectedEvent);

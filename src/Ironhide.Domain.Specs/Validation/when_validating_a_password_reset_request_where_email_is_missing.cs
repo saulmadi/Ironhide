@@ -25,7 +25,7 @@ namespace Ironhide.Domain.Specs.Validation
             };
 
         Because of =
-            () => _exception = Catch.Exception(() => _validator.Validate(null, new CreatePasswordResetToken("")));
+            () => _exception = Catch.Exception(() => _validator.Validate(null, new CreatePasswordResetToken("")).Await());
 
         It should_return_a_validation_failure_for_missing_email_address =
             () =>

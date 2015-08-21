@@ -34,7 +34,7 @@ namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
                 };
 
         Because of =
-            () => _result = _readOnlyRepository.GetById<UserEmailLogin>(_userToFind.Id);
+            () => _result = _readOnlyRepository.GetById<UserEmailLogin>(_userToFind.Id).Await();
 
         It should_return_matching_user =
             () => _result.ShouldBeLike(_userToFind);

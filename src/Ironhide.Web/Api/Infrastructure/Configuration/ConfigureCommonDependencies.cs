@@ -82,11 +82,6 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
         static void ConfigureCommandAndEventHandlers(ContainerBuilder container)
         {
-            container.RegisterType<BlingInitializer<DomainEvent>>().As<IBlingInitializer<DomainEvent>>();
-            container.RegisterType<BlingConfigurator>().As<IBlingConfigurator<DomainEvent>>();
-
-         
-            
             container.RegisterType<IronhideBlingDispatcher>().As<IBlingDispatcher>();
           
             container.RegisterType<ImmediateCommandDispatcher>().Named<ICommandDispatcher>("CommandDispatcher");

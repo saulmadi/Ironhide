@@ -1,23 +1,19 @@
 using System;
 using System.Collections.Generic;
-using Ironhide.Users.Domain.Entities;
-using Ironhide.Users.Domain.Exceptions;
-using Ironhide.Users.Domain.Services;
-using Ironhide.Web.Api.Infrastructure.Authentication;
-using Nancy.Security;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
-using NHibernate.Mapping;
-using NHibernate.Util;
+using Ironhide.Users.Domain.Services;
+using Ironhide.Web.Api.Infrastructure.Authentication;
+using Nancy.Security;
 
 namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
     public class ApiUserMapper : IApiUserMapper<string>
     {
+        readonly IKeyProvider _keyProvider;
         readonly IReadOnlyRepository _readOnlyRepo;
         readonly ITimeProvider _timeProvider;
-        readonly IKeyProvider _keyProvider;
 
         public ApiUserMapper(IReadOnlyRepository readOnlyRepo, ITimeProvider timeProvider, IKeyProvider keyProvider)
         {
@@ -39,15 +35,15 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
         ClaimsPrincipal ValidateToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var validationParameters = new TokenValidationParameters()
-            {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                IssuerSigningKey = new InMemorySymmetricSecurityKey(_keyProvider.GetKey())
-            };
+            var validationParameters = new TokenValidationParameters
+                                       {
+                                           ValidateAudience = false,
+                                           ValidateIssuer = false,
+                                           IssuerSigningKey = new InMemorySymmetricSecurityKey(_keyProvider.GetKey())
+                                       };
 
             SecurityToken securityToken;
-            var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
+            ClaimsPrincipal claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out securityToken);
 
             var jwtSecurityToken = (JwtSecurityToken) securityToken;
             MakeSureTokenHasntExpiredYet(jwtSecurityToken);
@@ -58,9 +54,8 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
         {
             try
             {
-                var claimsPrincipal = ValidateToken(token);
+                ClaimsPrincipal claimsPrincipal = ValidateToken(token);
                 return claimsPrincipal.Claims;
-
             }
             catch
             {

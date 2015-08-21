@@ -37,7 +37,7 @@ namespace Ironhide.Domain.Specs.Validation
         Because of =
             () =>
                 _exception =
-                    Catch.Exception(() => _validator.Validate(null, new CreatePasswordResetToken(EmailAddress)));
+                    Catch.Exception(() => _validator.Validate(null, new CreatePasswordResetToken(EmailAddress)).Await());
 
         It should_return_a_validation_failure_for_non_existant_email_address =
             () =>

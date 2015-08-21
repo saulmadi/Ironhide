@@ -43,7 +43,7 @@ namespace Ironhide.Web.Specs
         It should_send_the_email =
             () =>
                 Mock.Get(_emailSender)
-                    .Verify(x => x.Send(Email, WithExpected.Object(new PasswordResetEmail(BaseUrl, TokenId))));
+                    .Verify(x => x.Send(Email, WithExpected.Object(new PasswordResetEmail(BaseUrl, TokenId), AllowAnonymous.No)));
 
     }
 }

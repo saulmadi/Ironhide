@@ -28,7 +28,7 @@ namespace DatabaseDeployer
             CreateDatabaseIfNotExists(connectionStringSettings);
 
             DomainDrivenDatabaseDeployer.DatabaseDeployer dd = null;
-            ISessionFactory sessionFactory = new SessionFactoryBuilder(new MappingScheme(), databaseConfiguration, new EntityInterceptor())
+            var sessionFactory = new SessionFactoryBuilder(new MappingScheme(), databaseConfiguration, new EntityInterceptor())
                 .Build(cfg => { dd = new DomainDrivenDatabaseDeployer.DatabaseDeployer(cfg); });
 
             if (noArgs || args.Contains("drop"))

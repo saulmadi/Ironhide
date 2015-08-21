@@ -43,7 +43,7 @@ namespace Ironhide.Domain.Specs.Validation
         Because of =
             () => _exception = Catch.Exception(() =>
                 _validator.Validate(new VisitorSession(),
-                    new ResetPassword(ResetPasswordToken, EncryptedPassword)));
+                    new ResetPassword(ResetPasswordToken, EncryptedPassword)).Await());
 
         It should_return_expected_failures =
             () => ((CommandValidationException) _exception).ValidationFailures.ShouldBeLike(_expectedFailures);

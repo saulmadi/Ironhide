@@ -33,7 +33,7 @@ namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
                 };
 
         Because of =
-            () => _result = _readOnlyRepository.Query<UserEmailLogin>(x => x.Name.Contains("match"));
+            async () => _result = await _readOnlyRepository.Query<UserEmailLogin>(x => x.Name.Contains("match"));
 
         It should_return_the_matching_users =
             () => _result.ShouldBeLike(_users.Where(x => x.Name.Contains("match")));
