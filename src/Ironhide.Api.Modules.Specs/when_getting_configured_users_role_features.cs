@@ -9,7 +9,7 @@ using Machine.Specifications;
 
 namespace Ironhide.Api.Modules.Specs
 {
-    public class when_getting_configured_users_rol_features
+    public class when_getting_configured_users_role_features
     {
          private static IEnumerable<UsersRoles> _usersRoles;
          private static string[] _expectedUsersRoles;

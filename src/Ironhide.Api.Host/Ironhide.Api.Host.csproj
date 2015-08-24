@@ -47,26 +47,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.12\lib\net45\AcklenAvenue.Commands.dll</HintPath>
     </Reference>
-    <Reference Include="AcklenAvenue.Data, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AcklenAvenue.Data.NHibernate, Version=2.0.2.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.1.0\lib\net40\AcklenAvenue.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="AcklenAvenue.Data.NHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.1.0\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.2.3\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="AcklenAvenue.Email, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\AcklenAvenue.Email.1.0.0.2\lib\net45\AcklenAvenue.Email.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac">
-      <HintPath>..\..\lib\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Extras.DynamicProxy2">
       <HintPath>..\..\lib\Autofac.Extras.DynamicProxy2.3.0.4\lib\net40\Autofac.Extras.DynamicProxy2.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper">
-      <HintPath>..\..\lib\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+      <HintPath>..\..\lib\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="BlingBag, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -108,8 +105,9 @@
     <Reference Include="Nancy.Hosting.Aspnet">
       <HintPath>..\..\lib\Nancy.Hosting.Aspnet.0.23.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\lib\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -136,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RootModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -151,6 +150,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ironhide.Api.Modules\Ironhide.Api.Modules.csproj">
+      <Project>{ab5a64bd-681c-409e-b7cd-3430b666caf0}</Project>
+      <Name>Ironhide.Api.Modules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ironhide.Data\Ironhide.Data.csproj">
       <Project>{828BB611-5955-47C0-AB91-32374D8506E2}</Project>
       <Name>Ironhide.Data</Name>
@@ -196,7 +199,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\..\lib\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\..\lib\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
   <PropertyGroup>
     <PreBuildEvent>IF NOT EXIST "$(ProjectDir)connectionStrings.config" copy "$(ProjectDir)connectionStrings.config.default" "$(ProjectDir)connectionStrings.config"
 IF NOT EXIST "$(ProjectDir)smtp.config" copy "$(ProjectDir)smtp.config.default" "$(ProjectDir)smtp.config"</PreBuildEvent>

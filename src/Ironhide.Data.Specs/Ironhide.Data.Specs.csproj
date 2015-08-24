@@ -33,9 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcklenAvenue.Data, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.1.0\lib\net40\AcklenAvenue.Data.dll</HintPath>
+    <Reference Include="AcklenAvenue.Data">
+      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.2.3\lib\net40\AcklenAvenue.Data.dll</HintPath>
     </Reference>
     <Reference Include="AcklenAvenue.Data.NHibernate">
       <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.2.3\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
