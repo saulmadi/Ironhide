@@ -14,7 +14,7 @@ namespace Ironhide.Domain.Specs.Validation
 {
     public class when_validating_an_invalid_password_reset_command
     {
-        static ICommandValidator<ResetPassword> _validator;
+        static ICommandValidator<IUserSession, ResetPassword> _validator;
         static List<ValidationFailure> _expectedFailures;
         static Exception _exception;
 
@@ -35,9 +35,8 @@ namespace Ironhide.Domain.Specs.Validation
             };
 
         Because of =
-            () => _exception = Catch.Exception(() =>
-                _validator.Validate(new VisitorSession(),
-                    new ResetPassword(Guid.Empty, null)));
+            () => _exception = Catch.Exception(() => _validator.Validate(new VisitorSession(),
+                new ResetPassword(Guid.Empty, null)).Await());
 
         It should_return_expected_failures =
             () => ((CommandValidationException) _exception).ValidationFailures.ShouldBeLike(_expectedFailures);

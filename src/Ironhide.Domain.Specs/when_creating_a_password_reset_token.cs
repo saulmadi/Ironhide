@@ -18,7 +18,7 @@ namespace Ironhide.Domain.Specs
     public class when_creating_a_password_reset_token
     {
         const string EmailAddress = "email@email.com";
-        static ICommandHandler<CreatePasswordResetToken> _handler;
+        static IEventedCommandHandler<IUserSession, CreatePasswordResetToken> _handler;
         static IWriteableRepository _writeableRepository;
         static ITimeProvider _timeProvider;
         static DateTime _now;
@@ -50,7 +50,7 @@ namespace Ironhide.Domain.Specs
                     .ThatMatches(_userWithMatchingEmailAddress)
                     .ThatDoesNotMatch(otherUser)
                     .Build()))
-                    .Returns(_userWithMatchingEmailAddress);
+                    .ReturnsAsync(_userWithMatchingEmailAddress);
 
                 _handler.NotifyObservers += x => _eventRaised = x;
                 _expectedEvent = new PasswordResetTokenCreated(TokenId, _userWithMatchingEmailAddress.Id);
@@ -65,7 +65,7 @@ namespace Ironhide.Domain.Specs
                     x =>
                         x.Create(
                             WithExpected.Object(new PasswordResetAuthorization(TokenId, _userWithMatchingEmailAddress.Id,
-                                _now))));
+                                _now), AllowAnonymous.No)));
 
         It should_raise_the_expected_event =
             () => _eventRaised.ShouldBeLike(_expectedEvent);

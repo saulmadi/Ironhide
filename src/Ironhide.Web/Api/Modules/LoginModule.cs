@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using Ironhide.Users.Domain.Entities;
 using Ironhide.Users.Domain.Exceptions;
 using Ironhide.Users.Domain.Services;
@@ -18,8 +19,8 @@ namespace Ironhide.Web.Api.Modules
         public LoginModule(IPasswordEncryptor passwordEncryptor, IReadOnlyRepository readOnlyRepository,
                            ITokenFactory tokenFactory, IMenuProvider menuProvider)
         {
-            Post["/login"] =
-                _ =>
+            Post["/login", true] =
+                async (a, ct) =>
                     {
 
                         var loginInfo = this.Bind<LoginRequest>();
@@ -31,7 +32,7 @@ namespace Ironhide.Web.Api.Modules
                         try
                         {
                             var user =
-                                readOnlyRepository.First<UserEmailLogin>(
+                                await readOnlyRepository.First<UserEmailLogin>(
                                     x => x.Email == loginInfo.Email && x.EncryptedPassword == encryptedPassword.Password);
 
                             if (!user.IsActive) throw new DisableUserAccountException();
@@ -49,7 +50,7 @@ namespace Ironhide.Web.Api.Modules
                         }
                     };
 
-            Post["/login/facebook"] = _ =>
+            Post["/login/facebook", true] = async (a, ct) =>
                                       {
                                           var loginInfo = this.Bind<LoginSocialRequest>();
                                           if (loginInfo.Email == null) throw new UserInputPropertyMissingException("Email");
@@ -58,7 +59,7 @@ namespace Ironhide.Web.Api.Modules
                                           try
                                           {
                                               var user =
-                                                  readOnlyRepository.First<UserFacebookLogin>(
+                                                 await readOnlyRepository.First<UserFacebookLogin>(
                                                       x => x.Email == loginInfo.Email && x.FacebookId== loginInfo.Id );
 
                                               if (!user.IsActive) throw new DisableUserAccountException();
@@ -85,7 +86,7 @@ namespace Ironhide.Web.Api.Modules
                 };
 
 
-            Post["/login/google"] = _ =>
+            Post["/login/google", true] = async (a, ct) =>
             {
                 var loginInfo = this.Bind<LoginSocialRequest>();
                 if (loginInfo.Email == null) throw new UserInputPropertyMissingException("Email");
@@ -94,7 +95,7 @@ namespace Ironhide.Web.Api.Modules
                 try
                 {
                     var user =
-                        readOnlyRepository.First<UserGoogleLogin>(
+                        await readOnlyRepository.First<UserGoogleLogin>(
                             x => x.Email == loginInfo.Email && x.GoogleId == loginInfo.Id);
                     
                     if (!user.IsActive) throw new DisableUserAccountException();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using AcklenAvenue.Email;
 using Autofac;
@@ -17,10 +18,10 @@ using Ironhide.Web.Api.Infrastructure.Authentication;
 using Ironhide.Web.Api.Infrastructure.Authentication.Roles;
 using log4net;
 using Newtonsoft.Json;
+using NHibernate;
 
 namespace Ironhide.Web.Api.Infrastructure.Configuration
-{
-    
+{    
     public class ConfigureCommonDependencies : IBootstrapperTask<ContainerBuilder>
     {
         #region IBootstrapperTask<ContainerBuilder> Members
@@ -82,19 +83,14 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
 
         static void ConfigureCommandAndEventHandlers(ContainerBuilder container)
         {
-            container.RegisterType<BlingInitializer<DomainEvent>>().As<IBlingInitializer<DomainEvent>>();
-            container.RegisterType<BlingConfigurator>().As<IBlingConfigurator<DomainEvent>>();
-
-         
+            container.RegisterType<IronhideBlingDispatcher>().As<IBlingDispatcher>();
             
-            container.RegisterType<AutoFacBlingDispatcher>().As<IBlingDispatcher>();
-          
             container.RegisterType<ImmediateCommandDispatcher>().Named<ICommandDispatcher>("CommandDispatcher");
+            container.RegisterDecorator<ICommandDispatcher>(
+                (c, inner) => new UnitOfWorkCommandDispatcher(inner, c.Resolve<ISession>()), "CommandDispatcher");
 
-            container.RegisterDecorator<ICommandDispatcher>((c, inner) => new CommandDispatcherLogger(inner,c.Resolve<ILog>()), "CommandDispatcher");
+            container.RegisterType<CommandDispatcherLogger>().As<ICommandDispatcherLogger>();
         }
-
-      
 
         static void AutoRegisterEmailTemplates(ContainerBuilder container)
         {
@@ -121,4 +117,5 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
                 .AsImplementedInterfaces();
         }
     }
+
 }

@@ -19,7 +19,7 @@ namespace Ironhide.Domain.Specs
         const string NewPassword = "new_password";
         static IWriteableRepository _writeableRepository;
         static IReadOnlyRepository _readOnlyRepository;
-        static ICommandHandler<ResetPassword> _commandHander;
+        static IEventedCommandHandler<IUserSession, ResetPassword> _commandHander;
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static object _eventRaised;
         static PasswordReset _expectedEvent;
@@ -34,10 +34,10 @@ namespace Ironhide.Domain.Specs
 
                 var userId = Guid.NewGuid();
                 Mock.Get(_readOnlyRepository).Setup(x => x.GetById<PasswordResetAuthorization>(ResetPasswordToken))
-                    .Returns(new PasswordResetAuthorization(ResetPasswordToken, userId, DateTime.Now));
+                    .ReturnsAsync(new PasswordResetAuthorization(ResetPasswordToken, userId, DateTime.Now));
 
                 Mock.Get(_readOnlyRepository).Setup(x => x.GetById<UserEmailLogin>(userId))
-                    .Returns(new TestUser(userId, "name", "password"));
+                    .ReturnsAsync(new TestUser(userId, "name", "password"));
 
                 _commandHander.NotifyObservers += x => _eventRaised = x;
                 _expectedEvent = new PasswordReset(userId);

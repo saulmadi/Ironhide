@@ -19,26 +19,10 @@ namespace Ironhide.Web.Api.Infrastructure.Configuration
                     ConnectionString(x => x.Is(ConnectionStrings.Get().ConnectionString)).Dialect<MsSqlAzureDialect>();
 
                 return container =>
-                           {
-                               container.Register(c => c.Resolve<ISessionFactory>().OpenSession()).As
-                                   <ISession>()
-                                   .InstancePerLifetimeScope()
-                                   .OnActivating(c =>
-                                                     {
-                                                         if (!c.Instance.Transaction.IsActive)
-                                                             c.Instance.BeginTransaction();
-                                                     }
-                                   )
-                                   .OnRelease(c =>
-                                                  {
-                                                      if (c.Transaction.IsActive)
-                                                      {
-                                                          c.Transaction.Commit();
-                                                      }
-                                                      c.Dispose();
-                                                  });
-
-
+                       {
+                           container.Register(c => c.Resolve<ISessionFactory>().OpenSession()).As
+                               <ISession>()
+                               .InstancePerLifetimeScope();
 
                                container.Register(c =>
                                                   new SessionFactoryBuilder(new MappingScheme(), databaseConfiguration, new EntityInterceptor())

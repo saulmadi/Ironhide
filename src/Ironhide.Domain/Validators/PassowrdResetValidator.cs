@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.Entities;
@@ -9,7 +10,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Validators
 {
-    public class PassowrdResetValidator : ICommandValidator<ResetPassword>
+    public class PassowrdResetValidator : ICommandValidator<IUserSession, ResetPassword>
     {
         readonly IReadOnlyRepository _readOnlyRepo;
         readonly ITimeProvider _timeProvider;
@@ -20,7 +21,7 @@ namespace Ironhide.Users.Domain.Validators
             _timeProvider = timeProvider;
         }
 
-        public void Validate(IUserSession userSession, ResetPassword command)
+        public async Task Validate(IUserSession userSession, ResetPassword command)
         {
             var failures = new List<ValidationFailure>();
             if (command.EncryptedPassword==null || string.IsNullOrEmpty(command.EncryptedPassword.Password))
@@ -35,7 +36,7 @@ namespace Ironhide.Users.Domain.Validators
             {
                 try
                 {
-                    var passwordResetToken = _readOnlyRepo.GetById<PasswordResetAuthorization>(command.ResetPasswordToken);
+                    var passwordResetToken = await _readOnlyRepo.GetById<PasswordResetAuthorization>(command.ResetPasswordToken);
 
                     if (passwordResetToken.Created > _timeProvider.Now().AddDays(2))
                     {

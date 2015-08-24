@@ -35,9 +35,9 @@ namespace Ironhide.Data.Specs.WriteableRepositorySpecs
                 };
 
         Because of =
-            () => _writeableRepository.Delete<UserEmailLogin>(_userToDelete.Id);
+            () => _writeableRepository.Delete<UserEmailLogin>(_userToDelete.Id).Await();
 
         It should_make_the_change_in_the_session =
-            () => ShouldExtensionMethods.ShouldBeNull(_session.Get<UserEmailLogin>(_userToDelete.Id));
+            () => _session.Get<UserEmailLogin>(_userToDelete.Id).ShouldBeNull();
     }
 }

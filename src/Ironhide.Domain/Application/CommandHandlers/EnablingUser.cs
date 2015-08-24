@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -6,7 +7,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
-    public  class EnablingUser : ICommandHandler<EnableUser>
+    public class EnablingUser : IEventedCommandHandler<IUserSession, EnableUser>
     {
         readonly IWriteableRepository _writeableRepository;
         readonly IReadOnlyRepository _readOnlyRepository;
@@ -17,13 +18,13 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
             _readOnlyRepository = readOnlyRepository;
         }
 
-        public void Handle(IUserSession userIssuingCommand, EnableUser command)
+        public async Task Handle(IUserSession userIssuingCommand, EnableUser command)
         {
-            var user = _readOnlyRepository.GetById<User>(command.id);
+            var user = await _readOnlyRepository.GetById<User>(command.id);
 
             user.EnableUser();
 
-            _writeableRepository.Update(user);
+            await _writeableRepository.Update(user);
 
             NotifyObservers(new UserEnabled(user.Id));
         }

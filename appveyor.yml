@@ -30,23 +30,15 @@ test:
   assemblies:
     - specs\**\*.Specs.dll
 artifacts:
-  - path: deploy\Rewardle.Accounts.Api.*.zip
-    name: accounts_api
-  - path: deploy\Rewardle.Accounts.Events.*.zip
-    name: accounts_events
-  - path: deploy\Rewardle.Accounts.Commands.*.zip
-    name: accounts_commands
-  - path: deploy\Rewardle.Accounts.EventStoreRebuilder*.zip
-    name: accounts_eventStoreRebuilder
-  - path: deploy\Rewardle.Accounts.ViewStoreRebuilder*.zip
-    name: accounts_viewStoreRebuilder
+  # - path: deploy\Rewardle.Accounts.ViewStoreRebuilder*.zip
+  #   name: accounts_viewStoreRebuilder
   - path: deploy\**\*.nupkg
     name: nugetPackages
 
 deploy:
-  - provider: Environment
-    name: Rewardle.Dev
-    artifacts: accounts_eventStoreRebuilder, accounts_viewStoreRebuilder, accounts_events, accounts_commands, accounts_api
+  # - provider: Environment
+  #   name: Rewardle.Dev
+  #   artifacts: accounts_eventStoreRebuilder, accounts_viewStoreRebuilder, accounts_events, accounts_commands, accounts_api
 
 before_deploy:
   - gulp deploy-nuget

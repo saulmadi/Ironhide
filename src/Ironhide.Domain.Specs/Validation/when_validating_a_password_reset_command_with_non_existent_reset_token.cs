@@ -16,7 +16,7 @@ namespace Ironhide.Domain.Specs.Validation
 {
     public class when_validating_a_password_reset_command_with_non_existent_reset_token
     {
-        static ICommandValidator<ResetPassword> _validator;
+        static ICommandValidator<IUserSession, ResetPassword> _validator;
         static readonly EncryptedPassword EncryptedPassword = new EncryptedPassword("password");
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static List<ValidationFailure> _expectedFailures;
@@ -43,7 +43,7 @@ namespace Ironhide.Domain.Specs.Validation
         Because of =
             () => _exception = Catch.Exception(() =>
                 _validator.Validate(new VisitorSession(),
-                    new ResetPassword(ResetPasswordToken, EncryptedPassword)));
+                    new ResetPassword(ResetPasswordToken, EncryptedPassword)).Await());
 
         It should_return_expected_failures =
             () => ((CommandValidationException) _exception).ValidationFailures.ShouldBeLike(_expectedFailures);

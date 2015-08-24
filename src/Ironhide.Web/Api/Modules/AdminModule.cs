@@ -21,8 +21,8 @@ namespace Ironhide.Web.Api.Modules
         public AdminModule(IReadOnlyRepository readOnlyRepository, IMappingEngine mappingEngine,
             ICommandDispatcher commandDispatcher, IUserSessionFactory userSessionFactory)
         {
-            Get["/users"] =
-                _ =>
+            Get["/users", true] =
+                async (a,c) =>
                     {
                         this.RequiresClaims(new[] { "Administrator" });
                         var request = this.Bind<AdminUsersRequest>();
@@ -30,8 +30,8 @@ namespace Ironhide.Web.Api.Modules
                         var parameter = Expression.Parameter(typeof(User), "User");
                         var mySortExpression = Expression.Lambda<Func<User, object>>(Expression.Property(parameter, request.Field), parameter);
                         
-                        IQueryable<User> users =
-                            readOnlyRepository.Query<User>(x => x.Name != this.Context.CurrentUser.UserName).AsQueryable();
+                        var users =
+                            (await readOnlyRepository.Query<User>(x => x.Name != this.Context.CurrentUser.UserName)).AsQueryable();
 
                         var orderedUsers = users.OrderBy(mySortExpression);
 
@@ -43,38 +43,38 @@ namespace Ironhide.Web.Api.Modules
                         return  usersList;
                     };
 
-            Post["/users/enable"] =
-                _ =>
+            Post["/users/enable", true] =
+                async (a,c) =>
                 {
                    this.RequiresClaims(new[] {"Administrator"});
                     var request = this.Bind<AdminEnableUsersRequest>();
                     if (request.Enable)
                     {
-                        commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new EnableUser(request.Id)); 
+                        await commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new EnableUser(request.Id)); 
                     }
                     else
                     {
-                        commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new DisableUser(request.Id));
+                        await commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new DisableUser(request.Id));
                     }
                 
                     return null;
                 };
 
-            Get["/user/{userId}"] =
-                _ =>
-                {
+            Get["/user/{userId}", true] =
+               async (_, c) =>
+               {
                     var userId = Guid.Parse((string)_.userId);
-                    var user = readOnlyRepository.GetById<User>(userId);
+                    var user = await readOnlyRepository.GetById<User>(userId);
                     var mappedUser = mappingEngine
                             .Map<User, AdminUserResponse>(user);
                     return mappedUser;
                 };
 
-            Post["/user"] =
-                _ =>
-                {
+            Post["/user", true] =
+               async (a, c) =>
+               {
                     var request = this.Bind<AdminUpdateUserRequest>();
-                    commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new UpdateUserProfile(request.Id, request.Name, request.Email));
+                    await commandDispatcher.Dispatch(userSessionFactory.Create(this.Context.CurrentUser), new UpdateUserProfile(request.Id, request.Name, request.Email));
                     return null;
                 };
 

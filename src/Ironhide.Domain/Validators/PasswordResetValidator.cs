@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.Entities;
@@ -8,7 +9,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Validators
 {
-    public class PasswordResetValidator : ICommandValidator<CreatePasswordResetToken>
+    public class PasswordResetValidator : ICommandValidator<IUserSession, CreatePasswordResetToken>
     {
         readonly IReadOnlyRepository _readOnlyRepsitory;
 
@@ -17,7 +18,7 @@ namespace Ironhide.Users.Domain.Validators
             _readOnlyRepsitory = readOnlyRepsitory;
         }
 
-        public void Validate(IUserSession userSession, CreatePasswordResetToken command)
+        public async Task Validate(IUserSession userSession, CreatePasswordResetToken command)
         {
             var validationFailures = new List<ValidationFailure>();
 
@@ -27,7 +28,7 @@ namespace Ironhide.Users.Domain.Validators
             {
                 try
                 {
-                    _readOnlyRepsitory.First<UserEmailLogin>(x => x.Email == command.Email);
+                    await _readOnlyRepsitory.First<UserEmailLogin>(x => x.Email == command.Email);
                 }
                 catch (ItemNotFoundException<UserEmailLogin>)
                 {

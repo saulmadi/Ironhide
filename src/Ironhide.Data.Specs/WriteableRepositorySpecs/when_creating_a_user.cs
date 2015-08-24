@@ -24,7 +24,7 @@ namespace Ironhide.Data.Specs.WriteableRepositorySpecs
         Because of =
             () =>
             _result =
-            _writeableRepository.Create(new UserEmailLogin("test", "test@test.com", new EncryptedPassword("password")));
+            _writeableRepository.Create(new UserEmailLogin("test", "test@test.com", new EncryptedPassword("password"))).Await();
 
         It should_be_retrievable =
             () => _session.Get<UserEmailLogin>(_result.Id).Name.ShouldEqual("test");

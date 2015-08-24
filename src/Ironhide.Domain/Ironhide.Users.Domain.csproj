@@ -33,11 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AcklenAvenue.Commands">
-      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.0.1\lib\net45\AcklenAvenue.Commands.dll</HintPath>
-    </Reference>
-    <Reference Include="BlingBag, Version=1.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\BlingBag.1.3.3.0\lib\net40\BlingBag.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.12\lib\net45\AcklenAvenue.Commands.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -58,7 +54,7 @@
     <Compile Include="Application\CommandHandlers\UserFacebookCreator.cs" />
     <Compile Include="Application\CommandHandlers\UserGoogleCreator.cs" />
     <Compile Include="Application\CommandHandlers\UserProfileUpdater.cs" />
-    <Compile Include="Application\CommandHandlers\UserRolAdder.cs" />
+    <Compile Include="Application\CommandHandlers\UserRoleAdder.cs" />
     <Compile Include="Application\Commands\AddRoleToUser.cs" />
     <Compile Include="Application\Commands\AddAbilitiesToUser.cs" />
     <Compile Include="Application\Commands\CreateFacebookLoginUser.cs" />
@@ -67,6 +63,7 @@
     <Compile Include="Application\Commands\CreateEmailLoginUser.cs" />
     <Compile Include="Application\Commands\DisableUser.cs" />
     <Compile Include="Application\Commands\EnableUser.cs" />
+    <Compile Include="Application\Commands\IEventedCommandHandler.cs" />
     <Compile Include="Application\Commands\ResetPassword.cs" />
     <Compile Include="Application\Commands\UpdateUserProfile.cs" />
     <Compile Include="BasicUserSession.cs" />

@@ -1,4 +1,5 @@
-﻿using BlingBag;
+﻿using System.Threading.Tasks;
+using BlingBag;
 using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.DomainEvents;
 using Ironhide.Users.Domain.Entities;
@@ -19,9 +20,9 @@ namespace Ironhide.Web.Api
             _baseUrlProvider = baseUrlProvider;
         }
 
-        public void Handle(PasswordResetTokenCreated @event)
+        public async Task Handle(PasswordResetTokenCreated @event)
         {
-            var user = _readOnlyRepository.GetById<UserEmailLogin>(@event.UserId);
+            var user = await _readOnlyRepository.GetById<UserEmailLogin>(@event.UserId);
             _emailSender.Send(user.Email, new PasswordResetEmail(_baseUrlProvider.GetBaseUrl(), @event.TokenId));
         }
     }

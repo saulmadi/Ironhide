@@ -31,12 +31,9 @@ namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
                 };
 
         Because of =
-            () => _result = _readOnlyRepository.GetAll<UserEmailLogin>();
+            async () => _result = await _readOnlyRepository.GetAll<UserEmailLogin>();
 
         It should_return_all_the_users =
-            () =>
-                {
-                    _result.ShouldBeLike(_users);
-                };
+            () => _result.ShouldBeLike(_users);
     }
 }

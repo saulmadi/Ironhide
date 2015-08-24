@@ -43,16 +43,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcklenAvenue.Commands">
-      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.0.1\lib\net45\AcklenAvenue.Commands.dll</HintPath>
-    </Reference>
-    <Reference Include="AcklenAvenue.Data, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AcklenAvenue.Commands, Version=1.0.2.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Data.1.3.0.1\lib\net40\AcklenAvenue.Data.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.12\lib\net45\AcklenAvenue.Commands.dll</HintPath>
     </Reference>
-    <Reference Include="AcklenAvenue.Data.NHibernate, Version=1.3.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AcklenAvenue.Data, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.1.3.0.1\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.1.0\lib\net40\AcklenAvenue.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="AcklenAvenue.Data.NHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.1.0\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="AcklenAvenue.Email, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -67,19 +68,20 @@
     <Reference Include="AutoMapper">
       <HintPath>..\..\lib\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="BlingBag">
-      <HintPath>..\..\lib\BlingBag.1.3.3.0\lib\net40\BlingBag.dll</HintPath>
+    <Reference Include="BlingBag, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\BlingBag.1.4.0.14\lib\net45\BlingBag.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\lib\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="FluentNHibernate, Version=1.4.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
+    <Reference Include="FluentNHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+      <HintPath>..\..\lib\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+      <HintPath>..\..\lib\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\lib\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -109,9 +111,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate.3.3.1.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\..\lib\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -141,11 +143,11 @@
     <Compile Include="Api\Infrastructure\Authentication\MenuProvider.cs" />
     <Compile Include="Api\Infrastructure\Authentication\Roles\Feature.cs" />
     <Compile Include="Api\Infrastructure\Authentication\Roles\UsersRoles.cs" />
-    <Compile Include="Api\Infrastructure\Configuration\AutoFacBlingDispatcher.cs" />
-    <Compile Include="Api\Infrastructure\Configuration\BlingConfigurator.cs" />
+    <Compile Include="Api\Infrastructure\Configuration\IronhideBlingDispatcher.cs" />
     <Compile Include="Api\Infrastructure\Configuration\DataBaseErrorHandling.cs" />
     <Compile Include="Api\Infrastructure\Configuration\DataBaseErrorInTransactionHandler.cs" />
     <Compile Include="Api\Infrastructure\Configuration\CommandDispatcherLogger.cs" />
+    <Compile Include="Api\Infrastructure\Configuration\UnitOfWorkCommandDispatcher.cs" />
     <Compile Include="Api\Infrastructure\Exceptions\NoCurrentUserException.cs" />
     <Compile Include="Api\Infrastructure\Exceptions\RolNotFound.cs" />
     <Compile Include="Api\Infrastructure\RestExceptions\CommandValidationExceptionRepackager.cs" />

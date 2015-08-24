@@ -78,9 +78,9 @@ namespace Ironhide.Web.Api.Modules
 
             };
 
-            Get["/abilities"] = _ =>
+            Get["/abilities", true] = async (_,c) =>
             {
-                var abilites = readOnlyRepository.GetAll<UserAbility>();
+                var abilites = await readOnlyRepository.GetAll<UserAbility>();
 
                 var mappedAbilites = mappingEngine.Map<IEnumerable<UserAbility>, IEnumerable<UserAbilityRequest>>(abilites);
 

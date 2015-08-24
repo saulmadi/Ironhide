@@ -34,7 +34,7 @@ namespace Ironhide.Web.Specs
                 var value = new UserEmailLogin("Bob", Email, new EncryptedPassword("something"));
                 Mock.Get(readOnlyRepository)
                     .Setup(x => x.GetById<UserEmailLogin>(UserId))
-                    .Returns(value);
+                    .ReturnsAsync(value);
             };
 
         Because of =
@@ -43,7 +43,7 @@ namespace Ironhide.Web.Specs
         It should_send_the_email =
             () =>
                 Mock.Get(_emailSender)
-                    .Verify(x => x.Send(Email, WithExpected.Object(new PasswordResetEmail(BaseUrl, TokenId))));
+                    .Verify(x => x.Send(Email, WithExpected.Object(new PasswordResetEmail(BaseUrl, TokenId), AllowAnonymous.No)));
 
     }
 }

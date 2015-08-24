@@ -57,7 +57,7 @@ gulp.task('copy-logging-config', function(){
 
 gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-logging-config'], function () {
 
-	return gulp.src(['src/**/deployable.this'])
+	return gulp.src(['src/**/.deployable'])
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);	
 			var pathParts = file.folder.split("\\");
@@ -68,7 +68,8 @@ gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-loggin
 			config.util.msbuild 
 			+ ' /p:Configuration=Release'
 			+ ' /p:OutDir=\"' + config.buildPath + '\\<%= file.folderName %>\"' 
-			+' \"<%= file.csprojPath %>\"'
+			+ ' \"<%= file.csprojPath %>\"'
+			+ ' /p:WebProjectOutputDir=\"' + config.buildPath + '\\<%= file.folderName %>-publish\"' 
 			]));	
 });
 
@@ -127,7 +128,7 @@ gulp.task('zip-apps', function(){
 	var folders = getFolders(config.buildPath);
 
 	var tasks = folders.map(function(folder) {		
-      return gulp.src([config.buildPath+'/'+folder+'/**'])      	
+      return gulp.src([config.buildPath+'/'+folder+'/**/'])      	
         .pipe(zip(folder+'-'+config.appVersion+'.zip'))
         .pipe(gulp.dest('deploy'));
    	});
@@ -142,10 +143,9 @@ gulp.task('deploy', function(){
 gulp.task('specs', ['compile-specs'], function(){
 
 	gulp.src(config.buildPath + '/specs/**/*.Specs.dll')
-	    .pipe(debug())
 	    .pipe(tap(function(file){
 	    	file.path = file.path.replace('/','\\');
-	    	}))
+    	}))
 	    .pipe(shell(config.util.mspec + ' --html ' + config.reportsPath + ' "<%= file.path %>"'));
 
 });

@@ -16,7 +16,7 @@ namespace Ironhide.Domain.Specs
         static DisableUser _command;
         static IWriteableRepository _writeableRepository;
         static IReadOnlyRepository _readOnlyRepository;
-        static ICommandHandler<DisableUser> _handler;
+        static IEventedCommandHandler<IUserSession, DisableUser> _handler;
         static UserDisabled _expectedEvent;
         static object _eventRaised;
         static User _userDisable;
@@ -32,7 +32,7 @@ namespace Ironhide.Domain.Specs
 
                 Mock.Get(_readOnlyRepository)
                     .Setup(repository => repository.GetById<User>(_command.id))
-                    .Returns(_userDisable);
+                    .ReturnsAsync(_userDisable);
 
                 _handler = new DisablingUser(_writeableRepository, _readOnlyRepository);
 
@@ -41,10 +41,10 @@ namespace Ironhide.Domain.Specs
             };
 
         Because of =
-            () => { _handler.Handle(Mock.Of<IUserSession>(), _command); };
+            () => _handler.Handle(Mock.Of<IUserSession>(), _command);
 
         It should_enable_user =
-            () => { _userDisable.IsActive.ShouldBeFalse(); };
+            () => _userDisable.IsActive.ShouldBeFalse();
 
         It should_throw_the_expected_event =
          () => _eventRaised.ShouldBeLike(_expectedEvent);
