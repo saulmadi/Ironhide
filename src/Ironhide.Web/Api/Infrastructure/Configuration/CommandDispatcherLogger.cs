@@ -1,44 +1,28 @@
 using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using log4net;
 
 namespace Ironhide.Web.Api.Infrastructure.Configuration
 {
-    public class CommandDispatcherLogger : ICommandDispatcher
+    public class CommandDispatcherLogger : ICommandDispatcherLogger
     {
-        readonly ICommandDispatcher _decoratedDispatcher;
         readonly ILog _logger;
 
-        public CommandDispatcherLogger(ICommandDispatcher decoratedDispatcher, ILog logger)
+        public CommandDispatcherLogger(ILog logger)
         {
-            _decoratedDispatcher = decoratedDispatcher;
             _logger = logger;
         }
 
-        public async Task Dispatch(IUserSession userSession, object command)
+        public void LogInfo(IUserSession userSession, object sender, DateTime timeStamp, string message)
         {
-            try
-            {
-                await _decoratedDispatcher.Dispatch(userSession, command);
-            }
-            catch (Exception e)
-            {
-                string errorMessage = "1) Error calling " + command.GetType() + "\n";
+            _logger.InfoFormat("{0}: {1}", sender.GetType().Name, message);
+        }
 
-                PropertyInfo[] properties = command.GetType().GetProperties();
-                string propertiesMessage = properties.Aggregate("",
-                    (current, property) =>
-                        current + ("Property Name " + property.Name + " Property Value " + property.GetValue(command)));
-
-                errorMessage += "2) " + propertiesMessage + "\n";
-                errorMessage += "3) " + e.Message;
-                _logger.Error(errorMessage);
-
-                throw;
-            }
+        public void LogException(IUserSession userSession, object sender, DateTime timeStamp, Exception exception)
+        {
+            string errorMessage = "1) Error handling command with handler '" + sender.GetType() + "'\n";
+            errorMessage += "2) " + exception.Message;
+            _logger.Error(errorMessage);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
                 };
 
         Because of =
-            () => _exception = Catch.Exception(() => _readOnlyRepository.GetById<UserEmailLogin>(Guid.NewGuid()));
+            () => _exception = Catch.Exception(() => _readOnlyRepository.GetById<UserEmailLogin>(Guid.NewGuid()).Await());
 
         It should_throw_the_expected_exception =
             () => _exception.ShouldBeAssignableTo<ItemNotFoundException<UserEmailLogin>>();

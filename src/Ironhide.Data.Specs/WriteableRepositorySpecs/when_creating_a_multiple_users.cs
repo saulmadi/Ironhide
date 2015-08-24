@@ -32,7 +32,7 @@ namespace Ironhide.Data.Specs.WriteableRepositorySpecs
                 };
 
         Because of =
-            async () => _result = await _writeableRepository.CreateAll(_users);
+            () => _result = (_writeableRepository.CreateAll(_users).Await()).AsTask.Result;
 
         It should_all_be_retrievable =
             () => _result.ToList().ForEach(x => _session.Get<UserEmailLogin>(x.Id).Name.ShouldEqual(x.Name));

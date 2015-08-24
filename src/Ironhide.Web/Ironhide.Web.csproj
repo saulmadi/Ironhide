@@ -147,6 +147,7 @@
     <Compile Include="Api\Infrastructure\Configuration\DataBaseErrorHandling.cs" />
     <Compile Include="Api\Infrastructure\Configuration\DataBaseErrorInTransactionHandler.cs" />
     <Compile Include="Api\Infrastructure\Configuration\CommandDispatcherLogger.cs" />
+    <Compile Include="Api\Infrastructure\Configuration\UnitOfWorkCommandDispatcher.cs" />
     <Compile Include="Api\Infrastructure\Exceptions\NoCurrentUserException.cs" />
     <Compile Include="Api\Infrastructure\Exceptions\RolNotFound.cs" />
     <Compile Include="Api\Infrastructure\RestExceptions\CommandValidationExceptionRepackager.cs" />

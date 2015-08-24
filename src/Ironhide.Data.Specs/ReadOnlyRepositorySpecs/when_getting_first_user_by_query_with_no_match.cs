@@ -20,9 +20,9 @@ namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
                 };
 
         Because of =
-            () => _exception = Catch.Exception(() => _readOnlyRepository.First<UserEmailLogin>(x => x.Name == "test2-match"));
+            () => _exception = Catch.Exception(() => _readOnlyRepository.First<UserEmailLogin>(x => x.Name == "test2-match").Await());
 
         It should_throw_the_expected_exception =
-            () => _exception.ShouldBeOfType<ItemNotFoundException<UserEmailLogin>>();
+            () => _exception.ShouldBeOfExactType<ItemNotFoundException<UserEmailLogin>>();
     }
 }
