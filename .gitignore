@@ -3,6 +3,7 @@ codekit-config.json
 *.orig
 /lib
 /deploy
+/specs
 
 #developer-specific files
 connectionStrings.config

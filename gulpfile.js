@@ -150,6 +150,42 @@ gulp.task('specs', ['compile-specs'], function(){
 
 });
 
+gulp.task('coverage', ['compile-specs'], function(){
+	
+	var coverageFilters = '+[Corizon*]*';
+
+	return new Promise(function(resolve, reject) {
+		glob(specs, {}, function (er, files) {
+			console.log("files for coverage:");
+			var dlls = _.uniq(files, function(f){
+
+					var parts = f.split('/');
+					console.log(f);
+					var lastPart = parts[parts.length-1];
+					return lastPart;
+				}).map(function(f){
+					return '' + f.replace('/','\\') + '';
+				})
+				.join(" ").trim();
+	  	  	
+	  	  	var cmd = 'OpenCover.Console.exe -register:user -filter:"' + coverageFilters + '" -target:"' + config.util.mspec + '" -targetargs:"' + dlls + '" -output:"./coverage.xml"';
+
+			console.log("Command for coverage:");
+			console.log(cmd);
+			
+			gulp.src('coverage')
+				.pipe(clean())
+				.pipe(shell(cmd, {"verbose": true}))
+				.on('end', function(){
+					
+					resolve();
+				});
+		});
+	});	
+});
+
+gulp.task('coverage-report', ['coverage'], shell.task(['ReportGenerator.exe -reports:"coverage.xml" -targetdir:"coverage"']));
+
 gulp.task('clean-build', function(){
 	return gulp.src(config.buildPath).pipe(clean());
 });
