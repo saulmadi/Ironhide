@@ -9,6 +9,8 @@ codekit-config.json
 connectionStrings.config
 mailSettings.config
 thumbs.db
+coverage.xml
+
 # Ignore Node & Bower
 ###################
 node_modules
