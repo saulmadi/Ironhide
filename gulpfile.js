@@ -159,11 +159,8 @@ gulp.task('coverage', ['compile-specs'], function(done){
 	var coverageFilters = '+[Ironhide*]*';
 
 	glob(specs, {}, function (er, files) {
-		console.log("files for coverage:");
 		var dlls = _.uniq(files, function(f){
-
 				var parts = f.split('/');
-				console.log(f);
 				var lastPart = parts[parts.length-1];
 				return lastPart;
 			}).map(function(f){
@@ -184,7 +181,7 @@ gulp.task('coverage', ['compile-specs'], function(done){
 	});	
 });
 
-gulp.task('coverage-report', ['coverage'], shell.task(['ReportGenerator.exe -reports:"coverage.xml" -targetdir:"coverage"']));
+gulp.task('coverage-report', ['coverage'], shell.task([config.util.reportGenerator + ' -reports:"coverage.xml" -targetdir:"coverage"']));
 
 gulp.task('clean-build', function(){
 	return gulp.src(config.buildPath).pipe(clean());

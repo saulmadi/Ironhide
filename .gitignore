@@ -5,6 +5,8 @@ codekit-config.json
 /deploy
 /specs
 
+reports
+
 #developer-specific files
 connectionStrings.config
 mailSettings.config
