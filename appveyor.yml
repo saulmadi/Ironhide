@@ -10,9 +10,7 @@ install:
   - npm -g install npm@2
   - npm install -g gulp
   - npm install
-  - nuget sources
-  - choco install opencover
-  - choco install reportgenerator
+  - nuget sources  
 nuget:
   account_feed: true
   disable_publish_on_pr: true

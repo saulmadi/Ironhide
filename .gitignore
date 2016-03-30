@@ -1,9 +1,10 @@
 .sass-cache/*
 codekit-config.json
 *.orig
-/lib
-/deploy
-/specs
+lib/
+deploy/
+specs/
+coverage/
 
 reports
 
