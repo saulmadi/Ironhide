@@ -10,7 +10,7 @@ install:
   - npm -g install npm@2
   - npm install -g gulp
   - npm install
-  - nuget sources
+  - nuget sources  
 nuget:
   account_feed: true
   disable_publish_on_pr: true
@@ -25,7 +25,7 @@ assembly_info:
 after_build:
   - gulp package
 build_script:  
-  - gulp build  
+  - gulp build coverage-report
 test:
   assemblies:
     - specs\**\*.Specs.dll

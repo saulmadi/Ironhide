@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var config = require('./gulp.config')();
 var shell = require('./util/shell');
+var executeChildProcess = require('child_process').exec;
 var _ = require('lodash');
 var clean = require('gulp-clean');
 var runSequence = require('run-sequence');
@@ -11,6 +12,7 @@ var fs = require('fs');
 var path = require('path');
 var merge = require('merge-stream');
 var rename = require('gulp-rename');
+var glob = require('glob');
 
 gulp.task('default', function(callback){
 	runSequence('build', 'specs', 'package', 'deploy', callback);
@@ -73,7 +75,7 @@ gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-loggin
 			]));	
 });
 
-gulp.task('compile-specs', ['clean-spec'], function () {
+gulp.task('compile-specs', ['restore-nuget-packages', 'clean-spec'], function () {
 
 	return gulp.src('src/**/*.Specs.csproj')
 		.pipe(tap(function(file){
@@ -140,9 +142,11 @@ gulp.task('deploy', function(){
 
 });
 
+var specs = './specs/**/*.Specs.dll';
+
 gulp.task('specs', ['compile-specs'], function(){
 
-	gulp.src(config.buildPath + '/specs/**/*.Specs.dll')
+	gulp.src(specs)
 	    .pipe(tap(function(file){
 	    	file.path = file.path.replace('/','\\');
     	}))
@@ -150,41 +154,34 @@ gulp.task('specs', ['compile-specs'], function(){
 
 });
 
-gulp.task('coverage', ['compile-specs'], function(){
+gulp.task('coverage', ['compile-specs'], function(done){
 	
-	var coverageFilters = '+[Corizon*]*';
+	var coverageFilters = '+[Ironhide*]*';
 
-	return new Promise(function(resolve, reject) {
-		glob(specs, {}, function (er, files) {
-			console.log("files for coverage:");
-			var dlls = _.uniq(files, function(f){
+	glob(specs, {}, function (er, files) {
+		var dlls = _.uniq(files, function(f){
+				var parts = f.split('/');
+				var lastPart = parts[parts.length-1];
+				return lastPart;
+			}).map(function(f){
+				return '' + f.replace('/','\\') + '';
+			})
+			.join(" ").trim();
+  	  	
+  	  	var cmd = config.util.openCover + ' -register:user -filter:"' + coverageFilters + '" -target:"' + config.util.mspec + '" -targetargs:"' + dlls + '" -output:"./coverage.xml"';
 
-					var parts = f.split('/');
-					console.log(f);
-					var lastPart = parts[parts.length-1];
-					return lastPart;
-				}).map(function(f){
-					return '' + f.replace('/','\\') + '';
-				})
-				.join(" ").trim();
-	  	  	
-	  	  	var cmd = 'OpenCover.Console.exe -register:user -filter:"' + coverageFilters + '" -target:"' + config.util.mspec + '" -targetargs:"' + dlls + '" -output:"./coverage.xml"';
-
-			console.log("Command for coverage:");
-			console.log(cmd);
-			
-			gulp.src('coverage')
-				.pipe(clean())
-				.pipe(shell(cmd, {"verbose": true}))
-				.on('end', function(){
-					
-					resolve();
-				});
-		});
+		executeChildProcess(cmd, function(err, stdout, stderr){
+			if(err){
+				console.log(stderr);
+				done(err);
+			}
+			console.log(stdout);
+			done();
+		});		
 	});	
 });
 
-gulp.task('coverage-report', ['coverage'], shell.task(['ReportGenerator.exe -reports:"coverage.xml" -targetdir:"coverage"']));
+gulp.task('coverage-report', ['coverage'], shell.task([config.util.reportGenerator + ' -reports:"coverage.xml" -targetdir:"coverage"']));
 
 gulp.task('clean-build', function(){
 	return gulp.src(config.buildPath).pipe(clean());
