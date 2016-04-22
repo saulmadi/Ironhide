@@ -168,7 +168,7 @@ gulp.task('coverage', ['compile-specs'], function(done){
 			})
 			.join(" ").trim();
   	  	
-  	  	var cmd = config.util.openCover + ' -register:user -filter:"' + coverageFilters + '" -target:"' + config.util.mspec + '" -targetargs:"' + dlls + '" -output:"./coverage.xml"';
+  	  	var cmd = config.util.openCover + ' -register:user -returntargetcode -filter:"' + coverageFilters + '" -target:"' + config.util.mspec + '" -targetargs:"' + dlls + '" -output:"./coverage.xml"';
 
 		executeChildProcess(cmd, function(err, stdout, stderr){
 			if(err){
