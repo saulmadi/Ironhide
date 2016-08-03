@@ -31,7 +31,7 @@ after_build:
 build_script:
   - gulp build coverage-report
   - if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" ( sonar-scanner.bat )
-  - if not "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" ( sonar-scanner.bat -Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=%APPVEYOR_PULL_REQUEST_NUMBER% -Dsonar.github.repository=AcklenAvenue/brass-bongo-testing -Dsonar.github.oauth=%GITHUB_SONAR_TOKEN% )
+  - if not "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" ( sonar-scanner.bat -Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=%APPVEYOR_PULL_REQUEST_NUMBER% -Dsonar.github.repository=AcklenAvenue/Ironhide -Dsonar.github.oauth=%GITHUB_SONAR_TOKEN% )
 test:
   assemblies:
     - specs\**\*.Specs.dll
