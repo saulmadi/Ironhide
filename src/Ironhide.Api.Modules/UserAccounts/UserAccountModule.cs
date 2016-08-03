@@ -17,14 +17,14 @@ namespace Ironhide.Api.Modules.UserAccounts
     public class UserAccountModule : NancyModule
     {
         public UserAccountModule(IReadOnlyRepository readOnlyRepository, ICommandDispatcher commandDispatcher,
-            IPasswordEncryptor passwordEncryptor, IMappingEngine mappingEngine, IUserSessionFactory userSessionFactory)
+            IPasswordEncryptor passwordEncryptor, IMapper mapper, IUserSessionFactory userSessionFactory)
         {
             Post["/register"] =
                 _ =>
                 {
                     var req = this.Bind<NewUserRequest>();
                     IEnumerable<UserAbility> abilities =
-                        mappingEngine.Map<IEnumerable<UserAbilityRequest>, IEnumerable<UserAbility>>(req.Abilities);
+                        mapper.Map<IEnumerable<UserAbilityRequest>, IEnumerable<UserAbility>>(req.Abilities);
                     commandDispatcher.Dispatch(userSessionFactory.Create(Context.CurrentUser),
                         new CreateEmailLoginUser(req.Email, passwordEncryptor.Encrypt(req.Password), req.Name,
                             req.PhoneNumber, abilities));
@@ -87,7 +87,7 @@ namespace Ironhide.Api.Modules.UserAccounts
                                                     await readOnlyRepository.GetAll<UserAbility>();
 
                                                 IEnumerable<UserAbilityRequest> mappedAbilites =
-                                                    mappingEngine
+                                                    mapper
                                                         .Map<IEnumerable<UserAbility>, IEnumerable<UserAbilityRequest>>(
                                                             abilites);
 

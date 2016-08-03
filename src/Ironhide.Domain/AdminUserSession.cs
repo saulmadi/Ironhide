@@ -5,14 +5,12 @@ namespace Ironhide.Users.Domain
 {
     public class AdminUserSession : IUserSession
     {
-        public Guid UserId { get; private set; }
-
-
-        public AdminUserSession(Guid userId)
+        public AdminUserSession(string userIdentifier)
         {
-            UserId = userId;
+            UserIdentifier = userIdentifier;
         }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; protected set; }
+        public string UserIdentifier { get; }
     }
 }

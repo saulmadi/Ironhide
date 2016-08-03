@@ -20,9 +20,56 @@ namespace Ironhide.Api.Infrastructure.Configuration
 
         public void LogException(IUserSession userSession, object sender, DateTime timeStamp, Exception exception)
         {
-            string errorMessage = "1) Error handling command with handler '" + sender.GetType() + "'\n";
-            errorMessage += "2) " + exception.Message;
-            _logger.Error(errorMessage);
+            
+        }
+
+        public void LogInfo(IUserSession userSession, object sender, DateTime timeStamp, string message, object command)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LogException(IUserSession userSession, object sender, DateTime timeStamp, Exception exception, object command)
+        {
+            var commandTransformed = CommandCasted(command);
+            if (commandTransformed != null)
+            {
+                SetGlobalContextForLogger(userSession, commandTransformed, "Error");
+
+                _logger.Error(
+                    $"Failed {sender.GetType().Name}:by reason: {exception.Message} with the following data {commandTransformed.MessageToLog}",
+                    exception);
+            }
+            else
+            {
+                throw new InvalidCastException("The command can't be logged");
+            }
+        }
+
+        ICommandLogged CommandCasted(object command)
+        {
+            var commandTransformed = command as ICommandLogged;
+
+            return commandTransformed;
+        }
+
+        public interface ICommandLogged
+        {
+            string Id { get; }
+            DateTime DateIssued { get; }
+            string MessageToLog { get; }
+        }
+
+        void SetGlobalContextForLogger(IUserSession userSession, ICommandLogged commandTransformed, string typeOfEvent)
+        {
+            SetGlobalContextForLogger(Guid.NewGuid(), commandTransformed.Id, userSession.UserIdentifier, typeOfEvent);
+        }
+
+        void SetGlobalContextForLogger(Guid commandId, string eventId, string user, string typeOfEvent)
+        {
+            GlobalContext.Properties["id"] = commandId;
+            GlobalContext.Properties["commandId"] = eventId;
+            GlobalContext.Properties["userRequestCommand"] = user;
+            GlobalContext.Properties["typeOfEvent"] = typeOfEvent;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Ironhide.Api.Modules.UserManagement
 {
     public class AdminModule : NancyModule
     {
-        public AdminModule(IReadOnlyRepository readOnlyRepository, IMappingEngine mappingEngine,
+        public AdminModule(IReadOnlyRepository readOnlyRepository, IMapper mapper,
             ICommandDispatcher commandDispatcher, IUserSessionFactory userSessionFactory)
         {
             Get["/users", true] =
@@ -39,7 +39,7 @@ namespace Ironhide.Api.Modules.UserManagement
                           IQueryable<User> pagedUsers =
                               orderedUsers.Skip(request.PageSize*(request.PageNumber - 1)).Take(request.PageSize);
 
-                          List<AdminUserResponse> usersList = mappingEngine
+                          List<AdminUserResponse> usersList = mapper
                               .Map<IQueryable<User>, IEnumerable<AdminUserResponse>>(pagedUsers).ToList();
 
                           return usersList;
@@ -71,7 +71,7 @@ namespace Ironhide.Api.Modules.UserManagement
                       {
                           Guid userId = Guid.Parse((string) _.userId);
                           User user = await readOnlyRepository.GetById<User>(userId);
-                          AdminUserResponse mappedUser = mappingEngine
+                          AdminUserResponse mappedUser = mapper
                               .Map<User, AdminUserResponse>(user);
                           return mappedUser;
                       };

@@ -15,12 +15,12 @@ namespace Ironhide.Api.Infrastructure
             if (HasRole(loggedInUserIdentity, "Administrator"))
             {
                 Guid userId = GetUserId(loggedInUserIdentity);
-                return new AdminUserSession(userId);
+                return new AdminUserSession(userId.ToString());
             }
             else if (HasRole(loggedInUserIdentity, "Basic"))
             {
                 Guid userId = GetUserId(loggedInUserIdentity);
-                return new BasicUserSession(userId);
+                return new BasicUserSession(userId.ToString());
             }
             return new VisitorSession();
         }

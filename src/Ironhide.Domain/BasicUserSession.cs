@@ -5,13 +5,12 @@ namespace Ironhide.Users.Domain
 {
     public class BasicUserSession : IUserSession
     {
-        public Guid UserId { get; private set; }
-
-        public BasicUserSession(Guid userId)
+        public BasicUserSession(string userIdentifier)
         {
-            UserId = userId;
+            UserIdentifier = userIdentifier;
         }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; protected set; }
+        public string UserIdentifier { get; }
     }
 }
