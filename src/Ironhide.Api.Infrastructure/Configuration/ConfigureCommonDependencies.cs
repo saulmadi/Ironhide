@@ -31,7 +31,6 @@ namespace Ironhide.Api.Infrastructure.Configuration
                 return container =>
                        {
                            AutoRegisterDataAndDomain(container);
-                           //container.RegisterInstance(Mapper.Configuration.CreateMapper()).As<IMapper>();
                            container.RegisterType<BaseUrlProvider>().As<IBaseUrlProvider>();
                            container.RegisterType<ApiUserMapper>().As<IApiUserMapper<string>>();
                            container.RegisterInstance(LogManager.GetLogger("Logger")).As<ILog>();
