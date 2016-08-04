@@ -13,36 +13,14 @@ namespace Ironhide.Api.Infrastructure.Configuration
             _logger = logger;
         }
 
-        public void LogInfo(IUserSession userSession, object sender, DateTime timeStamp, string message)
+        public void LogInfo(IUserSession userSession, object sender, DateTime timeStamp, string message, object command)
         {
             _logger.InfoFormat("{0}: {1}", sender.GetType().Name, message);
         }
 
-        public void LogException(IUserSession userSession, object sender, DateTime timeStamp, Exception exception)
-        {
-            
-        }
-
-        public void LogInfo(IUserSession userSession, object sender, DateTime timeStamp, string message, object command)
-        {
-            throw new NotImplementedException();
-        }
-
         public void LogException(IUserSession userSession, object sender, DateTime timeStamp, Exception exception, object command)
         {
-            var commandTransformed = CommandCasted(command);
-            if (commandTransformed != null)
-            {
-                SetGlobalContextForLogger(userSession, commandTransformed, "Error");
-
-                _logger.Error(
-                    $"Failed {sender.GetType().Name}:by reason: {exception.Message} with the following data {commandTransformed.MessageToLog}",
-                    exception);
-            }
-            else
-            {
-                throw new InvalidCastException("The command can't be logged");
-            }
+           
         }
 
         ICommandLogged CommandCasted(object command)
@@ -70,6 +48,15 @@ namespace Ironhide.Api.Infrastructure.Configuration
             GlobalContext.Properties["commandId"] = eventId;
             GlobalContext.Properties["userRequestCommand"] = user;
             GlobalContext.Properties["typeOfEvent"] = typeOfEvent;
+        }
+
+        string GetTypeOfEvent(string message)
+        {
+            return message.StartsWith("Starting Synchronously")
+                ? "Starting "
+                : message.StartsWith("Synchronously dispatching")
+                    ? " Requested "
+                    : message.StartsWith("Started synchronously validating") ? "Validating " : "Finishing ";
         }
     }
 }
