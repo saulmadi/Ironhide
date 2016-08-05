@@ -6,7 +6,6 @@ using System.Text;
 using AcklenAvenue.Commands;
 using AcklenAvenue.Email;
 using Autofac;
-using AutoMapper;
 using BlingBag;
 using Ironhide.Api.Infrastructure.Authentication;
 using Ironhide.Api.Infrastructure.Authentication.Roles;
@@ -14,6 +13,7 @@ using Ironhide.Data;
 using Ironhide.EmailClients.DotNet;
 using Ironhide.TemplateEngines.Razor;
 using Ironhide.Users.Domain;
+using Ironhide.Users.Domain.Application.Commands;
 using log4net;
 using Newtonsoft.Json;
 using NHibernate;
@@ -39,8 +39,7 @@ namespace Ironhide.Api.Infrastructure.Configuration
                           
                            ConfigureCommandAndEventHandlers(container);
                            AutoRegisterEmailTemplates(container);
-
-                           AutoRegisterAllDomainEvents(container);
+                           
                            AutoRegisterAllCommandHandlers(container);
                            RegisterUsersFeutures(container);
                        };
@@ -65,14 +64,7 @@ namespace Ironhide.Api.Infrastructure.Configuration
         void AutoRegisterAllCommandHandlers(ContainerBuilder container)
         {
             container.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(x => x.GetInterfaces().Any(i => i.Name.StartsWith("ICommandHandler")))
-                .AsImplementedInterfaces();
-        }
-
-        void AutoRegisterAllDomainEvents(ContainerBuilder container)
-        {
-            container.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(x => x.GetInterfaces().Any(i => i.Name.StartsWith("IBlingHandler")))
+                .Where(x => typeof(ICommandHandler).IsAssignableFrom(x) || typeof(IEventedCommandHandler).IsAssignableFrom(x))
                 .AsImplementedInterfaces();
         }
 
@@ -82,11 +74,11 @@ namespace Ironhide.Api.Infrastructure.Configuration
         {
             container.RegisterType<IronhideBlingDispatcher>().As<IBlingDispatcher>();
             
-            container.RegisterType<ImmediateCommandDispatcher>().Named<ICommandDispatcher>("CommandDispatcher");
+            container.RegisterType<IronhideCommandDispatcher>().Named<ICommandDispatcher>("CommandDispatcher");
             container.RegisterDecorator<ICommandDispatcher>(
                 (c, inner) => new UnitOfWorkCommandDispatcher(inner, c.Resolve<ISession>()), "CommandDispatcher");
 
-            container.RegisterType<CommandDispatcherLogger>().As<ICommandDispatcherLogger>();
+            container.RegisterType<CommandDispatcherLogger>().As<ICommandDispatcherLogger>().As<IBlingLogger>(); ;
         }
 
         static void AutoRegisterEmailTemplates(ContainerBuilder container)

@@ -1,10 +1,11 @@
 using System;
 using AcklenAvenue.Commands;
+using BlingBag;
 using log4net;
 
 namespace Ironhide.Api.Infrastructure.Configuration
 {
-    public class CommandDispatcherLogger : ICommandDispatcherLogger
+    public class CommandDispatcherLogger : ICommandDispatcherLogger, IBlingLogger
     {
         readonly ILog _logger;
 
@@ -23,13 +24,6 @@ namespace Ironhide.Api.Infrastructure.Configuration
            
         }
 
-        ICommandLogged CommandCasted(object command)
-        {
-            var commandTransformed = command as ICommandLogged;
-
-            return commandTransformed;
-        }
-
         public interface ICommandLogged
         {
             string Id { get; }
@@ -37,26 +31,16 @@ namespace Ironhide.Api.Infrastructure.Configuration
             string MessageToLog { get; }
         }
 
-        void SetGlobalContextForLogger(IUserSession userSession, ICommandLogged commandTransformed, string typeOfEvent)
+        public void LogException(object handler, DateTime timeStamp, Exception exception)
         {
-            SetGlobalContextForLogger(Guid.NewGuid(), commandTransformed.Id, userSession.UserIdentifier, typeOfEvent);
+            var errorMessage = "Error handling command'" + handler.GetType().Name + "'\n";
+            errorMessage += "2) " + exception.Message;
+            _logger.Error(errorMessage, exception);
         }
 
-        void SetGlobalContextForLogger(Guid commandId, string eventId, string user, string typeOfEvent)
+        public void LogInfo(object handler, DateTime timeStamp, string message)
         {
-            GlobalContext.Properties["id"] = commandId;
-            GlobalContext.Properties["commandId"] = eventId;
-            GlobalContext.Properties["userRequestCommand"] = user;
-            GlobalContext.Properties["typeOfEvent"] = typeOfEvent;
-        }
-
-        string GetTypeOfEvent(string message)
-        {
-            return message.StartsWith("Starting Synchronously")
-                ? "Starting "
-                : message.StartsWith("Synchronously dispatching")
-                    ? " Requested "
-                    : message.StartsWith("Started synchronously validating") ? "Validating " : "Finishing ";
+            _logger.InfoFormat("{0}: {1}", handler.GetType().Name, message);
         }
     }
 }

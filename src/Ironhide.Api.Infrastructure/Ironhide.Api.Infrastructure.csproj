@@ -121,6 +121,7 @@
     <Compile Include="Configuration\ConfigureCommonDependencies.cs" />
     <Compile Include="Configuration\ConfigureDatabaseWiring.cs" />
     <Compile Include="Configuration\IronhideBlingDispatcher.cs" />
+    <Compile Include="Configuration\IronhideCommandDispatcher.cs" />
     <Compile Include="Configuration\UnitOfWorkCommandDispatcher.cs" />
     <Compile Include="IBaseUrlProvider.cs" />
     <Compile Include="IBootstrapperTask.cs" />
