@@ -209,5 +209,5 @@ gulp.task('run-sonar-analysis', shell.task([
 	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe end'
 ], { 
 		cwd:  process.env.APPVEYOR_BUILD_FOLDER + '\\src',
-		{PATH: process.env.PATH}
+		PATH: process.env.PATH
 	}));
