@@ -25,9 +25,7 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
 after_build:
-  - cd src
   - gulp run-sonar-analysis
-  - cd ..
   - gulp package
 build_script:
   - gulp build coverage-report
