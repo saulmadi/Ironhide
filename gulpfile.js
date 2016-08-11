@@ -205,9 +205,9 @@ gulp.task('run-sonar-analysis', shell.task([
     ' /d:sonar.analysis.mode=preview /d:sonar.github.pullRequest=' + process.env.APPVEYOR_PULL_REQUEST_NUMBER +
 	' /d:sonar.github.repository=AcklenAvenue/LimeLight /d:sonar.github.oauth=' +process.env.GITHUB_SONAR_TOKEN
 	: ''*/
-	'msbuild',
+	'msbuild %APPVEYOR_BUILD_FOLDER%\\src\\Ironhide.sln',
 	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe end'
-], { 
+]/*, { 
 		cwd:  process.env.APPVEYOR_BUILD_FOLDER + '\\src',
 		Path: process.env.PATH
-	}));
+	}*/));
