@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var config = require('./gulp.config')();
-var shell = require('./util/shell');
+var shell = require('gulp-shell');
 var executeChildProcess = require('child_process').exec;
 var _ = require('lodash');
 var clean = require('gulp-clean');
