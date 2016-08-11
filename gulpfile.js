@@ -198,19 +198,19 @@ gulp.task('clean-spec', function(){
 
 
 gulp.task('download-sonar-scanner', shell.task([
-    'if not exist %APPVEYOR_BUILD_FOLDER%\MSBuild.SonarQube.Runner-2.1 ' +
-		'appveyor DownloadFile https://github.com/SonarSource-VisualStudio/sonar-msbuild-runner/releases/download/2.1/MSBuild.SonarQube.Runner-2.1.zip',
-    'if not exist %APPVEYOR_BUILD_FOLDER%\MSBuild.SonarQube.Runner-2.1 7z x MSBuild.SonarQube.Runner-2.1.zip -y -oMSBuild.SonarQube.Runner-2.1',
+    'if not exist %APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName +
+		' appveyor DownloadFile ' + config.sonarRunnerDownloadPath,
+    'if not exist %APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + ' 7z x ' + config.sonarRunnerDownloadPath.substring(config.sonarRunnerDownloadPath.lastIndexOf("/") + 1) + '-y -o' + config.sonarRunnerFolderName,
 ]));
 
 gulp.task('run-sonar-analysis', shell.task([
 	(!process.env.APPVEYOR_PULL_REQUEST_NUMBER) ?
-	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe begin' +
+	'%APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + '\\' + config.sonarRunner + ' begin' +
 	' /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.host.url=http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000 /k:Ironhide /n:Ironhide /v:1.0' +
     ' /d:sonar.analysis.mode=preview /d:sonar.github.pullRequest=' + process.env.APPVEYOR_PULL_REQUEST_NUMBER +
 	' /d:sonar.github.repository=AcklenAvenue/Ironhide /d:sonar.github.oauth=' +process.env.GITHUB_SONAR_TOKEN
-	: '%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe begin' +
+	: '%APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + '\\' + config.sonarRunner + ' begin' +
 	' /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.host.url=http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000 /k:Ironhide /n:Ironhide /v:1.0',
 	'msbuild %APPVEYOR_BUILD_FOLDER%\\src\\Ironhide.sln',
-	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe end'
+	'%APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + '\\' + config.sonarRunner + ' end'
 ]));
