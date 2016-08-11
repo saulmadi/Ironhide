@@ -204,7 +204,7 @@ gulp.task('download-sonar-scanner', shell.task([
 ]));
 
 gulp.task('run-sonar-analysis', shell.task([
-	(process.env.APPVEYOR_PULL_REQUEST_NUMBER) ?
+	(!process.env.APPVEYOR_PULL_REQUEST_NUMBER) ?
 	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe begin' +
 	' /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.host.url=http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000 /k:Ironhide /n:Ironhide /v:1.0' +
     ' /d:sonar.analysis.mode=preview /d:sonar.github.pullRequest=' + process.env.APPVEYOR_PULL_REQUEST_NUMBER +
