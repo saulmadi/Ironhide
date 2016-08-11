@@ -199,6 +199,7 @@ gulp.task('download-sonar-scanner', shell.task([
 ]));
 
 gulp.task('run-sonar-analysis', shell.task([
+	'cd %APPVEYOR_BUILD_FOLDER%\\src',
 	'dir',
 	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe begin' +
 	' /d:sonar.cs.opencover.reportsPaths=..\coverage.xml /d:sonar.host.url=http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000 /k:Ironhide /n:Ironhide /v:1.0', /*+
@@ -207,5 +208,7 @@ gulp.task('run-sonar-analysis', shell.task([
 	' /d:sonar.github.repository=AcklenAvenue/LimeLight /d:sonar.github.oauth=' +process.env.GITHUB_SONAR_TOKEN
 	: ''*/
 	'msbuild',
-	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe end'
-], { cwd:  process.env.APPVEYOR_BUILD_FOLDER + '\\src'}));
+	'%APPVEYOR_BUILD_FOLDER%\\MSBuild.SonarQube.Runner-2.1\\MSBuild.SonarQube.Runner.exe end',
+	'cd ..',
+	'dir'
+]/*, { cwd:  process.env.APPVEYOR_BUILD_FOLDER + '\\src'}*/));
