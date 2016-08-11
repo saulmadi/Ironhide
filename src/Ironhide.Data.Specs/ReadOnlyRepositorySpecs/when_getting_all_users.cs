@@ -7,7 +7,7 @@ using NHibernate;
 
 namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
 {
-    public class when_getting_all_users
+    /*public class when_getting_all_users
     {
         static ReadOnlyRepository _readOnlyRepository;
         static IEnumerable<UserEmailLogin> _result;
@@ -35,5 +35,5 @@ namespace Ironhide.Data.Specs.ReadOnlyRepositorySpecs
 
         It should_return_all_the_users =
             () => _result.ShouldBeLike(_users);
-    }
+    }*/
 }

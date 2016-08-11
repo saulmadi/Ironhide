@@ -11,15 +11,13 @@ install:
   - npm install -g gulp
   - npm install
   - nuget sources
-  - if not exist %APPVEYOR_BUILD_FOLDER%\sonar-scanner-2.6.1 appveyor DownloadFile https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.6.1.zip
-  - if not exist %APPVEYOR_BUILD_FOLDER%\sonar-scanner-2.6.1 7z x sonar-scanner-2.6.1.zip -y
-  - set PATH=sonar-scanner-2.6.1\bin;%PATH%
+  - gulp download-sonar-scanner
 nuget:
   account_feed: true
   disable_publish_on_pr: true
 cache:
   - lib -> src\**\packages.config
-  - sonar-scanner-2.6.1
+  - MSBuild.SonarQube.Runner-2.1
 assembly_info:
   patch: true
   file: AssemblyInfo.*
@@ -27,11 +25,10 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
 after_build:
+  - gulp run-sonar-analysis
   - gulp package
 build_script:
   - gulp build coverage-report
-  - if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" ( sonar-scanner.bat )
-  - if not "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" ( sonar-scanner.bat -Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=%APPVEYOR_PULL_REQUEST_NUMBER% -Dsonar.github.repository=AcklenAvenue/Ironhide -Dsonar.github.oauth=%GITHUB_SONAR_TOKEN% )
 test:
   assemblies:
     - specs\**\*.Specs.dll
