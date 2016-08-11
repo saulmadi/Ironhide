@@ -28,7 +28,7 @@ after_build:
   - gulp run-sonar-analysis
   - gulp package
 build_script:
-  - gulp build coverage-report
+  - gulp build-with-coverage-report
 test:
   assemblies:
     - specs\**\*.Specs.dll
