@@ -14,6 +14,19 @@ var merge = require('merge-stream');
 var rename = require('gulp-rename');
 var glob = require('glob');
 
+var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
+        sonarRunnerDownloadPath = config.sonarRunnerDownloadPath,
+        sonarMSRunnerFolderName = config.sonarRunnerFolderName,
+        sonarRunner = config.sonarRunner,
+        sonarServerURL = 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
+        msCoverageReportPath = 'coverage.xml',
+        projectName = 'Ironhide',
+        projectKey = 'Ironhide',
+        projectVersion = '1.0',
+        projectRepo = 'AcklenAvenue/Ironhide',
+        projectSolutionPath ='src\\Ironhide.sln'
+    });
+
 gulp.task('default', function(callback){
 	runSequence('build', 'specs', 'package', 'deploy', callback);
 });
@@ -197,20 +210,6 @@ gulp.task('clean-spec', function(){
 });
 
 
-gulp.task('download-sonar-scanner', shell.task([
-    'if not exist %APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName +
-		' appveyor DownloadFile ' + config.sonarRunnerDownloadPath,
-    'if not exist %APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + ' 7z x ' + config.sonarRunnerDownloadPath.substring(config.sonarRunnerDownloadPath.lastIndexOf("/") + 1) + '-y -o' + config.sonarRunnerFolderName,
-]));
+gulp.task('download-sonar-scanner', sonarQubeUtil.downloadMSBuildScanner());
 
-gulp.task('run-sonar-analysis', shell.task([
-	(process.env.APPVEYOR_PULL_REQUEST_NUMBER) ?
-	'%APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + '\\' + config.sonarRunner + ' begin' +
-	' /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.host.url=http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000 /k:Ironhide /n:Ironhide /v:1.0' +
-    ' /d:sonar.analysis.mode=preview /d:sonar.github.pullRequest=' + process.env.APPVEYOR_PULL_REQUEST_NUMBER +
-	' /d:sonar.github.repository=AcklenAvenue/Ironhide /d:sonar.github.oauth=' +process.env.GITHUB_SONAR_TOKEN
-	: '%APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + '\\' + config.sonarRunner + ' begin' +
-	' /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.host.url=http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000 /k:Ironhide /n:Ironhide /v:1.0',
-	'msbuild %APPVEYOR_BUILD_FOLDER%\\src\\Ironhide.sln',
-	'%APPVEYOR_BUILD_FOLDER%\\' + config.sonarRunnerFolderName + '\\' + config.sonarRunner + ' end'
-]));
+gulp.task('run-sonar-analysis', sonarQubeUtil.runMsBuildScanner());
