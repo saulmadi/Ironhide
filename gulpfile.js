@@ -15,16 +15,16 @@ var rename = require('gulp-rename');
 var glob = require('glob');
 
 var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
-        sonarRunnerDownloadPath = config.sonarRunnerDownloadPath,
-        sonarMSRunnerFolderName = config.sonarRunnerFolderName,
-        sonarRunner = config.sonarRunner,
-        sonarServerURL = 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
-        msCoverageReportPath = 'coverage.xml',
-        projectName = 'Ironhide',
-        projectKey = 'Ironhide',
-        projectVersion = '1.0',
-        projectRepo = 'AcklenAvenue/Ironhide',
-        projectSolutionPath ='src\\Ironhide.sln'
+        sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
+        sonarMSRunnerFolderName: config.sonarRunnerFolderName,
+        sonarRunner: config.sonarRunner,
+        sonarServerURL: 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
+        msCoverageReportPath: 'coverage.xml',
+        projectName: 'Ironhide',
+        projectKey: 'Ironhide',
+        projectVersion: '1.0',
+        projectRepo: 'AcklenAvenue/Ironhide',
+        projectSolutionPath:'src\\Ironhide.sln'
     });
 
 gulp.task('default', function(callback){

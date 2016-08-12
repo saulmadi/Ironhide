@@ -26,16 +26,16 @@ module.exports = function(shell,
     }
 
     var defaultOptions = {
-        sonarRunnerDownloadPath = options.sonarRunnerDownloadPath,
-        sonarMSRunnerFolderName = options.sonarMSRunnerFolderName | '',
-        sonarRunner = options.sonarRunner,
-        sonarServerURL = options.sonarServerURL | 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
-        msCoverageReportPath = options.msCoverageReportPath | '',
-        projectName = options.projectName,
-        projectKey = options.projectKey,
-        projectVersion = options.projectVersion,
-        projectRepo = options.projectRepo,
-        projectSolutionPath = options.projectSolutionPath | ''
+        sonarRunnerDownloadPath: options.sonarRunnerDownloadPath,
+        sonarMSRunnerFolderName: options.sonarMSRunnerFolderName | '',
+        sonarRunner: options.sonarRunner,
+        sonarServerURL: options.sonarServerURL | 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
+        msCoverageReportPath: options.msCoverageReportPath | '',
+        projectName: options.projectName,
+        projectKey: options.projectKey,
+        projectVersion: options.projectVersion,
+        projectRepo: options.projectRepo,
+        projectSolutionPath: options.projectSolutionPath | ''
     }
 
     var runnerZipFileName = defaultOptions.sonarRunnerDownloadPath.substring(defaultOptions.sonarRunnerDownloadPath.lastIndexOf("/") + 1);
