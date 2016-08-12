@@ -71,7 +71,7 @@ module.exports = function(shell,
                 ' /k:' + defaultOptions.projectKey + ' /n:' + defaultOptions.projectName + ' /v:' + defaultOptions.projectVersion +
                 ' /d:sonar.analysis.mode=preview /d:sonar.github.pullRequest=' + process.env.APPVEYOR_PULL_REQUEST_NUMBER +
                 ' /d:sonar.github.repository=' + defaultOptions.projectRepo + ' /d:sonar.github.oauth=' +process.env.GITHUB_SONAR_TOKEN
-                : '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
+                : '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
                 ' /d:sonar.cs.opencover.reportsPaths='+ defaultOptions.msCoverageReportPath + ' /d:sonar.host.url=' + defaultOptions.sonarServerURL +
                 ' /k:' + defaultOptions.projectKey + ' /n:' + defaultOptions.projectName + ' /v:' + defaultOptions.projectVersion,
                 'msbuild %APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.projectSolutionPath,
