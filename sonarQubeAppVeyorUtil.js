@@ -74,7 +74,7 @@ module.exports = function(shell,
                 : '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
                 ' /d:sonar.cs.opencover.reportsPaths='+ defaultOptions.msCoverageReportPath + ' /d:sonar.host.url=' + defaultOptions.sonarServerURL +
                 ' /k:' + defaultOptions.projectKey + ' /n:' + defaultOptions.projectName + ' /v:' + defaultOptions.projectVersion,
-                'msbuild %APPVEYOR_BUILD_FOLDER%\\src\\' + defaultOptions.projectSolutionPath,
+                'msbuild %APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.projectSolutionPath,
                 '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' end'
             ]);
         },
