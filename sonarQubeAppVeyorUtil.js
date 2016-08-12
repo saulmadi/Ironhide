@@ -9,18 +9,6 @@ module.exports = function(shell,
         throw 'Sonar runner executable name is required.'
     }
 
-    if (!options.projectName || options.projectName === '') {
-        throw 'Project name is required.'
-    }
-
-    if (!options.projectKey || options.projectKey === '') {
-        throw 'Project key is required.'
-    }
-
-    if (!options.projectVersion || options.projectVersion === '') {
-        throw 'Project version is required.'
-    }
-
     if (!options.projectRepo || options.projectRepo === '') {
         throw 'Project repository is required.'
     }
@@ -64,6 +52,18 @@ module.exports = function(shell,
                 throw 'Path to solution file for MSBuild runner is required.'
             }
 
+            if (!options.projectName || options.projectName === '') {
+                throw 'Project name is required.'
+            }
+
+            if (!options.projectKey || options.projectKey === '') {
+                throw 'Project key is required.'
+            }
+
+            if (!options.projectVersion || options.projectVersion === '') {
+                throw 'Project version is required.'
+            }
+
             return shell.task([
                 (process.env.APPVEYOR_PULL_REQUEST_NUMBER) ?
                 '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
@@ -87,10 +87,10 @@ module.exports = function(shell,
         },
         runSonarScanner: function() {
             return shell.task([
-                (process.env.APPVEYOR_PULL_REQUEST_NUMBER) ? '%APPVEYOR_BUILD_FOLDER%\\' + runnerFileNameNoExt + '\\bin\\sonar-scanner.bat ' +
-                '-Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=%APPVEYOR_PULL_REQUEST_NUMBER% ' +
-                '-Dsonar.github.repository=' + defaultOptions.projectRepo + ' -Dsonar.github.oauth=%GITHUB_SONAR_TOKEN%' :
-                    '%APPVEYOR_BUILD_FOLDER%\\' + runnerFileNameNoExt + '\\bin\\sonar-scanner.bat '
+                (process.env.APPVEYOR_PULL_REQUEST_NUMBER) ? '%APPVEYOR_BUILD_FOLDER%\\' + runnerFileNameNoExt + '\\bin\\' + defaultOptions.sonarRunner +
+                ' -Dsonar.analysis.mode=preview -Dsonar.github.pullRequest=%APPVEYOR_PULL_REQUEST_NUMBER% ' +
+                ' -Dsonar.github.repository=' + defaultOptions.projectRepo + ' -Dsonar.github.oauth=%GITHUB_SONAR_TOKEN%' :
+                    '%APPVEYOR_BUILD_FOLDER%\\' + runnerFileNameNoExt + '\\bin\\' + defaultOptions.sonarRunner
             ]);
         }
 	}
