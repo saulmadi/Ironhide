@@ -12,6 +12,9 @@ module.exports = function() {
 		buildPath: process.cwd() + '/build',
 		specsPath: process.cwd() + '/specs',
 		deployPath: process.cwd() + '/deploy',
-		reportsPath: process.cwd() + '/reports',		
+		reportsPath: process.cwd() + '/reports',
+		sonarRunnerDownloadPath: 'https://github.com/SonarSource-VisualStudio/sonar-msbuild-runner/releases/download/2.1/MSBuild.SonarQube.Runner-2.1.zip',
+		sonarRunnerFolderName: 'MSBuild.SonarQube.Runner-2.1',
+		sonarRunner: 'MSBuild.SonarQube.Runner.exe'
 	}
 };
