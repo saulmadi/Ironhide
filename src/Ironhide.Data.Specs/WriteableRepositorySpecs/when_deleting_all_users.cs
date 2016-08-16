@@ -29,13 +29,16 @@ namespace Ironhide.Data.Specs.WriteableRepositorySpecs
                     _session.Flush();                    
                 };
 
-        Because of =
-            () => _writeableRepository.DeleteAll<UserEmailLogin>();
+        private Because of =
+            () =>
+            {
+                _writeableRepository.DeleteAll<UserEmailLogin>().Await();
+                _session.Flush();
+            };
 
         It should_make_the_change_in_the_session =
             () =>
                 {
-                    _session.Flush();
                     _session.QueryOver<UserEmailLogin>().List().ShouldBeEmpty();
                 };
     }
