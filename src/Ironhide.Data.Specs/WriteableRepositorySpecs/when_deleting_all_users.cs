@@ -32,7 +32,7 @@ namespace Ironhide.Data.Specs.WriteableRepositorySpecs
         private Because of =
             () =>
             {
-                _writeableRepository.DeleteAll<UserEmailLogin>();
+                _writeableRepository.DeleteAll<UserEmailLogin>().Await();
                 _session.Flush();
             };
 
