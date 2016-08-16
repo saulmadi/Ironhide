@@ -9,6 +9,7 @@ coverage/
 reports
 
 #developer-specific files
+localconfig.json
 connectionStrings.config
 mailSettings.config
 thumbs.db
