@@ -7,7 +7,8 @@ namespace Ironhide.Users.Domain
     {
         #region IUserSession Members
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; protected set; }
+        public string UserIdentifier { get; protected set; }
 
         #endregion
     }

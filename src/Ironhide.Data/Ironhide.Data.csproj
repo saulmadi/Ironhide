@@ -35,28 +35,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcklenAvenue.Commands, Version=1.0.2.12, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.12\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+    <Reference Include="AcklenAvenue.Commands">
+      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.59\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="AcklenAvenue.Data">
-      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.2.3\lib\net40\AcklenAvenue.Data.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.2.8\lib\net40\AcklenAvenue.Data.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="AcklenAvenue.Data.NHibernate, Version=2.0.2.3, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.2.3\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
+    <Reference Include="AcklenAvenue.Data.NHibernate">
+      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.2.8\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="FluentNHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\lib\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\lib\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

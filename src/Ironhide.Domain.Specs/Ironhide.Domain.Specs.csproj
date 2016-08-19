@@ -35,33 +35,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcklenAvenue.Commands, Version=1.0.2.12, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.12\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+    <Reference Include="AcklenAvenue.Commands">
+      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.59\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="AcklenAvenue.Testing">
-      <HintPath>..\..\lib\AcklenAvenue.Testing.1.1.0.5\lib\net45\AcklenAvenue.Testing.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Testing.1.1.0.9\lib\net45\AcklenAvenue.Testing.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="AcklenAvenue.Testing.Moq, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Testing.Moq.1.1.0.5\lib\net40\AcklenAvenue.Testing.Moq.dll</HintPath>
+    <Reference Include="AcklenAvenue.Testing.Moq">
+      <HintPath>..\..\lib\AcklenAvenue.Testing.Moq.1.1.0.9\lib\net40\AcklenAvenue.Testing.Moq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="AcklenAvenue.Testing.Moq.ExpectedObjects, Version=1.1.0.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\AcklenAvenue.Testing.Moq.ExpectedObjects.1.1.0.5\lib\net45\AcklenAvenue.Testing.Moq.ExpectedObjects.dll</HintPath>
+    <Reference Include="AcklenAvenue.Testing.Moq.ExpectedObjects">
+      <HintPath>..\..\lib\AcklenAvenue.Testing.Moq.ExpectedObjects.1.1.0.9\lib\net45\AcklenAvenue.Testing.Moq.ExpectedObjects.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="ExpectedObjects, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ExpectedObjects.1.0.0.2\lib\ExpectedObjects.dll</HintPath>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\lib\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExpectedObjects">
+      <HintPath>..\..\lib\ExpectedObjects.1.2.3\lib\net40\ExpectedObjects.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FizzWare.NBuilder">
       <HintPath>..\..\lib\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
-      <HintPath>..\..\lib\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+      <HintPath>..\..\lib\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\lib\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\..\lib\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Machine.Specifications, Version=0.9.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -72,14 +79,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Machine.Specifications.Should">
-      <HintPath>..\..\lib\Machine.Specifications.Should.0.7.2\lib\net45\Machine.Specifications.Should.dll</HintPath>
+      <HintPath>..\..\lib\Machine.Specifications.Should.0.9.0\lib\net45\Machine.Specifications.Should.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Moq, Version=4.2.1409.1722, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
+    <Reference Include="Moq">
+      <HintPath>..\..\lib\Moq.4.5.16\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NHibernate">
-      <HintPath>..\..\lib\NHibernate.3.3.1.4000\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\..\lib\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

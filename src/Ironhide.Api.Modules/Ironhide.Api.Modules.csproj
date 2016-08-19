@@ -36,22 +36,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AcklenAvenue.Commands">
-      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.12\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.59\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="AcklenAvenue.Email">
-      <HintPath>..\..\lib\AcklenAvenue.Email.1.0.0.2\lib\net45\AcklenAvenue.Email.dll</HintPath>
+      <HintPath>..\..\lib\AcklenAvenue.Email.1.0.1.4\lib\net45\AcklenAvenue.Email.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Autofac">
       <HintPath>..\..\lib\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="AutoMapper">
-      <HintPath>..\..\lib\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+      <HintPath>..\..\lib\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="BlingBag">
       <HintPath>..\..\lib\BlingBag.1.4.0.14\lib\net45\BlingBag.dll</HintPath>
     </Reference>
     <Reference Include="Nancy">
-      <HintPath>..\..\lib\Nancy.1.2.0\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\..\lib\Nancy.1.4.3\lib\net40\Nancy.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

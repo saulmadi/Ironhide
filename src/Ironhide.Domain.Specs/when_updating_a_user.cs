@@ -41,7 +41,7 @@ namespace Ironhide.Domain.Specs
 
         Because of =
             () =>
-                _handler.Handle(new BasicUserSession(Guid.NewGuid()), _command);
+                _handler.Handle(new BasicUserSession(Guid.NewGuid().ToString()), _command);
 
         It should_throw_the_expected_event =
             () => _eventRaised.ShouldBeLike(_expectedEvent);

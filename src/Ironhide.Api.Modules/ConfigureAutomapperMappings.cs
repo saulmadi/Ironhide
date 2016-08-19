@@ -10,16 +10,23 @@ namespace Ironhide.Api.Modules
 {
     public class ConfigureAutomapperMappings : IBootstrapperTask<ContainerBuilder>
     {
-        #region IBootstrapperTask<ContainerBuilder> Members
+        private readonly IMapper _mapper;
 
+        #region IBootstrapperTask<ContainerBuilder> Members
+        
         public Action<ContainerBuilder> Task
         {
             get
             {
                 return container =>
                     {
-                        Mapper.CreateMap<User, AdminUserResponse>();
-                        Mapper.CreateMap<UserAbility, UserAbilityRequest>().ReverseMap();
+                        Mapper.Initialize(cfg =>
+                        {
+                            cfg.CreateMap<User, AdminUserResponse>();
+                            cfg.CreateMap<UserAbility, UserAbilityRequest>().ReverseMap();
+                        });
+
+                        container.RegisterInstance(Mapper.Configuration.CreateMapper()).As<IMapper>();
                     };
             }
         }
