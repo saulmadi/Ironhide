@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AcklenAvenue.Commands;
-using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.Entities;
 using Ironhide.Users.Domain.Exceptions;
@@ -12,7 +11,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Ironhide.Domain.Specs.Validation
+namespace Ironhide.Users.Domain.Specs.Validation
 {
     public class when_validating_a_password_reset_command_with_reset_token_that_is_too_old
     {
@@ -21,14 +20,14 @@ namespace Ironhide.Domain.Specs.Validation
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static List<ValidationFailure> _expectedFailures;
         static Exception _exception;
-        static IReadOnlyRepository _readOnlyRepo;
+        static IPasswordResetTokenRepository _readOnlyRepo;
         static DateTime _now;
         static ITimeProvider _timeProvider;
 
         Establish context =
             () =>
             {
-                _readOnlyRepo = Mock.Of<IReadOnlyRepository>();
+                _readOnlyRepo = Mock.Of<IPasswordResetTokenRepository>();
                 _timeProvider = Mock.Of<ITimeProvider>();
                 _validator = new PassowrdResetValidator(_readOnlyRepo, _timeProvider);
 
@@ -42,8 +41,8 @@ namespace Ironhide.Domain.Specs.Validation
                 _now = DateTime.Now;
                 Mock.Get(_timeProvider).Setup(x => x.Now()).Returns(_now);
 
-                Mock.Get(_readOnlyRepo).Setup(x => x.GetById<PasswordResetAuthorization>(ResetPasswordToken))
-                    .ReturnsAsync(new PasswordResetAuthorization(ResetPasswordToken, Guid.NewGuid(), _now.AddDays(3)));
+                Mock.Get(_readOnlyRepo).Setup(x => x.GetById(ResetPasswordToken))
+                    .ReturnsAsync(new PasswordResetToken(ResetPasswordToken, Guid.NewGuid(), _now.AddDays(3)));
             };
 
         Because of =

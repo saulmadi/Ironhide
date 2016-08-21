@@ -1,3 +1,4 @@
+using System;
 using Ironhide.Users.Domain.ValueObjects;
 
 namespace Ironhide.Users.Domain.Entities
@@ -8,14 +9,14 @@ namespace Ironhide.Users.Domain.Entities
         {
         }
 
-        public UserEmailLogin(string name, string emailAddress, EncryptedPassword encryptedPassword):base(name,emailAddress)
+        public UserEmailLogin(Guid id, string name, string emailAddress, EncryptedPassword encryptedPassword):base(id, name,emailAddress)
         {
             
            
             EncryptedPassword = encryptedPassword.Password;
         }
 
-        public UserEmailLogin(string name, string emailAddress, EncryptedPassword encryptedPassword, string phoneNumber) :this(name, emailAddress, encryptedPassword)
+        public UserEmailLogin(Guid id, string name, string emailAddress, EncryptedPassword encryptedPassword, string phoneNumber) :this(id, name, emailAddress, encryptedPassword)
         {
             PhoneNumber = phoneNumber;            
         }

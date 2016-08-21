@@ -13,12 +13,10 @@ namespace Ironhide.Api.Infrastructure.Configuration
     public class ApiUserMapper : IApiUserMapper<string>
     {
         readonly IKeyProvider _keyProvider;
-        readonly IReadOnlyRepository _readOnlyRepo;
         readonly ITimeProvider _timeProvider;
 
-        public ApiUserMapper(IReadOnlyRepository readOnlyRepo, ITimeProvider timeProvider, IKeyProvider keyProvider)
+        public ApiUserMapper(ITimeProvider timeProvider, IKeyProvider keyProvider)
         {
-            _readOnlyRepo = readOnlyRepo;
             _timeProvider = timeProvider;
             _keyProvider = keyProvider;
         }

@@ -2,24 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using AcklenAvenue.Commands;
-using AcklenAvenue.Email;
 using Autofac;
 using BlingBag;
 using Ironhide.Api.Infrastructure.Authentication;
 using Ironhide.Api.Infrastructure.Authentication.Roles;
-using Ironhide.Data;
-using Ironhide.EmailClients.DotNet;
-using Ironhide.TemplateEngines.Razor;
+using Ironhide.Api.Infrastructure.Properties;
+using Ironhide.Users.Data.Repositories;
 using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Application.Commands;
 using log4net;
+using log4net.Config;
 using Newtonsoft.Json;
-using NHibernate;
 
 namespace Ironhide.Api.Infrastructure.Configuration
-{    
+{
     public class ConfigureCommonDependencies : IBootstrapperTask<ContainerBuilder>
     {
         #region IBootstrapperTask<ContainerBuilder> Members
@@ -35,11 +34,10 @@ namespace Ironhide.Api.Infrastructure.Configuration
                            container.RegisterType<ApiUserMapper>().As<IApiUserMapper<string>>();
                            container.RegisterInstance(LogManager.GetLogger("Logger")).As<ILog>();
                            container.RegisterType<UserSessionFactory>().As<IUserSessionFactory>();
-                           log4net.Config.XmlConfigurator.Configure();
-                          
+                           XmlConfigurator.Configure();
+
                            ConfigureCommandAndEventHandlers(container);
-                           AutoRegisterEmailTemplates(container);
-                           
+
                            AutoRegisterAllCommandHandlers(container);
                            RegisterUsersFeutures(container);
                        };
@@ -48,23 +46,23 @@ namespace Ironhide.Api.Infrastructure.Configuration
 
         void RegisterUsersFeutures(ContainerBuilder container)
         {
-
-
-            var bytes = Properties.Resources.RolesFeatures;
+            byte[] bytes = Resources.RolesFeatures;
             var reader = new StreamReader(new MemoryStream(bytes), Encoding.Default);
 
 
             var usersRoles = new JsonSerializer().Deserialize<IEnumerable<UsersRoles>>(new JsonTextReader(reader));
-            
 
-            container.RegisterType<MenuProvider>().As<IMenuProvider>().WithParameter("usersRoles",usersRoles);
 
+            container.RegisterType<MenuProvider>().As<IMenuProvider>().WithParameter("usersRoles", usersRoles);
         }
 
         void AutoRegisterAllCommandHandlers(ContainerBuilder container)
         {
             container.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(x => typeof(ICommandHandler).IsAssignableFrom(x) || typeof(IEventedCommandHandler).IsAssignableFrom(x))
+                .Where(
+                    x =>
+                        typeof (ICommandHandler).IsAssignableFrom(x) ||
+                        typeof (IEventedCommandHandler).IsAssignableFrom(x))
                 .AsImplementedInterfaces();
         }
 
@@ -73,38 +71,14 @@ namespace Ironhide.Api.Infrastructure.Configuration
         static void ConfigureCommandAndEventHandlers(ContainerBuilder container)
         {
             container.RegisterType<IronhideBlingDispatcher>().As<IBlingDispatcher>();
-            
+
             container.RegisterType<IronhideCommandDispatcher>().Named<ICommandDispatcher>("CommandDispatcher");
             container.RegisterDecorator<ICommandDispatcher>(
-                (c, inner) => new UnitOfWorkCommandDispatcher(inner, c.Resolve<ISession>()), "CommandDispatcher");
+                (c, inner) => new UnitOfWorkCommandDispatcher(inner), "CommandDispatcher");
 
-            container.RegisterType<CommandDispatcherLogger>().As<ICommandDispatcherLogger>().As<IBlingLogger>(); ;
+            container.RegisterType<CommandDispatcherLogger>().As<ICommandDispatcherLogger>().As<IBlingLogger>();
         }
 
-        static void AutoRegisterEmailTemplates(ContainerBuilder container)
-        {
-            container.RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
-                .Where(x => typeof (IEmailBodyTemplate).IsAssignableFrom(x) ||
-                            typeof (IEmailSubjectTemplate).IsAssignableFrom(x)
-                ).AsImplementedInterfaces();
-        }
-
-        static void AutoRegisterDataAndDomain(ContainerBuilder container)
-        {
-            container
-                .RegisterAssemblyTypes(new[]
-                                       {
-                                           typeof (ReadOnlyRepository).Assembly,
-                                           typeof (IEntity).Assembly,
-                                           typeof (MailGunSmtpClient).Assembly,
-                                           typeof (EmailSender).Assembly,
-                                           typeof (RazorViewEngine).Assembly                                          
-                                       })
-                .Where(x => x.GetInterfaces().Any())
-                .Where(x => typeof(ICommandHandler).IsAssignableFrom(x)!=true)
-                
-                .AsImplementedInterfaces();
-        }
+        
     }
-
 }

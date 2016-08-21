@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -10,27 +9,27 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserRoleAdder : IEventedCommandHandler<IUserSession, AddRoleToUser>
     {
-        private readonly IWriteableRepository _writeableRepository;
-        private readonly IReadOnlyRepository _readOnlyRepository;
-        
-        public UserRoleAdder(IWriteableRepository writeableRepository, IReadOnlyRepository readOnlyRepository)
+        readonly IRoleRepository _roleReadRepo;
+        readonly IUserRepository<User> _userReadRepo;
+        readonly IWriteableRepository _writeableRepository;
+
+        public UserRoleAdder(IWriteableRepository writeableRepository, IUserRepository<User> userReadRepo,
+            IRoleRepository roleReadRepo)
         {
             _writeableRepository = writeableRepository;
-            _readOnlyRepository = readOnlyRepository;            
+            _userReadRepo = userReadRepo;
+            _roleReadRepo = roleReadRepo;
         }
 
         public async Task Handle(IUserSession userIssuingCommand, AddRoleToUser command)
         {
+            User user = await _userReadRepo.GetById(command.UserId);
+            Role role = await _roleReadRepo.GetById(command.RolId);
 
-            var user = await _readOnlyRepository.GetById<User>(command.UserId);
-            var role = await _readOnlyRepository.GetById<Role>(command.RolId);
-
-            user.AddRol(role);
+            user.AddRole(role);
 
             await _writeableRepository.Update(user);
             NotifyObservers(new UserRoleAdded(user.Id, role.Id));
-
-
         }
 
         public event DomainEvent NotifyObservers;

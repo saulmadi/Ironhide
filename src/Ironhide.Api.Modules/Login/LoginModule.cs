@@ -13,8 +13,7 @@ namespace Ironhide.Api.Modules.Login
 {
     public class LoginModule : NancyModule
     {
-        public LoginModule(IPasswordEncryptor passwordEncryptor, IReadOnlyRepository readOnlyRepository,
-            ITokenFactory tokenFactory, IMenuProvider menuProvider)
+        public LoginModule(IPasswordEncryptor passwordEncryptor, IUserRepository<UserEmailLogin> readOnlyRepository, IUserRepository<UserFacebookLogin> facebookReadRepo, IUserRepository<UserGoogleLogin> googleReadRepo, ITokenFactory tokenFactory, IMenuProvider menuProvider)
         {
             Post["/login", true] =
                 async (a, ct) =>
@@ -28,7 +27,7 @@ namespace Ironhide.Api.Modules.Login
                           try
                           {
                               UserEmailLogin user =
-                                  await readOnlyRepository.First<UserEmailLogin>(
+                                  await readOnlyRepository.First(
                                       x =>
                                           x.Email == loginInfo.Email &&
                                           x.EncryptedPassword == encryptedPassword.Password);
@@ -62,7 +61,7 @@ namespace Ironhide.Api.Modules.Login
                           try
                           {
                               UserFacebookLogin user =
-                                  await readOnlyRepository.First<UserFacebookLogin>(
+                                  await facebookReadRepo.First(
                                       x =>
                                           x.Email == loginInfo.Email &&
                                           x.FacebookId == loginInfo.Id);
@@ -104,7 +103,7 @@ namespace Ironhide.Api.Modules.Login
                           try
                           {
                               UserGoogleLogin user =
-                                  await readOnlyRepository.First<UserGoogleLogin>(
+                                  await googleReadRepo.First(
                                       x =>
                                           x.Email == loginInfo.Email &&
                                           x.GoogleId == loginInfo.Id);

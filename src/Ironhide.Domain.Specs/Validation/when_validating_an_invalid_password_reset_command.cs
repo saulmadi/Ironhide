@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AcklenAvenue.Commands;
-using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.Exceptions;
 using Ironhide.Users.Domain.Services;
@@ -10,7 +9,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Ironhide.Domain.Specs.Validation
+namespace Ironhide.Users.Domain.Specs.Validation
 {
     public class when_validating_an_invalid_password_reset_command
     {
@@ -21,7 +20,7 @@ namespace Ironhide.Domain.Specs.Validation
         Establish context =
             () =>
             {
-                _validator = new PassowrdResetValidator(Mock.Of<IReadOnlyRepository>(), Mock.Of<ITimeProvider>());
+                _validator = new PassowrdResetValidator(Mock.Of<IPasswordResetTokenRepository>(), Mock.Of<ITimeProvider>());
 
                 _expectedFailures = new List<ValidationFailure>
                                     {

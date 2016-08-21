@@ -1,3 +1,5 @@
+using System;
+
 namespace Ironhide.Users.Domain.Entities
 {
     public class UserGoogleLogin : User
@@ -12,7 +14,7 @@ namespace Ironhide.Users.Domain.Entities
         {
         }
 
-        public UserGoogleLogin(string name, string email, string googleId, string firstName, string lastName, string imageUrl, string url): base(name, email)
+        public UserGoogleLogin(Guid id, string name, string email, string googleId, string firstName, string lastName, string imageUrl, string url): base(id, name, email)
         {
             GoogleId = googleId;
             FirstName = firstName;

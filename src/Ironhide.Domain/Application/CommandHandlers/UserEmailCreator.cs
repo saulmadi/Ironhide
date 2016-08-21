@@ -1,4 +1,4 @@
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
@@ -10,31 +10,34 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserEmailCreator : IEventedCommandHandler<IUserSession, CreateEmailLoginUser>
     {
+        readonly IUserAbilityRepository _abilityReadRepo;
+        readonly IRoleRepository _roleReadRepo;
         readonly IWriteableRepository _writeableRepository;
-        private readonly IReadOnlyRepository _readOnlyRepository;
 
-        public UserEmailCreator(IWriteableRepository writeableRepository, IReadOnlyRepository readOnlyRepository)
+        public UserEmailCreator(IWriteableRepository writeableRepository, IRoleRepository roleReadRepo,
+            IUserAbilityRepository abilityReadRepo)
         {
             _writeableRepository = writeableRepository;
-            _readOnlyRepository = readOnlyRepository;
+            _roleReadRepo = roleReadRepo;
+            _abilityReadRepo = abilityReadRepo;
         }
 
         #region ICommandHandler Members
 
         public async Task Handle(IUserSession userIssuingCommand, CreateEmailLoginUser command)
         {
-            var userCreated = new UserEmailLogin(command.Name, command.Email, command.EncryptedPassword,
+            var userCreated = new UserEmailLogin(Guid.NewGuid(), command.Name, command.Email, command.EncryptedPassword,
                 command.PhoneNumber);
 
-            foreach (var ability in command.abilities)
+            foreach (UserAbility ability in command.abilities)
             {
-                UserAbility userAbility = await _readOnlyRepository.GetById<UserAbility>(ability.Id);
+                UserAbility userAbility = await _abilityReadRepo.GetById(ability.Id);
                 userCreated.AddAbility(userAbility);
             }
 
-            var basicRole = await _readOnlyRepository.FirstOrDefault<Role>(x => x.Description == "Basic");
-            userCreated.AddRol(basicRole);
-            var userSaved = await _writeableRepository.Create(userCreated);
+            Role basicRole = await _roleReadRepo.First(x => x.Description == "Basic");
+            userCreated.AddRole(basicRole);
+            UserEmailLogin userSaved = await _writeableRepository.Create(userCreated);
 
             NotifyObservers(new UserEmailCreated(userSaved.Id, command.Email, command.Name, command.PhoneNumber));
         }

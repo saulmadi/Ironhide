@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
@@ -18,7 +19,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 
         public async Task Handle(IUserSession userIssuingCommand, CreateGoogleLoginUser command)
         {
-            var userCreated = await _writeableRepository.Create(new UserGoogleLogin(command.DisplayName, command.Email, command.Id, command.GivenName, command.FamilyName, command.ImageUrl, command.Url));
+            var userCreated = await _writeableRepository.Create(new UserGoogleLogin(Guid.NewGuid(), command.DisplayName, command.Email, command.Id, command.GivenName, command.FamilyName, command.ImageUrl, command.Url));
             NotifyObservers(new UserGoogleCreated(userCreated.Id, command.Email, command.DisplayName, command.Id));
         }
 

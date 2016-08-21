@@ -12,10 +12,11 @@ namespace Ironhide.Users.Domain.Validators
 {
     public class PassowrdResetValidator : ICommandValidator<IUserSession, ResetPassword>
     {
-        readonly IReadOnlyRepository _readOnlyRepo;
+        readonly IPasswordResetTokenRepository _readOnlyRepo;
         readonly ITimeProvider _timeProvider;
 
-        public PassowrdResetValidator(IReadOnlyRepository readOnlyRepo, ITimeProvider timeProvider)
+        public PassowrdResetValidator(IPasswordResetTokenRepository readOnlyRepo,
+            ITimeProvider timeProvider)
         {
             _readOnlyRepo = readOnlyRepo;
             _timeProvider = timeProvider;
@@ -24,7 +25,7 @@ namespace Ironhide.Users.Domain.Validators
         public async Task Validate(IUserSession userSession, ResetPassword command)
         {
             var failures = new List<ValidationFailure>();
-            if (command.EncryptedPassword==null || string.IsNullOrEmpty(command.EncryptedPassword.Password))
+            if (command.EncryptedPassword == null || string.IsNullOrEmpty(command.EncryptedPassword.Password))
             {
                 failures.Add(new ValidationFailure("EncryptedPassword", ValidationFailureType.Missing));
             }
@@ -36,14 +37,15 @@ namespace Ironhide.Users.Domain.Validators
             {
                 try
                 {
-                    var passwordResetToken = await _readOnlyRepo.GetById<PasswordResetAuthorization>(command.ResetPasswordToken);
+                    PasswordResetToken passwordResetToken =
+                        await _readOnlyRepo.GetById(command.ResetPasswordToken);
 
                     if (passwordResetToken.Created > _timeProvider.Now().AddDays(2))
                     {
                         failures.Add(new ValidationFailure("ResetPasswordToken", ValidationFailureType.Expired));
                     }
                 }
-                catch (ItemNotFoundException<PasswordResetAuthorization>)
+                catch (ItemNotFoundException<PasswordResetToken>)
                 {
                     failures.Add(new ValidationFailure("ResetPasswordToken", ValidationFailureType.DoesNotExist));
                 }

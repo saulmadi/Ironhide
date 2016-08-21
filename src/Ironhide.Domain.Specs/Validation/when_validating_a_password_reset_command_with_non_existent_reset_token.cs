@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AcklenAvenue.Commands;
-using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.Entities;
 using Ironhide.Users.Domain.Exceptions;
@@ -12,7 +11,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Ironhide.Domain.Specs.Validation
+namespace Ironhide.Users.Domain.Specs.Validation
 {
     public class when_validating_a_password_reset_command_with_non_existent_reset_token
     {
@@ -21,12 +20,12 @@ namespace Ironhide.Domain.Specs.Validation
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static List<ValidationFailure> _expectedFailures;
         static Exception _exception;
-        static IReadOnlyRepository _readOnlyRepo;
+        static IPasswordResetTokenRepository _readOnlyRepo;
 
         Establish context =
             () =>
             {
-                _readOnlyRepo = Mock.Of<IReadOnlyRepository>();
+                _readOnlyRepo = Mock.Of<IPasswordResetTokenRepository>();
                 _validator = new PassowrdResetValidator(_readOnlyRepo, Mock.Of<ITimeProvider>());
 
                 _expectedFailures = new List<ValidationFailure>
@@ -36,8 +35,8 @@ namespace Ironhide.Domain.Specs.Validation
                                             ValidationFailureType.DoesNotExist)
                                     };
 
-                Mock.Get(_readOnlyRepo).Setup(x => x.GetById<PasswordResetAuthorization>(ResetPasswordToken))
-                    .Throws(new ItemNotFoundException<PasswordResetAuthorization>(ResetPasswordToken));
+                Mock.Get(_readOnlyRepo).Setup(x => x.GetById(ResetPasswordToken))
+                    .Throws(new ItemNotFoundException<PasswordResetToken>(ResetPasswordToken));
             };
 
         Because of =

@@ -1,7 +1,7 @@
 ﻿using System;
 using Ironhide.Users.Domain.Entities;
 
-namespace Ironhide.Domain.Specs.Stubs
+namespace Ironhide.Users.Domain.Specs.Stubs
 {
     public class TestUser : UserEmailLogin
     {

@@ -39,26 +39,6 @@
       <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.59\lib\net45\AcklenAvenue.Commands.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AcklenAvenue.Data">
-      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.2.8\lib\net40\AcklenAvenue.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AcklenAvenue.Data.NHibernate">
-      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.2.8\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentNHibernate">
-      <HintPath>..\..\lib\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Iesi.Collections">
-      <HintPath>..\..\lib\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\..\lib\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />

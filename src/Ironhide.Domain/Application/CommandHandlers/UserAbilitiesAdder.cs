@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AcklenAvenue.Commands;
@@ -11,29 +12,31 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserAbilitiesAdder : IEventedCommandHandler<IUserSession, AddAbilitiesToUser>
     {
+        readonly IUserAbilityRepository _abilityReadRepo;
+        readonly IUserRepository<User> _userReadRepo;
         readonly IWriteableRepository _writeableRepository;
-        readonly IReadOnlyRepository _readOnlyRepository;
 
-        public UserAbilitiesAdder(IWriteableRepository writeableRepository, IReadOnlyRepository readOnlyRepository)
+        public UserAbilitiesAdder(IWriteableRepository writeableRepository, IUserRepository<User> userReadRepo, IUserAbilityRepository abilityReadRepo)
         {
             _writeableRepository = writeableRepository;
-            _readOnlyRepository = readOnlyRepository;
+            _userReadRepo = userReadRepo;
+            _abilityReadRepo = abilityReadRepo;
         }
 
         public async Task Handle(IUserSession userIssuingCommand, AddAbilitiesToUser command)
         {
-            var user = await _readOnlyRepository.GetById<User>(command.UserId);
+            User user = await _userReadRepo.GetById(command.UserId);
             var abilities = new List<UserAbility>();
-            foreach (var abilityId in command.Abilities)
+            foreach (Guid abilityId in command.Abilities)
             {
-                UserAbility userAbility = await _readOnlyRepository.GetById<UserAbility>(abilityId);
+                UserAbility userAbility = await _abilityReadRepo.GetById(abilityId);
                 abilities.Add(userAbility);
                 user.AddAbility(userAbility);
             }
 
             await _writeableRepository.Update(user);
 
-            NotifyObservers(new UserAbilitiesAdded(user.Id, abilities.Select(x=>x.Id)));
+            NotifyObservers(new UserAbilitiesAdded(user.Id, abilities.Select(x => x.Id)));
         }
 
         public event DomainEvent NotifyObservers;

@@ -49,8 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminUserSession.cs" />
-    <Compile Include="Application\CommandHandlers\DisablingUser.cs" />
-    <Compile Include="Application\CommandHandlers\EnablingUser.cs" />
+    <Compile Include="Application\CommandHandlers\UserDisabler.cs" />
+    <Compile Include="Application\CommandHandlers\UserEnabler.cs" />
     <Compile Include="Application\CommandHandlers\PasswordResetter.cs" />
     <Compile Include="Application\CommandHandlers\PasswordResetTokenCreator.cs" />
     <Compile Include="Application\CommandHandlers\UserAbilitiesAdder.cs" />
@@ -82,7 +82,7 @@
     <Compile Include="DomainEvents\UserGoogleCreated.cs" />
     <Compile Include="DomainEvents\UserProfileUpdated.cs" />
     <Compile Include="DomainEvents\UserRoleAdded.cs" />
-    <Compile Include="Entities\PasswordResetAuthorization.cs" />
+    <Compile Include="Entities\PasswordResetToken.cs" />
     <Compile Include="Entities\ProfileAdministrator.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\User.cs" />
@@ -95,6 +95,9 @@
     <Compile Include="Exceptions\ItemNotFoundException.cs" />
     <Compile Include="Exceptions\NoAvailableHandlerException.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="IPasswordResetTokenRepository.cs" />
+    <Compile Include="IRoleRepository.cs" />
+    <Compile Include="IUserAbilityRepository.cs" />
     <Compile Include="PasswordResetEmail.cs" />
     <Compile Include="Services\IEmailSender.cs" />
     <Compile Include="Services\IKeyProvider.cs" />

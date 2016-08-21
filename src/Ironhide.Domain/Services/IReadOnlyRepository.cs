@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Ironhide.Users.Domain.Entities;
 
 namespace Ironhide.Users.Domain.Services
-{
-    public interface IReadOnlyRepository
+{ 
+    public interface IUserRepository<TUser> where TUser: User
     {
-        Task<T> First<T>(Expression<Func<T, bool>> query) where T : class, IEntity;
-        Task<T> FirstOrDefault<T>(Expression<Func<T, bool>> query) where T : class, IEntity;
-        Task<T> GetById<T>(Guid id) where T : IEntity;
-        Task<IEnumerable<T>> GetAll<T>() where T : IEntity;
-        Task<IEnumerable<T>> Query<T>(Expression<Func<T, bool>> expression) where T : IEntity;
+        Task<TUser> First(Expression<Func<TUser, bool>> query);
+        Task<TUser> GetById(Guid id);
+        Task<IEnumerable<TUser>> GetAll();
+        Task<IEnumerable<TUser>> Query(Expression<Func<TUser, bool>> expression);
     }
 }

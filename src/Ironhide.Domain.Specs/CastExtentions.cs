@@ -1,4 +1,4 @@
-﻿namespace Ironhide.Domain.Specs
+﻿namespace Ironhide.Users.Domain.Specs
 {
     public static class CastExtentions
     {

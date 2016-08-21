@@ -11,6 +11,6 @@ namespace Ironhide.Users.Domain
         }
 
         public Guid Id { get; protected set; }
-        public string UserIdentifier { get; }
+        public string UserIdentifier { get; private set; }
     }
 }

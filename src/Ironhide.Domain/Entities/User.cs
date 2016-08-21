@@ -11,11 +11,11 @@ namespace Ironhide.Users.Domain.Entities
         public virtual bool IsActive { get; protected set; }
         IEnumerable<Role> _userRoles = new List<Role>(); 
 
-        public User(string name, string email)
+        public User(Guid id, string name, string email)
         {
             Name = name;
             Email = email;
-            Id = Guid.NewGuid();
+            Id = id;
             IsActive = true;
         }
 
@@ -60,7 +60,7 @@ namespace Ironhide.Users.Domain.Entities
             protected set { _userAbilities = value; }
         }
 
-        public virtual void AddRol(Role role)
+        public virtual void AddRole(Role role)
         {
            ( (IList<Role>)_userRoles).Add(role);
         }

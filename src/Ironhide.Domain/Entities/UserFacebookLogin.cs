@@ -1,8 +1,10 @@
+using System;
+
 namespace Ironhide.Users.Domain.Entities
 {
     public class UserFacebookLogin:User
     {
-        public UserFacebookLogin(string name, string email, string facebookId, string firstName, string lastName, string imageUrl, string url) : base(name, email)
+        public UserFacebookLogin(Guid id, string name, string email, string facebookId, string firstName, string lastName, string imageUrl, string url) : base(id, name, email)
         {
             FacebookId = facebookId;
             FirstName = firstName;
