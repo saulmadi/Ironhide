@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Threading.Tasks;
 using Ironhide.Users.Domain.Entities;
 
 namespace Ironhide.Users.Data.Specs.Support
@@ -16,6 +17,14 @@ namespace Ironhide.Users.Data.Specs.Support
         public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserAbility> UserAbilities { get; set; }
+        
+        public async Task SaveChanges()
+        {
+            Saved ++;
+        }
+
+        public int Saved { get; private set; }
+
         public DbSet<User> Users { get; set; }
 
         public void Seed(params User[] seed)

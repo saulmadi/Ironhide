@@ -10,16 +10,16 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserGoogleCreator : IEventedCommandHandler<IUserSession, CreateGoogleLoginUser>
     {
-        readonly IWriteableRepository _writeableRepository;
+        readonly IUserRepository<User> _userRepo;
 
-        public UserGoogleCreator(IWriteableRepository writeableRepository)
+        public UserGoogleCreator(IUserRepository<User> userRepo)
         {
-            _writeableRepository = writeableRepository;
+            _userRepo = userRepo;
         }
 
         public async Task Handle(IUserSession userIssuingCommand, CreateGoogleLoginUser command)
         {
-            var userCreated = await _writeableRepository.Create(new UserGoogleLogin(Guid.NewGuid(), command.DisplayName, command.Email, command.Id, command.GivenName, command.FamilyName, command.ImageUrl, command.Url));
+            var userCreated = await _userRepo.Create(new UserGoogleLogin(Guid.NewGuid(), command.DisplayName, command.Email, command.Id, command.GivenName, command.FamilyName, command.ImageUrl, command.Url));
             NotifyObservers(new UserGoogleCreated(userCreated.Id, command.Email, command.DisplayName, command.Id));
         }
 

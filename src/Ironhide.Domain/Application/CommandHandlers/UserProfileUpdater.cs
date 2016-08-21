@@ -9,21 +9,19 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserProfileUpdater : IEventedCommandHandler<IUserSession, UpdateUserProfile>
     {
-        readonly IUserRepository<User> _readonlyRepo;
-        readonly IWriteableRepository _writeableRepository;
-
-        public UserProfileUpdater(IUserRepository<User> readonlyRepo, IWriteableRepository writeableRepository)
+        readonly IUserRepository<User> _repo;
+        
+        public UserProfileUpdater(IUserRepository<User> repo)
         {
-            _readonlyRepo = readonlyRepo;
-            _writeableRepository = writeableRepository;
+            _repo = repo;            
         }
 
         public async Task Handle(IUserSession userIssuingCommand, UpdateUserProfile command)
         {
-            User user = await _readonlyRepo.GetById(command.Id);
+            User user = await _repo.GetById(command.Id);
             user.ChangeName(command.Name);
             user.ChangeEmailAddress(command.Email);
-            await _writeableRepository.Update(user);
+            await _repo.Update(user);
             NotifyObservers(new UserProfileUpdated(user.Id, command.Name, command.Email));
         }
 

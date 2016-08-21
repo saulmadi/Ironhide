@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.Users.Data", "Iron
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{235F3DD9-EBDE-41CD-AB88-FF844BCB423A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.Host", "Ironhide.Host\Ironhide.Host.csproj", "{A4650C44-B228-4F42-A13B-1AB50D58EF01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ironhide.Users.DatabaseDeployer", "DatabaseDeployer\Ironhide.Users.DatabaseDeployer.csproj", "{421F06E2-ED63-4E20-B8E7-03D6C5462D67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +68,14 @@ Global
 		{0021D37D-D0CC-4491-BB7B-3FD43EEEB7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0021D37D-D0CC-4491-BB7B-3FD43EEEB7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0021D37D-D0CC-4491-BB7B-3FD43EEEB7FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4650C44-B228-4F42-A13B-1AB50D58EF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4650C44-B228-4F42-A13B-1AB50D58EF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4650C44-B228-4F42-A13B-1AB50D58EF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4650C44-B228-4F42-A13B-1AB50D58EF01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{421F06E2-ED63-4E20-B8E7-03D6C5462D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{421F06E2-ED63-4E20-B8E7-03D6C5462D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{421F06E2-ED63-4E20-B8E7-03D6C5462D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{421F06E2-ED63-4E20-B8E7-03D6C5462D67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,5 +87,6 @@ Global
 		{1E1E8DFC-FF92-4FB3-A2A6-ED5744129EC5} = {235F3DD9-EBDE-41CD-AB88-FF844BCB423A}
 		{4B32449A-EC8C-4180-8D0B-C319F1E82172} = {235F3DD9-EBDE-41CD-AB88-FF844BCB423A}
 		{0021D37D-D0CC-4491-BB7B-3FD43EEEB7FE} = {235F3DD9-EBDE-41CD-AB88-FF844BCB423A}
+		{421F06E2-ED63-4E20-B8E7-03D6C5462D67} = {235F3DD9-EBDE-41CD-AB88-FF844BCB423A}
 	EndGlobalSection
 EndGlobal

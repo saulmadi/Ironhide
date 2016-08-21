@@ -14,15 +14,14 @@ using It = Machine.Specifications.It;
 
 namespace Ironhide.Users.Domain.Specs.CommandHandlers
 {
-    public class when_something_happens
+    public class when_adding_abilitites_to_an_existing_user
     {
         static IIdentityGenerator<Guid> _identityGenerator;
         static Guid _userGuid;
         static AddAbilitiesToUser _addAbilitiesToUser;
         static UserAbility _abilities;
         static Guid _abilityGuid;
-        static IWriteableRepository _writeableRepository;
-        static IUserRepository<User> _userReadRepo;
+        static IUserRepository<User> _userRepo;
         static User _userCreated;
         static UserAbilitiesAdder _handle;
         static UserAbilitiesAdded _userAbilitiesAdded;
@@ -52,22 +51,17 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                 _abilitiesAdded = new List<UserAbility> {_abilities};
                 _addAbilitiesToUser = new AddAbilitiesToUser(_userGuid, _abilitiesAdded.Select(x => x.Id));
 
-                _writeableRepository = Mock.Of<IWriteableRepository>();
-                _userReadRepo = Mock.Of<IUserRepository<User>>();
+                _userRepo = Mock.Of<IUserRepository<User>>();
                 _abilityReadRepo = Mock.Of<IUserAbilityRepository>();
 
-                Mock.Get(_writeableRepository)
-                    .Setup(repository => repository.Update(Moq.It.Is<User>(user => user.Id == _userGuid)))
-                    .ReturnsAsync(_userCreated);
-
-                Mock.Get(_userReadRepo)
+                Mock.Get(_userRepo)
                     .Setup(repository => repository.GetById(_userCreated.Id)).ReturnsAsync(_userCreated);
 
                 Mock.Get(_abilityReadRepo)
                     .Setup(repository => repository.GetById(_abilityGuid))
                     .ReturnsAsync(_abilitiesAdded.FirstOrDefault());
 
-                _handle = new UserAbilitiesAdder(_writeableRepository, _userReadRepo, _abilityReadRepo);
+                _handle = new UserAbilitiesAdder(_userRepo, _abilityReadRepo);
                 _userAbilitiesAdded = new UserAbilitiesAdded(_userGuid, _abilitiesAdded.Select(x => x.Id));
                 _handle.NotifyObservers += x => _eventRaised = x;
             };
@@ -77,7 +71,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
 
         It should_add_abilities_to_user =
             () =>
-                Mock.Get(_writeableRepository).Verify(
+                Mock.Get(_userRepo).Verify(
                     x =>
                         x.Update(Moq.It.Is<User>(u =>
                             u.Id == _userCreated.Id && u.UserAbilities.Contains(_abilities))));

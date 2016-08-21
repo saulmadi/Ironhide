@@ -80,6 +80,8 @@
     <Compile Include="Roles\when_getting_one_user_by_id.cs" />
     <Compile Include="Support\AsyncTestHelper.cs" />
     <Compile Include="Tokens\when_getting_one_user_by_id.cs" />
+    <Compile Include="Users\when_creating_a_user.cs" />
+    <Compile Include="Users\when_deleting_a_user.cs" />
     <Compile Include="Users\when_finding_one_user_match_by_any_property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\TestDbAsyncEnumerable.cs" />
@@ -88,8 +90,8 @@
     <Compile Include="Support\TestDbSet.cs" />
     <Compile Include="Support\TestUserDataContext.cs" />
     <Compile Include="Users\when_finding_multiple_user_matches_by_any_property.cs" />
-    <Compile Include="Users\when_getting_all_users.cs" />
     <Compile Include="Users\when_getting_one_user_by_id.cs" />
+    <Compile Include="Users\when_updating_a_user.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

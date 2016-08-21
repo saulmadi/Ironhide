@@ -45,44 +45,48 @@ namespace Ironhide.Api.Modules.UserManagement
                           return usersList;
                       };
 
-            Post["/users/enable", true] =
-                async (a, c) =>
+            Put["/users/{userId:guid}/enable", true] =
+                async (p, c) =>
                       {
                           this.RequiresClaims(new[] {"Administrator"});
-                          var request = this.Bind<AdminEnableUsersRequest>();
-                          if (request.Enable)
-                          {
-                              await
-                                  commandDispatcher.Dispatch(userSessionFactory.Create(Context.CurrentUser),
-                                      new EnableUser(request.Id));
-                          }
-                          else
-                          {
-                              await
-                                  commandDispatcher.Dispatch(userSessionFactory.Create(Context.CurrentUser),
-                                      new DisableUser(request.Id));
-                          }
-
+                          Guid userId = Guid.Parse((string) p.userId);
+                          await
+                              commandDispatcher.Dispatch(userSessionFactory.Create(Context.CurrentUser),
+                                  new EnableUser(userId));
                           return null;
                       };
 
-            Get["/user/{userId}", true] =
-                async (_, c) =>
+            Put["/users/{userId:guid}/disable", true] =
+                async (p, c) =>
                       {
-                          Guid userId = Guid.Parse((string) _.userId);
+                          this.RequiresClaims(new[] {"Administrator"});
+                          Guid userId = Guid.Parse((string) p.userId);
+                          await
+                              commandDispatcher.Dispatch(userSessionFactory.Create(Context.CurrentUser),
+                                  new DisableUser(userId));
+                          return null;
+                      };
+
+            Get["/users/{userId:guid}", true] =
+                async (p, c) =>
+                      {
+                          this.RequiresClaims(new[] { "Administrator" });
+                          Guid userId = Guid.Parse((string)p.userId);
                           User user = await readOnlyRepository.GetById(userId);
                           AdminUserResponse mappedUser = mapper
                               .Map<User, AdminUserResponse>(user);
                           return mappedUser;
                       };
 
-            Post["/user", true] =
-                async (a, c) =>
+            Put["/users/{userId:guid}", true] =
+                async (p, c) =>
                       {
+                          this.RequiresClaims(new[] { "Administrator" });
                           var request = this.Bind<AdminUpdateUserRequest>();
+                          Guid userId = Guid.Parse((string) p.userId);
                           await
                               commandDispatcher.Dispatch(userSessionFactory.Create(Context.CurrentUser),
-                                  new UpdateUserProfile(request.Id, request.Name, request.Email));
+                                  new UpdateUserProfile(userId, request.Name, request.Email));
                           return null;
                       };
         }

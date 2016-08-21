@@ -10,25 +10,23 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
     public class UserRoleAdder : IEventedCommandHandler<IUserSession, AddRoleToUser>
     {
         readonly IRoleRepository _roleReadRepo;
-        readonly IUserRepository<User> _userReadRepo;
-        readonly IWriteableRepository _writeableRepository;
-
-        public UserRoleAdder(IWriteableRepository writeableRepository, IUserRepository<User> userReadRepo,
+        readonly IUserRepository<User> _userRepo;
+        
+        public UserRoleAdder(IUserRepository<User> userRepo,
             IRoleRepository roleReadRepo)
         {
-            _writeableRepository = writeableRepository;
-            _userReadRepo = userReadRepo;
+            _userRepo = userRepo;
             _roleReadRepo = roleReadRepo;
         }
 
         public async Task Handle(IUserSession userIssuingCommand, AddRoleToUser command)
         {
-            User user = await _userReadRepo.GetById(command.UserId);
+            User user = await _userRepo.GetById(command.UserId);
             Role role = await _roleReadRepo.GetById(command.RolId);
 
             user.AddRole(role);
 
-            await _writeableRepository.Update(user);
+            await _userRepo.Update(user);
             NotifyObservers(new UserRoleAdded(user.Id, role.Id));
         }
 

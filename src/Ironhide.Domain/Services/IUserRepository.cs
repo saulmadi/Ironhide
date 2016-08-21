@@ -10,7 +10,9 @@ namespace Ironhide.Users.Domain.Services
     {
         Task<TUser> First(Expression<Func<TUser, bool>> query);
         Task<TUser> GetById(Guid id);
-        Task<IEnumerable<TUser>> GetAll();
         Task<IEnumerable<TUser>> Query(Expression<Func<TUser, bool>> expression);
+        Task Delete(Guid userId);
+        Task Update(User user);
+        Task<User> Create(User user);
     }
 }

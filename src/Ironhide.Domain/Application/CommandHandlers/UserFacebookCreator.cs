@@ -10,9 +10,9 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserFacebookCreator : IEventedCommandHandler<IUserSession, CreateFacebookLoginUser>
     {
-        readonly IWriteableRepository _writeableRepository;
+        readonly IUserRepository<User> _writeableRepository;
 
-        public UserFacebookCreator(IWriteableRepository writeableRepository)
+        public UserFacebookCreator(IUserRepository<User> writeableRepository)
         {
             _writeableRepository = writeableRepository;
         }
@@ -20,6 +20,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
         public async Task Handle(IUserSession userIssuingCommand, CreateFacebookLoginUser command)
         {
             var userCreated = await _writeableRepository.Create(new UserFacebookLogin(Guid.NewGuid(), command.name,command.email,command.id,command.firstName,command.lastName,command.imageUrl,command.link));
+            
             NotifyObservers(new UserFacebookCreated(userCreated.Id, command.email, command.name, command.id));
         }
 

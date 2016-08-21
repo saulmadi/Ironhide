@@ -126,6 +126,8 @@
     <Compile Include="RestExceptions\TokenExpiredException.cs" />
     <Compile Include="RestExceptions\UnauthorizedExceptionRepackager.cs" />
     <Compile Include="RestExceptions\UserInputPropertyMissingException.cs" />
+    <Compile Include="RootModule.cs" />
+    <Compile Include="StartupMessages.cs" />
     <Compile Include="UserSessionFactory.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,24 +7,20 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
-    public class UserDisabler : IEventedCommandHandler<IUserSession, Commands.DisableUser>
+    public class UserDisabler : IEventedCommandHandler<IUserSession, DisableUser>
     {
-        readonly IUserRepository<User> _readOnlyRepository;
-        readonly IWriteableRepository _writeableRepository;
+        readonly IUserRepository<User> _repo;
 
-        public UserDisabler(IWriteableRepository writeableRepository, IUserRepository<User> readOnlyRepository)
+        public UserDisabler(IUserRepository<User> repo)
         {
-            _writeableRepository = writeableRepository;
-            _readOnlyRepository = readOnlyRepository;
+            _repo = repo;
         }
 
-        public async Task Handle(IUserSession userIssuingCommand, Commands.DisableUser command)
+        public async Task Handle(IUserSession userIssuingCommand, DisableUser command)
         {
-            User user = await _readOnlyRepository.GetById(command.id);
+            User user = await _repo.GetById(command.id);
             user.DisableUser();
-
-            await _writeableRepository.Update(user);
-
+            await _repo.Update(user);
             NotifyObservers(new UserDisabled(user.Id));
         }
 

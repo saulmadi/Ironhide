@@ -9,23 +9,18 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserEnabler : IEventedCommandHandler<IUserSession, EnableUser>
     {
-        readonly IUserRepository<User> _readOnlyRepository;
-        readonly IWriteableRepository _writeableRepository;
-
-        public UserEnabler(IWriteableRepository writeableRepository, IUserRepository<User> readOnlyRepository)
+        readonly IUserRepository<User> _repo;
+        
+        public UserEnabler(IUserRepository<User> repo)
         {
-            _writeableRepository = writeableRepository;
-            _readOnlyRepository = readOnlyRepository;
+            _repo = repo;
         }
 
         public async Task Handle(IUserSession userIssuingCommand, EnableUser command)
         {
-            User user = await _readOnlyRepository.GetById(command.id);
-
+            User user = await _repo.GetById(command.id);
             user.EnableUser();
-
-            await _writeableRepository.Update(user);
-
+            await _repo.Update(user);
             NotifyObservers(new UserEnabled(user.Id));
         }
 

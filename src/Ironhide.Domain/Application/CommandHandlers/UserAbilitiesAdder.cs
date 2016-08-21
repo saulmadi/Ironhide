@@ -14,11 +14,9 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
     {
         readonly IUserAbilityRepository _abilityReadRepo;
         readonly IUserRepository<User> _userReadRepo;
-        readonly IWriteableRepository _writeableRepository;
-
-        public UserAbilitiesAdder(IWriteableRepository writeableRepository, IUserRepository<User> userReadRepo, IUserAbilityRepository abilityReadRepo)
+        
+        public UserAbilitiesAdder(IUserRepository<User> userReadRepo, IUserAbilityRepository abilityReadRepo)
         {
-            _writeableRepository = writeableRepository;
             _userReadRepo = userReadRepo;
             _abilityReadRepo = abilityReadRepo;
         }
@@ -34,7 +32,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
                 user.AddAbility(userAbility);
             }
 
-            await _writeableRepository.Update(user);
+            await _userReadRepo.Update(user);
 
             NotifyObservers(new UserAbilitiesAdded(user.Id, abilities.Select(x => x.Id)));
         }

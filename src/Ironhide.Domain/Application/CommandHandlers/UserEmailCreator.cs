@@ -12,14 +12,14 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
     {
         readonly IUserAbilityRepository _abilityReadRepo;
         readonly IRoleRepository _roleReadRepo;
-        readonly IWriteableRepository _writeableRepository;
+        readonly IUserRepository<User> _userRepo;
 
-        public UserEmailCreator(IWriteableRepository writeableRepository, IRoleRepository roleReadRepo,
-            IUserAbilityRepository abilityReadRepo)
+        public UserEmailCreator(IRoleRepository roleReadRepo,
+            IUserAbilityRepository abilityReadRepo, IUserRepository<User> userRepo)
         {
-            _writeableRepository = writeableRepository;
             _roleReadRepo = roleReadRepo;
             _abilityReadRepo = abilityReadRepo;
+            _userRepo = userRepo;
         }
 
         #region ICommandHandler Members
@@ -37,7 +37,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 
             Role basicRole = await _roleReadRepo.First(x => x.Description == "Basic");
             userCreated.AddRole(basicRole);
-            UserEmailLogin userSaved = await _writeableRepository.Create(userCreated);
+            User userSaved = await _userRepo.Create(userCreated);
 
             NotifyObservers(new UserEmailCreated(userSaved.Id, command.Email, command.Name, command.PhoneNumber));
         }

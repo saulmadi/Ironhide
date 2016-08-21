@@ -18,7 +18,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     {
         const string EmailAddress = "email@email.com";
         static IEventedCommandHandler<IUserSession, CreatePasswordResetToken> _handler;
-        static IWriteableRepository _writeableRepository;
+        static IPasswordResetTokenRepository _tokenRepo;
         static ITimeProvider _timeProvider;
         static DateTime _now;
         static UserEmailLogin _userWithMatchingEmailAddress;
@@ -31,10 +31,10 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
             () =>
             {
                 var readOnlyRepository = Mock.Of<IUserRepository<UserEmailLogin>>();
-                _writeableRepository = Mock.Of<IWriteableRepository>();
+                _tokenRepo = Mock.Of<IPasswordResetTokenRepository>();
                 _timeProvider = Mock.Of<ITimeProvider>();
                 _idGenerator = Mock.Of<IIdentityGenerator<Guid>>();
-                _handler = new PasswordResetTokenCreator(_writeableRepository, readOnlyRepository, _timeProvider,
+                _handler = new PasswordResetTokenCreator(_tokenRepo, readOnlyRepository, _timeProvider,
                     _idGenerator);
 
                 Mock.Get(_idGenerator).Setup(x => x.Generate()).Returns(TokenId);
@@ -59,7 +59,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
             () => _handler.Handle(new VisitorSession(), new CreatePasswordResetToken(EmailAddress));
 
         It should_create_the_password_reset_token =
-            () => Mock.Get(_writeableRepository)
+            () => Mock.Get(_tokenRepo)
                 .Verify(
                     x =>
                         x.Create(

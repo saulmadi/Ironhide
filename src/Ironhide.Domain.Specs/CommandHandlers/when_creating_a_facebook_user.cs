@@ -15,7 +15,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_creating_a_facebook_user
     {
         static CreateFacebookLoginUser _command;
-        static IWriteableRepository _writeableRepository;
+        static IUserRepository<User> _writeableRepository;
         static IEventedCommandHandler<IUserSession, CreateFacebookLoginUser> _handler;
         static UserFacebookCreated _expectedEvent;
         static object _eventRaised;
@@ -27,7 +27,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
 
                 _command = Builder<CreateFacebookLoginUser>.CreateNew().Build();
 
-                _writeableRepository = Mock.Of<IWriteableRepository>();
+                _writeableRepository = Mock.Of<IUserRepository<User>>();
                 _userCreated = Builder<UserFacebookLogin>.CreateNew()
                   .With(user => user.Email, _command.email)
                   .With(user => user.Name, _command.name)

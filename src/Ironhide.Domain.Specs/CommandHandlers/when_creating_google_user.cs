@@ -15,7 +15,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_creating_google_user
     {
         static CreateGoogleLoginUser _command;
-        static IWriteableRepository _writeableRepository;
+        static IUserRepository<User> _userRepo;
         static IEventedCommandHandler<IUserSession, CreateGoogleLoginUser> _handler;
         static UserGoogleCreated _expectedEvent;
         static object _eventRaised;
@@ -27,7 +27,8 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
 
                 _command = Builder<CreateGoogleLoginUser>.CreateNew().Build();
 
-                _writeableRepository = Mock.Of<IWriteableRepository>();
+                _userRepo = Mock.Of<IUserRepository<User>>();
+
                 _userCreated = Builder<UserGoogleLogin>.CreateNew()
                   .With(user => user.Email, _command.Email)
                   .With(user => user.Name, _command.DisplayName)
@@ -39,10 +40,9 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                 .With(user => user.Id, Guid.NewGuid())
                   .Build();
 
+                _handler = new UserGoogleCreator(_userRepo);
 
-                _handler = new UserGoogleCreator(_writeableRepository);
-
-                Mock.Get(_writeableRepository)
+                Mock.Get(_userRepo)
                     .Setup(repository => repository.Create(Moq.It.IsAny<UserGoogleLogin>()))
                     .ReturnsAsync(_userCreated);
 
@@ -55,7 +55,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
             () => _handler.Handle(Mock.Of<IUserSession>(), _command);
 
         It should_create_google_user =
-            () => Mock.Get(_writeableRepository).Verify(
+            () => Mock.Get(_userRepo).Verify(
                 repository =>
                     repository.Create(Moq.It.Is<UserGoogleLogin>(
                         z => z.FirstName == _command.GivenName &&

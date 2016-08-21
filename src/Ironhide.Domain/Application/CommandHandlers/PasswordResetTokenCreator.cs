@@ -13,13 +13,13 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
         readonly IIdentityGenerator<Guid> _idGenerator;
         readonly IUserRepository<UserEmailLogin> _readOnlyRepository;
         readonly ITimeProvider _timeProvider;
-        readonly IWriteableRepository _writeableRepository;
+        readonly IPasswordResetTokenRepository _tokenRepo;
 
-        public PasswordResetTokenCreator(IWriteableRepository writeableRepository,
+        public PasswordResetTokenCreator(IPasswordResetTokenRepository tokenRepo,
             IUserRepository<UserEmailLogin> readOnlyRepository, ITimeProvider timeProvider,
             IIdentityGenerator<Guid> idGenerator)
         {
-            _writeableRepository = writeableRepository;
+            _tokenRepo = tokenRepo;
             _readOnlyRepository = readOnlyRepository;
             _timeProvider = timeProvider;
             _idGenerator = idGenerator;
@@ -29,7 +29,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
         {
             UserEmailLogin user = await _readOnlyRepository.First(x => x.Email == command.Email);
             Guid tokenId = _idGenerator.Generate();
-            await _writeableRepository.Create(new PasswordResetToken(tokenId, user.Id, _timeProvider.Now()));
+            await _tokenRepo.Create(new PasswordResetToken(tokenId, user.Id, _timeProvider.Now()));
             NotifyObservers(new PasswordResetTokenCreated(tokenId, user.Id));
         }
 

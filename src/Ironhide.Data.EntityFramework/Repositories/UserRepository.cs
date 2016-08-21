@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -28,14 +29,28 @@ namespace Ironhide.Users.Data.Repositories
             return await _dataContext.Users.FindAsync(id);
         }
 
-        public async Task<IEnumerable<User>> GetAll()
-        {
-            return await _dataContext.Users.ToListAsync();
-        }
-
         public async Task<IEnumerable<User>> Query(Expression<Func<User, bool>> expression)
         {
             return await _dataContext.Users.Where(expression).ToListAsync();
+        }
+
+        public async Task Delete(Guid userId)
+        {
+            var user = await _dataContext.Users.FindAsync(userId);
+            _dataContext.Users.Remove(user);
+            await _dataContext.SaveChanges();            
+        }
+
+        public async Task Update(User user)
+        {
+            await _dataContext.SaveChanges();
+        }
+
+        public async Task<User> Create(User user)
+        {
+            _dataContext.Users.Add(user);
+            await _dataContext.SaveChanges();
+            return user;
         }
     }
 }

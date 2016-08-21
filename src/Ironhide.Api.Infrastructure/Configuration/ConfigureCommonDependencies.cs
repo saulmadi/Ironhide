@@ -29,31 +29,15 @@ namespace Ironhide.Api.Infrastructure.Configuration
             {
                 return container =>
                        {
-                           AutoRegisterDataAndDomain(container);
+                           XmlConfigurator.Configure();
                            container.RegisterType<BaseUrlProvider>().As<IBaseUrlProvider>();
                            container.RegisterType<ApiUserMapper>().As<IApiUserMapper<string>>();
                            container.RegisterInstance(LogManager.GetLogger("Logger")).As<ILog>();
                            container.RegisterType<UserSessionFactory>().As<IUserSessionFactory>();
-                           XmlConfigurator.Configure();
-
                            ConfigureCommandAndEventHandlers(container);
-
-                           AutoRegisterAllCommandHandlers(container);
-                           RegisterUsersFeutures(container);
+                           AutoRegisterAllCommandHandlers(container);                           
                        };
             }
-        }
-
-        void RegisterUsersFeutures(ContainerBuilder container)
-        {
-            byte[] bytes = Resources.RolesFeatures;
-            var reader = new StreamReader(new MemoryStream(bytes), Encoding.Default);
-
-
-            var usersRoles = new JsonSerializer().Deserialize<IEnumerable<UsersRoles>>(new JsonTextReader(reader));
-
-
-            container.RegisterType<MenuProvider>().As<IMenuProvider>().WithParameter("usersRoles", usersRoles);
         }
 
         void AutoRegisterAllCommandHandlers(ContainerBuilder container)
@@ -71,11 +55,9 @@ namespace Ironhide.Api.Infrastructure.Configuration
         static void ConfigureCommandAndEventHandlers(ContainerBuilder container)
         {
             container.RegisterType<IronhideBlingDispatcher>().As<IBlingDispatcher>();
-
             container.RegisterType<IronhideCommandDispatcher>().Named<ICommandDispatcher>("CommandDispatcher");
             container.RegisterDecorator<ICommandDispatcher>(
                 (c, inner) => new UnitOfWorkCommandDispatcher(inner), "CommandDispatcher");
-
             container.RegisterType<CommandDispatcherLogger>().As<ICommandDispatcherLogger>().As<IBlingLogger>();
         }
 

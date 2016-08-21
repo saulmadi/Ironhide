@@ -18,5 +18,15 @@ namespace Ironhide.Users.Data.Repositories
         {
             return await _dataContext.PasswordResetTokens.FindAsync(tokenId);
         }
+
+        public Task Delete(Guid tokenId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Create(PasswordResetToken passwordResetToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

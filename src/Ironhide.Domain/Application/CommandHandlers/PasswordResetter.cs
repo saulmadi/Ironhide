@@ -10,24 +10,22 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
     public class PasswordResetter : IEventedCommandHandler<IUserSession, ResetPassword>
     {
         readonly IPasswordResetTokenRepository _tokenReadRepo;
-        readonly IUserRepository<UserEmailLogin> _userReadRepo;
-        readonly IWriteableRepository _writeableRepository;
-
-        public PasswordResetter(IUserRepository<UserEmailLogin> userReadRepo,
-            IPasswordResetTokenRepository tokenReadRepo, IWriteableRepository writeableRepository)
+        readonly IUserRepository<UserEmailLogin> _repo;
+        
+        public PasswordResetter(IUserRepository<UserEmailLogin> repo,
+            IPasswordResetTokenRepository tokenReadRepo)
         {
-            _userReadRepo = userReadRepo;
-            _tokenReadRepo = tokenReadRepo;
-            _writeableRepository = writeableRepository;
+            _repo = repo;
+            _tokenReadRepo = tokenReadRepo;            
         }
 
         public async Task Handle(IUserSession userIssuingCommand, ResetPassword command)
         {
             PasswordResetToken passwordResetToken = await _tokenReadRepo.GetById(command.ResetPasswordToken);
-            UserEmailLogin user = await _userReadRepo.GetById(passwordResetToken.UserId);
+            UserEmailLogin user = await _repo.GetById(passwordResetToken.UserId);
             user.ChangePassword(command.EncryptedPassword);
-            await _writeableRepository.Update(user);
-            await _writeableRepository.Delete<PasswordResetToken>(command.ResetPasswordToken);
+            await _repo.Update(user);
+            await _tokenReadRepo.Delete(command.ResetPasswordToken);
             NotifyObservers(new PasswordReset(passwordResetToken.UserId));
         }
 

@@ -16,8 +16,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_resetting_a_password
     {
         const string NewPassword = "new_password";
-        static IWriteableRepository _writeableRepository;
-        static IUserRepository<UserEmailLogin> _userReadRepo;
+        static IUserRepository<UserEmailLogin> _userRepo;
         static IEventedCommandHandler<IUserSession, ResetPassword> _commandHander;
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static object _eventRaised;
@@ -27,17 +26,16 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
         Establish context =
             () =>
             {
-                _writeableRepository = Mock.Of<IWriteableRepository>();
-                _userReadRepo = Mock.Of<IUserRepository<UserEmailLogin>>();
+                _userRepo = Mock.Of<IUserRepository<UserEmailLogin>>();
                 _tokenReadRepo = Mock.Of<IPasswordResetTokenRepository>();
                 _commandHander =
-                    new PasswordResetter(_userReadRepo, _tokenReadRepo, _writeableRepository);
+                    new PasswordResetter(_userRepo, _tokenReadRepo);
 
                 Guid userId = Guid.NewGuid();
                 Mock.Get(_tokenReadRepo).Setup(x => x.GetById(ResetPasswordToken))
                     .ReturnsAsync(new PasswordResetToken(ResetPasswordToken, userId, DateTime.Now));
 
-                Mock.Get(_userReadRepo).Setup(x => x.GetById(userId))
+                Mock.Get(_userRepo).Setup(x => x.GetById(userId))
                     .ReturnsAsync(new TestUser(userId, "name", "password"));
 
                 _commandHander.NotifyObservers += x => _eventRaised = x;
@@ -51,13 +49,13 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
 
         It should_change_the_password_in_the_user =
             () =>
-                Mock.Get(_writeableRepository)
+                Mock.Get(_userRepo)
                     .Verify(x => x.Update(Moq.It.Is<UserEmailLogin>(y => y.EncryptedPassword == NewPassword)));
 
         It should_notify_observers =
             () => _eventRaised.ShouldBeLike(_expectedEvent);
 
         It should_remove_the_token =
-            () => Mock.Get(_writeableRepository).Verify(x => x.Delete<PasswordResetToken>(ResetPasswordToken));
+            () => Mock.Get(_tokenReadRepo).Verify(x => x.Delete(ResetPasswordToken));
     }
 }

@@ -110,12 +110,11 @@
     <Compile Include="Services\GuidIdentityGenerator.cs" />
     <Compile Include="Services\HashPasswordEncryptor.cs" />
     <Compile Include="Services\IPasswordEncryptor.cs" />
-    <Compile Include="Services\IReadOnlyRepository.cs" />
+    <Compile Include="Services\IUserRepository.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Services\ITokenExpirationProvider.cs" />
     <Compile Include="Services\IIdentityGenerator.cs" />
     <Compile Include="Services\ITokenFactory.cs" />
-    <Compile Include="Services\IWriteableRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SystemTimeProvider.cs" />
     <Compile Include="Services\TokenExpirationProvider.cs" />

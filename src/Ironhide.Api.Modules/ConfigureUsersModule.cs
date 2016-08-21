@@ -1,10 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Text;
 using AcklenAvenue.Commands;
 using Autofac;
 using AutoMapper;
 using Ironhide.Api.Infrastructure;
+using Ironhide.Api.Infrastructure.Authentication;
+using Ironhide.Api.Infrastructure.Authentication.Roles;
+using Ironhide.Api.Infrastructure.Properties;
 using Ironhide.Api.Modules.UserAccounts;
 using Ironhide.Api.Modules.UserManagement;
 using Ironhide.Users.Data;
@@ -12,6 +18,7 @@ using Ironhide.Users.Data.Repositories;
 using Ironhide.Users.Domain;
 using Ironhide.Users.Domain.Entities;
 using Ironhide.Users.Domain.Services;
+using Newtonsoft.Json;
 
 namespace Ironhide.Api.Modules
 {
@@ -28,6 +35,7 @@ namespace Ironhide.Api.Modules
                            AutoRegisterDataAndDomainDependencies(container);
                            WireUpDatabaseStuff(container);
                            ConfigureAutomapperMappings(container);
+                           RegisterUsersFeatures(container);
                        };
             }
         }
@@ -56,12 +64,21 @@ namespace Ironhide.Api.Modules
             container.RegisterInstance(Mapper.Configuration.CreateMapper()).As<IMapper>();
         }
 
+        void RegisterUsersFeatures(ContainerBuilder container)
+        {
+            byte[] bytes = Resources.RolesFeatures;
+            var reader = new StreamReader(new MemoryStream(bytes), Encoding.Default);
+
+
+            var usersRoles = new JsonSerializer().Deserialize<IEnumerable<UsersRoles>>(new JsonTextReader(reader));
+
+
+            container.RegisterType<MenuProvider>().As<IMenuProvider>().WithParameter("usersRoles", usersRoles);
+        }
+
         void WireUpDatabaseStuff(ContainerBuilder container)
         {
-            string connStrEnvVarName = ConfigurationManager.AppSettings["UserModuleConnectionStringName"];
-            string connectionString = Environment.GetEnvironmentVariable(connStrEnvVarName);
-            container.RegisterInstance(new UserDataContext(connectionString)).As<IUserDataContext>();
-
+            container.RegisterInstance(new UserDataContext(UserModule.Database.ConnectionString)).As<IUserDataContext>();
             container.RegisterType<UserRepository>().As<IUserRepository<User>>();
         }
 

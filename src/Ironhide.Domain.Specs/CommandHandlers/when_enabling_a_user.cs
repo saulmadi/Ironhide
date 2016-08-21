@@ -14,8 +14,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_enabling_a_user
     {
         static EnableUser _command;
-        static IWriteableRepository _writeableRepository;
-        static IUserRepository<User> _readOnlyRepository;
+        static IUserRepository<User> _userRepo;
         static IEventedCommandHandler<IUserSession, EnableUser> _handler;
         static UserEnabled _expectedEvent;
         static object _eventRaised;
@@ -27,14 +26,13 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                 _command = Builder<EnableUser>.CreateNew().Build();
 
                 _userEnabled = Builder<User>.CreateNew().With(user => user.Id, _command.id).Build();
-                _writeableRepository = Mock.Of<IWriteableRepository>();
-                _readOnlyRepository = Mock.Of<IUserRepository<User>>();
+                _userRepo = Mock.Of<IUserRepository<User>>();
 
-                Mock.Get(_readOnlyRepository)
+                Mock.Get(_userRepo)
                     .Setup(repository => repository.GetById(_command.id))
                     .ReturnsAsync(_userEnabled);
 
-                _handler = new UserEnabler(_writeableRepository, _readOnlyRepository);
+                _handler = new UserEnabler(_userRepo);
 
                 _expectedEvent = new UserEnabled(_command.id);
                 _handler.NotifyObservers += x => _eventRaised = x;
