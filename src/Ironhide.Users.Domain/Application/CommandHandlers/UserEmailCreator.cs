@@ -29,7 +29,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
             var userCreated = new UserEmailLogin(Guid.NewGuid(), command.Name, command.Email, command.EncryptedPassword,
                 command.PhoneNumber);
 
-            foreach (UserAbility ability in command.abilities)
+            foreach (UserAbility ability in command.Abilities)
             {
                 UserAbility userAbility = await _abilityReadRepo.GetById(ability.Id);
                 userCreated.AddAbility(userAbility);

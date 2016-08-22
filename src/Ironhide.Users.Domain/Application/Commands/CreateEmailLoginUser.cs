@@ -13,13 +13,13 @@ namespace Ironhide.Users.Domain.Application.Commands
             EncryptedPassword = password;
             Name = name;
             PhoneNumber = phoneNumber;
-            this.abilities = abilities;
+            this.Abilities = abilities;
         }
 
         public string Email { get; private set; }
         public EncryptedPassword EncryptedPassword { get; private set; }
         public string Name { get; private set; }
         public string PhoneNumber { get; private set; }
-        public IEnumerable<UserAbility> abilities { get; private set; }
+        public IEnumerable<UserAbility> Abilities { get; private set; }
     }
 }

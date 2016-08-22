@@ -9,7 +9,7 @@ namespace DatabaseDeployer
     {
         protected override void Seed(UserDataContext context)
         {
-            context.Roles.Add(new Role(Guid.NewGuid(), "Guest"));
+            context.Roles.Add(new Role(Guid.NewGuid(), "Basic"));
             context.Roles.Add(new Role(Guid.NewGuid(), "Customer"));
             context.Roles.Add(new Role(Guid.NewGuid(), "Admin"));
 
