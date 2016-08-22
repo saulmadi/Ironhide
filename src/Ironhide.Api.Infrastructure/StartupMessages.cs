@@ -11,7 +11,7 @@ namespace Ironhide.Api.Infrastructure
         {
             List<Type> nancyModuleTypes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
-                .Where(x => typeof(NancyModule).IsAssignableFrom(x))
+                .Where(x => typeof (NancyModule).IsAssignableFrom(x))
                 .Where(x => x.Namespace != null && !x.Namespace.StartsWith("Nancy"))
                 .ToList();
 
@@ -22,7 +22,7 @@ namespace Ironhide.Api.Infrastructure
 
             if (!modules.Any())
             {
-                modules = new List<string> { "None" };
+                modules = new List<string> {"None"};
             }
 
             Version version = nancyModuleTypes.First().Assembly.GetName().Version;

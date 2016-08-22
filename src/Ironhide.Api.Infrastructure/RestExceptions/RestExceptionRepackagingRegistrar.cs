@@ -27,8 +27,8 @@ namespace Ironhide.Api.Infrastructure.RestExceptions
                 _config.ErrorHandlers.FirstOrDefault(x => x.CanHandle(err, contentType));
 
             Response response = handler == null
-                                    ? _config.DefaultExceptionRepackager.Repackage(err, ctx, contentType)
-                                    : handler.Repackage(err, ctx, contentType);
+                ? _config.DefaultExceptionRepackager.Repackage(err, ctx, contentType)
+                : handler.Repackage(err, ctx, contentType);
 
             _config.ResponseAction(response);
 

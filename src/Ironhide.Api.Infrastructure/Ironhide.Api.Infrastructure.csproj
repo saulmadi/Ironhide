@@ -94,7 +94,7 @@
     <Compile Include="Configuration\ApiUserMapper.cs" />
     <Compile Include="Configuration\Bootstrapper.cs" />
     <Compile Include="Configuration\CommandDispatcherLogger.cs" />
-    <Compile Include="Configuration\ConfigureCommonDependencies.cs" />
+    <Compile Include="Configuration\ConfigureApiDependencies.cs" />
     <Compile Include="Configuration\IronhideBlingDispatcher.cs" />
     <Compile Include="Configuration\IronhideCommandDispatcher.cs" />
     <Compile Include="Configuration\UnitOfWorkCommandDispatcher.cs" />
@@ -136,21 +136,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ironhide.Data.EntityFramework\Ironhide.Users.Data.csproj">
-      <Project>{0021D37D-D0CC-4491-BB7B-3FD43EEEB7FE}</Project>
-      <Name>Ironhide.Users.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ironhide.Domain\Ironhide.Users.Domain.csproj">
-      <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
-      <Name>Ironhide.Users.Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ironhide.Common\Ironhide.Common.csproj">
+      <Project>{8EEBF76E-3D1E-438E-9DC8-C2CB63402A4C}</Project>
+      <Name>Ironhide.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ironhide.Users.Domain\Ironhide.Users.Domain.csproj">
+      <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
+      <Name>Ironhide.Users.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -1,4 +1,5 @@
-﻿using Ironhide.Api.Modules.UserManagement;
+﻿using System;
+using Ironhide.Api.Modules.UserManagement;
 using Topshelf;
 
 namespace Ironhide.Host
@@ -7,7 +8,7 @@ namespace Ironhide.Host
     {
         static void Main(string[] args)
         {
-            var t1 = typeof (AdminModule);
+            Type t1 = typeof (AdminModule);
 
             HostFactory.Run(
                 x =>
