@@ -9,7 +9,7 @@ using Ironhide.Users.Domain.Services;
 
 namespace Ironhide.Users.Data.Repositories
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository : IUserRepository
     {
         readonly IUserDataContext _dataContext;
 
@@ -18,19 +18,19 @@ namespace Ironhide.Users.Data.Repositories
             _dataContext = dataContext;
         }
 
-        public Task<User> First(Expression<Func<User, bool>> query)
+        public Task<TUser> First<TUser>(Expression<Func<TUser, bool>> query) where TUser : User
         {
-            return _dataContext.Users.FirstAsync(query);
+            return _dataContext.Users.OfType<TUser>().FirstAsync(query);
         }
 
-        public async Task<User> GetById(Guid id)
+        public async Task<TUser> GetById<TUser>(Guid id) where TUser : User
         {
-            return await _dataContext.Users.FindAsync(id);
+            return await _dataContext.Users.OfType<TUser>().FirstAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<User>> Query(Expression<Func<User, bool>> expression)
+        public async Task<IEnumerable<TUser>> Query<TUser>(Expression<Func<TUser, bool>> expression) where TUser : User
         {
-            return await _dataContext.Users.Where(expression).ToListAsync();
+            return await _dataContext.Users.OfType<TUser>().Where(expression).ToListAsync();
         }
 
         public async Task Delete(Guid userId)

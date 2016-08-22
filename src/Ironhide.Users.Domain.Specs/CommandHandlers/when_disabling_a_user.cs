@@ -13,7 +13,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_disabling_a_user
     {
         static DisableUser _command;
-        static IUserRepository<User> _readOnlyRepository;
+        static IUserRepository _readOnlyRepository;
         static IEventedCommandHandler<IUserSession, DisableUser> _handler;
         static UserDisabled _expectedEvent;
         static object _eventRaised;
@@ -25,10 +25,10 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                 _command = Builder<DisableUser>.CreateNew().Build();
 
                 _userDisable = Builder<User>.CreateNew().With(user => user.Id, _command.id).Build();
-                _readOnlyRepository = Mock.Of<IUserRepository<User>>();
+                _readOnlyRepository = Mock.Of<IUserRepository>();
 
                 Mock.Get(_readOnlyRepository)
-                    .Setup(repository => repository.GetById(_command.id))
+                    .Setup(repository => repository.GetById<User>(_command.id))
                     .ReturnsAsync(_userDisable);
 
                 _handler = new UserDisabler(_readOnlyRepository);

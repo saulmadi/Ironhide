@@ -13,7 +13,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_updating_a_user
     {
         static IEventedCommandHandler<IUserSession, UpdateUserProfile> _handler;
-        static IUserRepository<User> _userRepo;
+        static IUserRepository _userRepo;
         static User _user;
         static object _eventRaised;
         static object _expectedEvent;
@@ -22,13 +22,13 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
         Establish context =
             () =>
             {
-                _userRepo = Mock.Of<IUserRepository<User>>();
+                _userRepo = Mock.Of<IUserRepository>();
                 _handler = new UserProfileUpdater(_userRepo);
                 _user = new User(Guid.NewGuid(), "Test User", "test@email.com");
 
                 _command = new UpdateUserProfile(_user.Id, "Test User Updated", "updated@email.com");
 
-                Mock.Get(_userRepo).Setup(x => x.GetById(_user.Id))
+                Mock.Get(_userRepo).Setup(x => x.GetById<User>(_user.Id))
                     .ReturnsAsync(_user);
 
                 _handler.NotifyObservers += x => _eventRaised = x;

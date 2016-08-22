@@ -8,16 +8,16 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserDisabler : IEventedCommandHandler<IUserSession, DisableUser>
     {
-        readonly IUserRepository<User> _repo;
+        readonly IUserRepository _repo;
 
-        public UserDisabler(IUserRepository<User> repo)
+        public UserDisabler(IUserRepository repo)
         {
             _repo = repo;
         }
 
         public async Task Handle(IUserSession userIssuingCommand, DisableUser command)
         {
-            User user = await _repo.GetById(command.id);
+            User user = await _repo.GetById<User>(command.id);
             user.DisableUser();
             await _repo.Update(user);
             NotifyObservers(new UserDisabled(user.Id));

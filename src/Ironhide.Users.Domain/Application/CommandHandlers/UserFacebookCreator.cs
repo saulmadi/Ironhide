@@ -10,9 +10,9 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserFacebookCreator : IEventedCommandHandler<IUserSession, CreateFacebookLoginUser>
     {
-        readonly IUserRepository<User> _writeableRepository;
+        readonly IUserRepository _writeableRepository;
 
-        public UserFacebookCreator(IUserRepository<User> writeableRepository)
+        public UserFacebookCreator(IUserRepository writeableRepository)
         {
             _writeableRepository = writeableRepository;
         }

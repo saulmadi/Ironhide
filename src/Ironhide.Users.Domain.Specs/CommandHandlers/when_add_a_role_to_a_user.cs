@@ -16,7 +16,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_add_a_role_to_a_user
     {
         static AddRoleToUser _command;
-        static IUserRepository<User> _userReadRepo;
+        static IUserRepository _userReadRepo;
         static IEventedCommandHandler<IUserSession, AddRoleToUser> _handler;
         static UserRoleAdded _expectedEvent;
         static object _eventRaised;
@@ -35,11 +35,11 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                 _userCreated = Builder<User>.CreateNew().Build();
                 _rolAdded = Builder<Role>.CreateNew().Build();
 
-                _userReadRepo = Mock.Of<IUserRepository<User>>();
+                _userReadRepo = Mock.Of<IUserRepository>();
                 _roleReadRepo = Mock.Of<IRoleRepository>();
 
                 Mock.Get(_userReadRepo)
-                    .Setup(repo => repo.GetById(_userCreated.Id)).ReturnsAsync(_userCreated);
+                    .Setup(repo => repo.GetById<User>(_userCreated.Id)).ReturnsAsync(_userCreated);
 
                 Mock.Get(_roleReadRepo)
                     .Setup(repository => repository.GetById(_rolAdded.Id)).ReturnsAsync(_rolAdded);

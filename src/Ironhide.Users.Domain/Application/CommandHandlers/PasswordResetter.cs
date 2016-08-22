@@ -9,10 +9,10 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class PasswordResetter : IEventedCommandHandler<IUserSession, ResetPassword>
     {
-        readonly IUserRepository<UserEmailLogin> _repo;
+        readonly IUserRepository _repo;
         readonly IPasswordResetTokenRepository _tokenReadRepo;
 
-        public PasswordResetter(IUserRepository<UserEmailLogin> repo,
+        public PasswordResetter(IUserRepository repo,
             IPasswordResetTokenRepository tokenReadRepo)
         {
             _repo = repo;
@@ -22,7 +22,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
         public async Task Handle(IUserSession userIssuingCommand, ResetPassword command)
         {
             PasswordResetToken passwordResetToken = await _tokenReadRepo.GetById(command.ResetPasswordToken);
-            UserEmailLogin user = await _repo.GetById(passwordResetToken.UserId);
+            UserEmailLogin user = await _repo.GetById<UserEmailLogin>(passwordResetToken.UserId);
             user.ChangePassword(command.EncryptedPassword);
             await _repo.Update(user);
             await _tokenReadRepo.Delete(command.ResetPasswordToken);

@@ -25,7 +25,7 @@ namespace Ironhide.Users.Data.Specs.Users
             };
 
         Because of =
-            () => _result = _repo.GetById(_userId).Await();
+            () => _result = _repo.GetById<User>(_userId).Await();
 
         It should_return_the_matching_user_by_id =
             () => _result.ShouldEqual(_exactUserByReference);

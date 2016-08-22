@@ -13,9 +13,9 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
     public class UserAbilitiesAdder : IEventedCommandHandler<IUserSession, AddAbilitiesToUser>
     {
         readonly IUserAbilityRepository _abilityReadRepo;
-        readonly IUserRepository<User> _userReadRepo;
+        readonly IUserRepository _userReadRepo;
 
-        public UserAbilitiesAdder(IUserRepository<User> userReadRepo, IUserAbilityRepository abilityReadRepo)
+        public UserAbilitiesAdder(IUserRepository userReadRepo, IUserAbilityRepository abilityReadRepo)
         {
             _userReadRepo = userReadRepo;
             _abilityReadRepo = abilityReadRepo;
@@ -23,7 +23,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 
         public async Task Handle(IUserSession userIssuingCommand, AddAbilitiesToUser command)
         {
-            User user = await _userReadRepo.GetById(command.UserId);
+            User user = await _userReadRepo.GetById<User>(command.UserId);
             var abilities = new List<UserAbility>();
             foreach (Guid abilityId in command.Abilities)
             {

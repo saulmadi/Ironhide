@@ -12,12 +12,12 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
     public class PasswordResetTokenCreator : IEventedCommandHandler<IUserSession, StartPasswordResetProcess>
     {
         readonly IIdentityGenerator<Guid> _idGenerator;
-        readonly IUserRepository<UserEmailLogin> _readOnlyRepository;
+        readonly IUserRepository _readOnlyRepository;
         readonly ITimeProvider _timeProvider;
         readonly IPasswordResetTokenRepository _tokenRepo;
 
         public PasswordResetTokenCreator(IPasswordResetTokenRepository tokenRepo,
-            IUserRepository<UserEmailLogin> readOnlyRepository, ITimeProvider timeProvider,
+            IUserRepository readOnlyRepository, ITimeProvider timeProvider,
             IIdentityGenerator<Guid> idGenerator)
         {
             _tokenRepo = tokenRepo;
@@ -28,7 +28,7 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 
         public async Task Handle(IUserSession userIssuingCommand, StartPasswordResetProcess command)
         {
-            UserEmailLogin user = await _readOnlyRepository.First(x => x.Email == command.Email);
+            UserEmailLogin user = await _readOnlyRepository.First<UserEmailLogin>(x => x.Email == command.Email);
             Guid tokenId = _idGenerator.Generate();
             await _tokenRepo.Create(new PasswordResetToken(tokenId, user.Id, _timeProvider.Now()));
             NotifyObservers(new PasswordResetTokenCreated(tokenId, user.Id));

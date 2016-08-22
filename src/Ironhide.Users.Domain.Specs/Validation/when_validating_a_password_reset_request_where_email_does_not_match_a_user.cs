@@ -18,13 +18,13 @@ namespace Ironhide.Users.Domain.Specs.Validation
         const string EmailAddress = "me@test.com";
         static ICommandValidator<IUserSession, StartPasswordResetProcess> _validator;
         static Exception _exception;
-        static IUserRepository<UserEmailLogin> _readOnlyRepsitory;
+        static IUserRepository _readOnlyRepsitory;
         static Guid _userId;
 
         Establish context =
             () =>
             {
-                _readOnlyRepsitory = Mock.Of<IUserRepository<UserEmailLogin>>();
+                _readOnlyRepsitory = Mock.Of<IUserRepository>();
                 _validator = new StartPasswordResetProcessValidator(_readOnlyRepsitory);
 
                 _userId = Guid.NewGuid();

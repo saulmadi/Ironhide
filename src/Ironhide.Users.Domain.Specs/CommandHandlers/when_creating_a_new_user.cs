@@ -18,7 +18,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_creating_a_new_user
     {
         static CreateEmailLoginUser _command;
-        static IUserRepository<User> _userRepo;
+        static IUserRepository _userRepo;
         static IUserAbilityRepository _abilityReadRepo;
         static IEventedCommandHandler<IUserSession, CreateEmailLoginUser> _handler;
         static UserEmailCreated _expectedEvent;
@@ -47,7 +47,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                     .Build();
                 _userCreated.AddAbility(_userAbility);
 
-                _userRepo = Mock.Of<IUserRepository<User>>();
+                _userRepo = Mock.Of<IUserRepository>();
                 _abilityReadRepo = Mock.Of<IUserAbilityRepository>();
                 _roleReadRepo = Mock.Of<IRoleRepository>();
 

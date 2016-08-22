@@ -31,7 +31,7 @@ namespace Ironhide.Users.Data.Specs.Users
             };
 
         Because of =
-            () => _result = _repo.Query(x => x.Name.StartsWith("Mickey")).WaitForResult();
+            () => _result = _repo.Query<User>(x => x.Name.StartsWith("Mickey")).WaitForResult();
 
         It should_return_the_users_that_match_the_query =
             () => _result.ShouldContainOnly(_users[2], _users[3], _users[4]);

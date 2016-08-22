@@ -15,12 +15,12 @@ namespace Ironhide.Users.Domain.Specs.Validation
     {
         static ICommandValidator<IUserSession, StartPasswordResetProcess> _validator;
         static Exception _exception;
-        static IUserRepository<UserEmailLogin> _readOnlyRepsitory;
+        static IUserRepository _readOnlyRepsitory;
 
         Establish context =
             () =>
             {
-                _readOnlyRepsitory = Mock.Of<IUserRepository<UserEmailLogin>>();
+                _readOnlyRepsitory = Mock.Of<IUserRepository>();
                 _validator = new StartPasswordResetProcessValidator(_readOnlyRepsitory);
             };
 

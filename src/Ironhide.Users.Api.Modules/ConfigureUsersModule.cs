@@ -78,7 +78,7 @@ namespace Ironhide.Api.Modules
         void WireUpDatabaseStuff(ContainerBuilder container)
         {
             container.RegisterInstance(new UserDataContext(UserModule.Database.ConnectionString)).As<IUserDataContext>();
-            container.RegisterType<UserRepository>().As<IUserRepository<User>>();
+            container.RegisterType<UserRepository>().As<IUserRepository>();
         }
 
         #endregion

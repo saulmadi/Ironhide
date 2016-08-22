@@ -11,9 +11,9 @@ namespace Ironhide.Users.Domain.Validators
 {
     public class StartPasswordResetProcessValidator : ICommandValidator<IUserSession, StartPasswordResetProcess>
     {
-        readonly IUserRepository<UserEmailLogin> _readOnlyRepsitory;
+        readonly IUserRepository _readOnlyRepsitory;
 
-        public StartPasswordResetProcessValidator(IUserRepository<UserEmailLogin> readOnlyRepsitory)
+        public StartPasswordResetProcessValidator(IUserRepository readOnlyRepsitory)
         {
             _readOnlyRepsitory = readOnlyRepsitory;
         }
@@ -28,7 +28,7 @@ namespace Ironhide.Users.Domain.Validators
             {
                 try
                 {
-                    await _readOnlyRepsitory.First(x => x.Email == command.Email);
+                    await _readOnlyRepsitory.First<UserEmailLogin>(x => x.Email == command.Email);
                 }
                 catch (ItemNotFoundException<UserEmailLogin>)
                 {

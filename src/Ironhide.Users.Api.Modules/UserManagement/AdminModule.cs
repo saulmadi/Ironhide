@@ -16,7 +16,7 @@ namespace Ironhide.Api.Modules.UserManagement
 {
     public class AdminModule : NancyModule
     {
-        public AdminModule(IUserRepository<User> readOnlyRepository, IMapper mapper,
+        public AdminModule(IUserRepository readOnlyRepository, IMapper mapper,
             ICommandDispatcher commandDispatcher, IUserSessionFactory userSessionFactory)
         {
             Get["/users", true] =
@@ -31,7 +31,7 @@ namespace Ironhide.Api.Modules.UserManagement
                                   parameter);
 
                           IQueryable<User> users =
-                              (await readOnlyRepository.Query(x => x.Name != Context.CurrentUser.UserName))
+                              (await readOnlyRepository.Query<User>(x => x.Name != Context.CurrentUser.UserName))
                                   .AsQueryable();
 
                           IOrderedQueryable<User> orderedUsers = users.OrderBy(mySortExpression);
@@ -72,7 +72,7 @@ namespace Ironhide.Api.Modules.UserManagement
                       {
                           this.RequiresClaims(new[] {"Administrator"});
                           Guid userId = Guid.Parse((string) p.userId);
-                          User user = await readOnlyRepository.GetById(userId);
+                          User user = await readOnlyRepository.GetById<User>(userId);
                           AdminUserResponse mappedUser = mapper
                               .Map<User, AdminUserResponse>(user);
                           return mappedUser;

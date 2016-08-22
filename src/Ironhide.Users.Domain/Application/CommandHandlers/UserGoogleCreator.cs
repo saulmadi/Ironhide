@@ -10,9 +10,9 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
 {
     public class UserGoogleCreator : IEventedCommandHandler<IUserSession, CreateGoogleLoginUser>
     {
-        readonly IUserRepository<User> _userRepo;
+        readonly IUserRepository _userRepo;
 
-        public UserGoogleCreator(IUserRepository<User> userRepo)
+        public UserGoogleCreator(IUserRepository userRepo)
         {
             _userRepo = userRepo;
         }

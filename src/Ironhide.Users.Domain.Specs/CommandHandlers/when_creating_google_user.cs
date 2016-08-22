@@ -15,7 +15,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_creating_google_user
     {
         static CreateGoogleLoginUser _command;
-        static IUserRepository<User> _userRepo;
+        static IUserRepository _userRepo;
         static IEventedCommandHandler<IUserSession, CreateGoogleLoginUser> _handler;
         static UserGoogleCreated _expectedEvent;
         static object _eventRaised;
@@ -26,7 +26,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
             {
                 _command = Builder<CreateGoogleLoginUser>.CreateNew().Build();
 
-                _userRepo = Mock.Of<IUserRepository<User>>();
+                _userRepo = Mock.Of<IUserRepository>();
 
                 _userCreated = Builder<UserGoogleLogin>.CreateNew()
                     .With(user => user.Email, _command.Email)

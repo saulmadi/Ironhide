@@ -12,10 +12,10 @@ namespace Ironhide.Users.Domain.Application.CommandHandlers
     {
         readonly IUserAbilityRepository _abilityReadRepo;
         readonly IRoleRepository _roleReadRepo;
-        readonly IUserRepository<User> _userRepo;
+        readonly IUserRepository _userRepo;
 
         public UserEmailCreator(IRoleRepository roleReadRepo,
-            IUserAbilityRepository abilityReadRepo, IUserRepository<User> userRepo)
+            IUserAbilityRepository abilityReadRepo, IUserRepository userRepo)
         {
             _roleReadRepo = roleReadRepo;
             _abilityReadRepo = abilityReadRepo;

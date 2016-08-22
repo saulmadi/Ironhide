@@ -31,7 +31,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
         Establish context =
             () =>
             {
-                var readOnlyRepository = Mock.Of<IUserRepository<UserEmailLogin>>();
+                var readOnlyRepository = Mock.Of<IUserRepository>();
                 _tokenRepo = Mock.Of<IPasswordResetTokenRepository>();
                 _timeProvider = Mock.Of<ITimeProvider>();
                 _idGenerator = Mock.Of<IIdentityGenerator<Guid>>();

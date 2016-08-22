@@ -5,7 +5,6 @@ using Ironhide.Users.Domain.Application.Commands;
 using Ironhide.Users.Domain.DomainEvents;
 using Ironhide.Users.Domain.Entities;
 using Ironhide.Users.Domain.Services;
-using Ironhide.Users.Domain.Specs.Stubs;
 using Ironhide.Users.Domain.ValueObjects;
 using Machine.Specifications;
 using Moq;
@@ -16,7 +15,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
     public class when_resetting_a_password
     {
         const string NewPassword = "new_password";
-        static IUserRepository<UserEmailLogin> _userRepo;
+        static IUserRepository _userRepo;
         static IEventedCommandHandler<IUserSession, ResetPassword> _commandHander;
         static readonly Guid ResetPasswordToken = Guid.NewGuid();
         static object _eventRaised;
@@ -26,7 +25,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
         Establish context =
             () =>
             {
-                _userRepo = Mock.Of<IUserRepository<UserEmailLogin>>();
+                _userRepo = Mock.Of<IUserRepository>();
                 _tokenReadRepo = Mock.Of<IPasswordResetTokenRepository>();
                 _commandHander =
                     new PasswordResetter(_userRepo, _tokenReadRepo);
@@ -35,8 +34,8 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                 Mock.Get(_tokenReadRepo).Setup(x => x.GetById(ResetPasswordToken))
                     .ReturnsAsync(new PasswordResetToken(ResetPasswordToken, userId, DateTime.Now));
 
-                Mock.Get(_userRepo).Setup(x => x.GetById(userId))
-                    .ReturnsAsync(new TestUser(userId, "name", "password"));
+                Mock.Get(_userRepo).Setup(x => x.GetById<UserEmailLogin>(userId))
+                    .ReturnsAsync(new UserEmailLogin(userId, "name", "password", new EncryptedPassword("123")));
 
                 _commandHander.NotifyObservers += x => _eventRaised = x;
                 _expectedEvent = new PasswordReset(userId);

@@ -21,7 +21,7 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
         static AddAbilitiesToUser _addAbilitiesToUser;
         static UserAbility _abilities;
         static Guid _abilityGuid;
-        static IUserRepository<User> _userRepo;
+        static IUserRepository _userRepo;
         static User _userCreated;
         static UserAbilitiesAdder _handle;
         static UserAbilitiesAdded _userAbilitiesAdded;
@@ -51,11 +51,11 @@ namespace Ironhide.Users.Domain.Specs.CommandHandlers
                 _abilitiesAdded = new List<UserAbility> {_abilities};
                 _addAbilitiesToUser = new AddAbilitiesToUser(_userGuid, _abilitiesAdded.Select(x => x.Id));
 
-                _userRepo = Mock.Of<IUserRepository<User>>();
+                _userRepo = Mock.Of<IUserRepository>();
                 _abilityReadRepo = Mock.Of<IUserAbilityRepository>();
 
                 Mock.Get(_userRepo)
-                    .Setup(repository => repository.GetById(_userCreated.Id)).ReturnsAsync(_userCreated);
+                    .Setup(repository => repository.GetById<User>(_userCreated.Id)).ReturnsAsync(_userCreated);
 
                 Mock.Get(_abilityReadRepo)
                     .Setup(repository => repository.GetById(_abilityGuid))

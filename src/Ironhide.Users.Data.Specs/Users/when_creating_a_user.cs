@@ -10,7 +10,7 @@ namespace Ironhide.Users.Data.Specs.Users
 {
     public class when_creating_a_user
     {
-        static IUserRepository<User> _repo;
+        static IUserRepository _repo;
         static readonly Guid UserId = Guid.NewGuid();
         static TestUserDataContext _dataContext;
 
