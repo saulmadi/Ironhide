@@ -13,6 +13,7 @@ namespace Ironhide.Users.Data.Specs.Users
         static IUserRepository<User> _repo;
         static readonly Guid UserId = Guid.NewGuid();
         static TestUserDataContext _dataContext;
+        static User _userToUpdate;
 
         Establish context =
             () =>
@@ -31,7 +32,5 @@ namespace Ironhide.Users.Data.Specs.Users
 
         It should_change_the_values_in_the_database =
             () => _dataContext.Users.First(x => x.Id == UserId).Name.ShouldEqual("new name");
-
-        static User _userToUpdate;
     }
 }
