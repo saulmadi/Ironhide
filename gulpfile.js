@@ -31,9 +31,13 @@ gulp.task('default', function(callback){
 	runSequence('build', 'specs', 'package', 'deploy', callback);
 });
 
-gulp.task('build', function(callback) {
+gulp.task('build', ['reftroll'], function(callback) {
   runSequence(
   	'restore-nuget-packages', 'compile-apps', callback);
+});
+
+gulp.task('reftroll', function(){
+	return gulp.src('').pipe(shell('node_modules\\reftroll\\RefTroll.exe src'));
 });
 
 gulp.task('build-with-coverage-report', function(callback) {

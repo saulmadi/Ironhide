@@ -1,20 +1,20 @@
 {
-  "name": "rewardle",
+  "name": "ironhide",
   "version": "1.0.0",
   "description": "",
-  "main": "gulp.config.js",
+  "main": "gulp",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AcklenAvenue/rewardle.git"
+    "url": "https://github.com/AcklenAvenue/ironhide.git"
   },
   "author": "AcklenAvenue",
   "bugs": {
-    "url": "https://github.com/AcklenAvenue/rewardle/issues"
+    "url": "https://github.com/AcklenAvenue/ironhide/issues"
   },
-  "homepage": "https://github.com/AcklenAvenue/rewardle",
+  "homepage": "https://github.com/AcklenAvenue/ironhide",
   "devDependencies": {
     "async": "^1.0.0",
     "glob": "^7.0.0",
@@ -28,6 +28,7 @@
     "gulp-zip": "^3.0.2",
     "lodash": "^4.14.2",
     "merge-stream": "^0.1.8",
+    "reftroll": "^1.0.31",
     "run-sequence": "^1.1.0",
     "through2": "^0.6.5"
   }
