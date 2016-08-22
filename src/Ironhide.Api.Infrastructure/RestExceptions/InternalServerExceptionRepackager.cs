@@ -13,7 +13,7 @@ namespace Ironhide.Api.Infrastructure.RestExceptions
 
             string formattedMessage =
                 string.Format("The {0} request to '{1}' resulted in an unhandled exception!\r\n\r\n{2}",
-                              context.Request.Method, context.Request.Url, message);
+                    context.Request.Method, context.Request.Url, message);
 
             return new ErrorResponse(formattedMessage, HttpStatusCode.InternalServerError, contentType);
         }
@@ -28,9 +28,9 @@ namespace Ironhide.Api.Infrastructure.RestExceptions
         static string AddException(Exception ex)
         {
             string original = string.Format("{0}: {1}\r\n{2}\r\n\r\n",
-                                            ex.GetType().Name,
-                                            ex.Message,
-                                            ex.StackTrace);
+                ex.GetType().Name,
+                ex.Message,
+                ex.StackTrace);
 
             if (ex.InnerException != null)
                 original += AddException(ex.InnerException);

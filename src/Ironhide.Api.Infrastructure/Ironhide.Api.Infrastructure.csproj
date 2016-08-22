@@ -39,18 +39,6 @@
       <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.59\lib\net45\AcklenAvenue.Commands.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AcklenAvenue.Data">
-      <HintPath>..\..\lib\AcklenAvenue.Data.2.0.2.8\lib\net40\AcklenAvenue.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AcklenAvenue.Data.NHibernate">
-      <HintPath>..\..\lib\AcklenAvenue.Data.NHibernate.2.0.2.8\lib\net40\AcklenAvenue.Data.NHibernate.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="AcklenAvenue.Email">
-      <HintPath>..\..\lib\AcklenAvenue.Email.1.0.1.4\lib\net45\AcklenAvenue.Email.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Autofac">
       <HintPath>..\..\lib\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
@@ -60,14 +48,6 @@
     </Reference>
     <Reference Include="BlingBag">
       <HintPath>..\..\lib\BlingBag.1.4.0.14\lib\net45\BlingBag.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentNHibernate">
-      <HintPath>..\..\lib\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Iesi.Collections">
-      <HintPath>..\..\lib\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\lib\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
@@ -87,10 +67,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\..\lib\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -118,8 +94,7 @@
     <Compile Include="Configuration\ApiUserMapper.cs" />
     <Compile Include="Configuration\Bootstrapper.cs" />
     <Compile Include="Configuration\CommandDispatcherLogger.cs" />
-    <Compile Include="Configuration\ConfigureCommonDependencies.cs" />
-    <Compile Include="Configuration\ConfigureDatabaseWiring.cs" />
+    <Compile Include="Configuration\ConfigureApiDependencies.cs" />
     <Compile Include="Configuration\IronhideBlingDispatcher.cs" />
     <Compile Include="Configuration\IronhideCommandDispatcher.cs" />
     <Compile Include="Configuration\UnitOfWorkCommandDispatcher.cs" />
@@ -151,6 +126,8 @@
     <Compile Include="RestExceptions\TokenExpiredException.cs" />
     <Compile Include="RestExceptions\UnauthorizedExceptionRepackager.cs" />
     <Compile Include="RestExceptions\UserInputPropertyMissingException.cs" />
+    <Compile Include="RootModule.cs" />
+    <Compile Include="StartupMessages.cs" />
     <Compile Include="UserSessionFactory.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -159,29 +136,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ironhide.Data\Ironhide.Data.csproj">
-      <Project>{828BB611-5955-47C0-AB91-32374D8506E2}</Project>
-      <Name>Ironhide.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ironhide.Domain\Ironhide.Users.Domain.csproj">
-      <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
-      <Name>Ironhide.Users.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ironhide.EmailClients.DotNet\Ironhide.EmailClients.DotNet.csproj">
-      <Project>{B85057A5-F5AA-4397-85A3-EF3F21AEA76D}</Project>
-      <Name>Ironhide.EmailClients.DotNet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ironhide.TemplateEngines.Razor\Ironhide.TemplateEngines.Razor.csproj">
-      <Project>{EABDB5FE-FD37-4C87-BD52-67D7D996CA03}</Project>
-      <Name>Ironhide.TemplateEngines.Razor</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ironhide.Common\Ironhide.Common.csproj">
+      <Project>{8EEBF76E-3D1E-438E-9DC8-C2CB63402A4C}</Project>
+      <Name>Ironhide.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ironhide.Users.Domain\Ironhide.Users.Domain.csproj">
+      <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>
+      <Name>Ironhide.Users.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

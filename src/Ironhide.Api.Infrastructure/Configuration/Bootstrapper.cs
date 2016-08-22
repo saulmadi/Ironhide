@@ -18,14 +18,14 @@ namespace Ironhide.Api.Infrastructure.Configuration
     public class Bootstrapper : AutofacNancyBootstrapper
     {
         static readonly Action<Response> CorsResponse = x =>
-        {
-            x.WithHeader("Access-Control-Allow-Methods",
-                         "GET, POST, PUT, DELETE, OPTIONS");
-            x.WithHeader("Access-Control-Allow-Headers",
-                         "Content-Type, Accept");
-            x.WithHeader("Access-Control-Max-Age", "1728000");
-            x.WithHeader("Access-Control-Allow-Origin", "*");
-        };
+                                                        {
+                                                            x.WithHeader("Access-Control-Allow-Methods",
+                                                                "GET, POST, PUT, DELETE, OPTIONS");
+                                                            x.WithHeader("Access-Control-Allow-Headers",
+                                                                "Content-Type, Accept");
+                                                            x.WithHeader("Access-Control-Max-Age", "1728000");
+                                                            x.WithHeader("Access-Control-Allow-Origin", "*");
+                                                        };
 
         readonly List<IBootstrapperTask<ContainerBuilder>> _tasks;
 
@@ -90,10 +90,10 @@ namespace Ironhide.Api.Infrastructure.Configuration
 
         static string GetTokenFromRequest(NancyContext ctx)
         {
-            var token = (string)ctx.Request.Query.token;
+            var token = (string) ctx.Request.Query.token;
             if (token == null)
             {
-                token = (string)ctx.Request.Form.token;
+                token = (string) ctx.Request.Form.token;
             }
             if (token == null)
             {

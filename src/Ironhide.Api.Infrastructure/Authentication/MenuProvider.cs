@@ -5,9 +5,9 @@ using Ironhide.Api.Infrastructure.RestExceptions;
 
 namespace Ironhide.Api.Infrastructure.Authentication
 {
-    public class MenuProvider:IMenuProvider
+    public class MenuProvider : IMenuProvider
     {
-        private readonly IEnumerable<UsersRoles> _usersRoles;
+        readonly IEnumerable<UsersRoles> _usersRoles;
 
         public MenuProvider(IEnumerable<UsersRoles> usersRoles)
         {
@@ -16,7 +16,7 @@ namespace Ironhide.Api.Infrastructure.Authentication
 
         public string[] getFeatures(string claim)
         {
-            var firstOrDefault = _usersRoles.FirstOrDefault(x => x.Name.Equals(claim));
+            UsersRoles firstOrDefault = _usersRoles.FirstOrDefault(x => x.Name.Equals(claim));
             if (firstOrDefault != null)
                 return firstOrDefault.Features.Select(y => y.Description).ToArray();
 
@@ -25,16 +25,14 @@ namespace Ironhide.Api.Infrastructure.Authentication
 
         public string[] getFeatures(string[] claims)
         {
-            var result = claims.SelectMany(getFeatures);
+            IEnumerable<string> result = claims.SelectMany(getFeatures);
 
             return result.ToArray();
         }
 
         public string[] getAllFeatures()
         {
-          
             return _usersRoles.SelectMany(x => x.Features).Select(x => x.Description).ToArray();
-
         }
     }
 }

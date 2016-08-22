@@ -11,7 +11,8 @@ namespace Ironhide.Api.Infrastructure.Configuration
         readonly IBlingDispatcher _blingDispatcher;
 
         public IronhideCommandDispatcher(IEnumerable<ICommandHandler> commandHandlers,
-            IEnumerable<ICommandValidator> commandValidators, ICommandDispatcherLogger logger, IBlingDispatcher blingDispatcher)
+            IEnumerable<ICommandValidator> commandValidators, ICommandDispatcherLogger logger,
+            IBlingDispatcher blingDispatcher)
             : base(commandHandlers, commandValidators, logger)
         {
             _blingDispatcher = blingDispatcher;

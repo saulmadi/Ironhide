@@ -6,6 +6,4 @@ namespace Ironhide.Api.Infrastructure
         string[] getFeatures(string[] claims);
         string[] getAllFeatures();
     }
-
-
 }
