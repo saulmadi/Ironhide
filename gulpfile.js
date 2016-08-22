@@ -27,6 +27,23 @@ var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
         projectSolutionPath:'src\\Ironhide.sln'
     });
 
+gulp.task('copy-local-config',function(callback){
+	fs.stat('localconfig.json', function(doesNotExist, stat) {
+		if(doesNotExist) {
+			return gulp.src('localconfig.json.default', { allowEmpty: true })
+	    		.pipe(rename("localconfig.json"))
+	    		.pipe(gulp.dest('./'));
+	    }else{
+			return;
+	    }
+	});
+});
+
+gulp.task('set-local-env', function(callback){
+	return gulp.src('setLocalEnv.ps1')		
+		.pipe(shell(['powershell.exe -File setLocalEnv.ps1'], { cwd: '<%= file.folder %>'}));
+});
+
 gulp.task('default', function(callback){
 	runSequence('build', 'specs', 'package', 'deploy', callback);
 });
