@@ -28,10 +28,10 @@ var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
     });
 
 gulp.task('default', function(callback){
-	runSequence('build', 'reftroll', 'specs', 'package', 'deploy', callback);
+	runSequence('build', 'specs', 'package', 'deploy', callback);
 });
 
-gulp.task('build', function(callback) {
+gulp.task('build', ['reftroll'], function(callback) {
   runSequence(
   	'restore-nuget-packages', 'compile-apps', callback);
 });
