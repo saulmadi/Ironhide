@@ -13,7 +13,8 @@ var path = require('path');
 var merge = require('merge-stream');
 var rename = require('gulp-rename');
 var glob = require('glob');
-require('events').EventEmitter.prototype._maxListeners = 100;
+const emitter = new EventEmitter();
+emitter.setMaxListeners(100);
 
 var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
         sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
