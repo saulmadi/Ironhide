@@ -1,3 +1,7 @@
+var events = require('events');
+console.log(events);
+events.EventEmitter.defaultMaxListeners = Infinity;
+
 module.exports = function() {
 	
 	return {
