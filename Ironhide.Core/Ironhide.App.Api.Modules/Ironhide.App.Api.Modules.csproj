@@ -5,16 +5,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3B743A1-FFF7-4EAF-80FA-2327AFE47D71}</ProjectGuid>
+    <ProjectGuid>{AB5A64BD-681C-409E-B7CD-3430B666CAF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ironhide.Api.Infrastructure</RootNamespace>
-    <AssemblyName>Ironhide.Api.Infrastructure</AssemblyName>
+    <RootNamespace>Ironhide.App.Api.Modules</RootNamespace>
+    <AssemblyName>Ironhide.App.Api.Modules</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>8619040f</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>50d82474</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,35 +49,26 @@
     <Reference Include="BlingBag">
       <HintPath>..\..\lib\BlingBag.1.4.0.14\lib\net45\BlingBag.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\lib\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Nancy">
       <HintPath>..\..\lib\Nancy.1.4.3\lib\net40\Nancy.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Nancy.Authentication.Stateless">
-      <HintPath>..\..\lib\Nancy.Authentication.Stateless.1.4.1\lib\net40\Nancy.Authentication.Stateless.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Nancy.Bootstrappers.Autofac">
-      <HintPath>..\..\lib\Nancy.Bootstrappers.Autofac.1.4.1\lib\net40\Nancy.Bootstrappers.Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\lib\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt">
-      <HintPath>..\..\lib\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,67 +76,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication\IApiUserMapper.cs" />
-    <Compile Include="Authentication\LoggedInUserIdentity.cs" />
-    <Compile Include="Authentication\MenuProvider.cs" />
-    <Compile Include="Authentication\Roles\Feature.cs" />
-    <Compile Include="Authentication\Roles\UsersRoles.cs" />
-    <Compile Include="BaseUrlProvider.cs" />
-    <Compile Include="Configuration\ApiUserMapper.cs" />
-    <Compile Include="Configuration\Bootstrapper.cs" />
-    <Compile Include="Configuration\CommandDispatcherLogger.cs" />
-    <Compile Include="Configuration\ConfigureApiDependencies.cs" />
-    <Compile Include="Configuration\IronhideBlingDispatcher.cs" />
-    <Compile Include="Configuration\IronhideCommandDispatcher.cs" />
-    <Compile Include="Configuration\UnitOfWorkCommandDispatcher.cs" />
-    <Compile Include="IBaseUrlProvider.cs" />
-    <Compile Include="IBootstrapperTask.cs" />
-    <Compile Include="IMenuProvider.cs" />
-    <Compile Include="IUserSessionFactory.cs" />
+    <Compile Include="ConfigureAppModule.cs" />
+    <Compile Include="Home\AppModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="RestExceptions\BadRequestExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\CommandValidationExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\ErrorResponse.cs" />
-    <Compile Include="RestExceptions\HttpErrorBody.cs" />
-    <Compile Include="RestExceptions\IExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\InternalServerExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\NoCurrentUserException.cs" />
-    <Compile Include="RestExceptions\NotFoundExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\NotImplementedExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\ResponseBodyExtensions.cs" />
-    <Compile Include="RestExceptions\RestExceptionConfiguration.cs" />
-    <Compile Include="RestExceptions\RestExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\RestExceptionRepackagingRegistrar.cs" />
-    <Compile Include="RestExceptions\RoleNotFound.cs" />
-    <Compile Include="RestExceptions\TokenDoesNotExistException.cs" />
-    <Compile Include="RestExceptions\TokenExpiredException.cs" />
-    <Compile Include="RestExceptions\UnauthorizedExceptionRepackager.cs" />
-    <Compile Include="RestExceptions\UserInputPropertyMissingException.cs" />
-    <Compile Include="RootModule.cs" />
-    <Compile Include="StartupMessages.cs" />
-    <Compile Include="UserSessionFactory.cs" />
+    <Compile Include="Home\SampleRequest.cs" />
+    <Compile Include="Home\SampleResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Authentication\RolesFeatures.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ironhide.Common\Ironhide.Common.csproj">
-      <Project>{8EEBF76E-3D1E-438E-9DC8-C2CB63402A4C}</Project>
-      <Name>Ironhide.Common</Name>
+    <ProjectReference Include="..\Ironhide.Api.Infrastructure\Ironhide.Api.Infrastructure.csproj">
+      <Project>{B3B743A1-FFF7-4EAF-80FA-2327AFE47D71}</Project>
+      <Name>Ironhide.Api.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ironhide.App.Data\Ironhide.App.Data.csproj">
+      <Project>{0021D37D-D0CC-4491-BB7B-3FD43EEEB7FE}</Project>
+      <Name>Ironhide.App.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ironhide.App.Domain\Ironhide.App.Domain.csproj">
       <Project>{2BEE7A33-DCB7-4F9C-B45C-A7DAC69AEB52}</Project>

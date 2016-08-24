@@ -21,8 +21,8 @@ namespace Ironhide.Api.Infrastructure.Authentication
         }
 
         public IEnumerable<Claim> JwTokenClaims { get; private set; }
-        public IEnumerable<string> Claims { get; private set; }
+        public IEnumerable<string> Claims { get; }
 
-        public string UserName { get; private set; }
+        public string UserName { get; }
     }
 }
