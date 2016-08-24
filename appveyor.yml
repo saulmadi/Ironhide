@@ -10,7 +10,7 @@ init:
 install:
   - if not exist %APPVEYOR_BUILD_FOLDER%\nuget-latest-version appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
   - set PATH=nuget-latest-version\;%PATH%
-  - npm -g install npm@1.2.18
+  - npm -g install npm@1.2.20
   - npm install -g gulp
   - npm install
   - nuget sources
