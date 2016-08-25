@@ -63,7 +63,7 @@ gulp.task('build-with-coverage-report', function(callback) {
 });
 
 gulp.task('restore-nuget-packages', function (taskDone) {
-	return gulp.src('src/**/*.sln')
+	return gulp.src('/**/*.sln')
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 		}))
@@ -98,7 +98,7 @@ gulp.task('copy-logging-config', function(){
 
 gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-logging-config'], function () {
 
-	return gulp.src(['src/**/.deployable'])
+	return gulp.src(['/**/.deployable'])
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 			var pathParts = file.folder.split("\\");
@@ -116,7 +116,7 @@ gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-loggin
 
 gulp.task('compile-specs', ['restore-nuget-packages', 'clean-spec'], function () {
 
-	return gulp.src('src/**/*.Specs.csproj')
+	return gulp.src('/**/*.Specs.csproj')
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 			var pathParts = file.folder.split("\\");
@@ -131,7 +131,7 @@ gulp.task('compile-specs', ['restore-nuget-packages', 'clean-spec'], function ()
 });
 
 gulp.task('create-nuget-packages', function(){
-	return gulp.src('src/**/*.nuspec')
+	return gulp.src('/**/*.nuspec')
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 		}))
@@ -141,12 +141,12 @@ gulp.task('create-nuget-packages', function(){
 });
 
 gulp.task('copy-nuget-packages', function(){
-	return gulp.src('src/**/*.nupkg')
+	return gulp.src('/**/*.nupkg')
 		.pipe(gulp.dest('deploy'));
 });
 
 gulp.task('deploy-nuget', function(){
-	return gulp.src('src//**/*.nupkg')
+	return gulp.src('/**/*.nupkg')
 		.pipe(shell(['nuget push <%= file.path %> -ApiKey 1w9s9pgveu1ruy5onxo9ko02 -Source https://ci.appveyor.com/nuget/acklenavenue/api/v2/package']));
 });
 
