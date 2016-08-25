@@ -6,8 +6,8 @@ namespace Ironhide.App.Data.Migrations
     {
         public MigrationsConfiguration()
         {
-            AutomaticMigrationsEnabled = false;
-            AutomaticMigrationDataLossAllowed = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
     }
 }

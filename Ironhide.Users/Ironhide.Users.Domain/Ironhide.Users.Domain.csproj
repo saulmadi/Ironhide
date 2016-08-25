@@ -98,10 +98,7 @@
     <Compile Include="IPasswordResetTokenRepository.cs" />
     <Compile Include="IRoleRepository.cs" />
     <Compile Include="ITokenExpirationProvider.cs" />
-    <Compile Include="ITokenFactory.cs" />
     <Compile Include="IUserAbilityRepository.cs" />
-    <Compile Include="JwtFactory.cs" />
-    <Compile Include="JwtSymmetricKeyProvider.cs" />
     <Compile Include="PasswordResetEmail.cs" />
     <Compile Include="Services\IEmailSender.cs" />
     <Compile Include="TokenExpirationProvider.cs" />

@@ -24,10 +24,9 @@ namespace Ironhide.App.Domain.Specs.CommandHandlers
         Establish context =
             () =>
             {
-                _command = new AddSample(Guid.NewGuid(), "Test name");
+                _command = new AddSample("Test name");
 
                 _sampleCreated = Builder<Sample>.CreateNew()
-                    .With(user => user.Id, _command.Id)
                     .With(user => user.Name, _command.Name)
                     .Build();
 

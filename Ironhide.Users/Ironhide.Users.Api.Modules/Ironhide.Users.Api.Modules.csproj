@@ -78,7 +78,6 @@
   <ItemGroup>
     <Compile Include="ConfigureUsersModule.cs" />
     <Compile Include="UserManagement\AdminModule.cs" />
-    <Compile Include="Login\LoginModule.cs" />
     <Compile Include="UserAccounts\UserAccountModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserManagement\AdminUpdateUserRequest.cs" />
@@ -88,8 +87,6 @@
     <Compile Include="UserAccounts\Google\Image.cs" />
     <Compile Include="UserAccounts\Google\Name.cs" />
     <Compile Include="UserAccounts\Google\Result.cs" />
-    <Compile Include="Login\LoginRequest.cs" />
-    <Compile Include="Login\LoginSocialRequest.cs" />
     <Compile Include="UserAccounts\NewPasswordRequest.cs" />
     <Compile Include="UserAccounts\NewUserRequest.cs" />
     <Compile Include="UserAccounts\ResetPasswordRequest.cs" />
@@ -97,7 +94,6 @@
     <Compile Include="UserAccounts\UserAbilityRequest.cs" />
     <Compile Include="UserManagement\AdminUserResponse.cs" />
     <Compile Include="UserManagement\AdminUsersListResponse.cs" />
-    <Compile Include="Login\SuccessfulLoginResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

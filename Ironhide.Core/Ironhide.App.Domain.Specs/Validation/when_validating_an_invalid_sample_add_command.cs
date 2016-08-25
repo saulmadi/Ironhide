@@ -26,7 +26,7 @@ namespace Ironhide.App.Domain.Specs.Validation
 
         Because of =
             () => _exception = Catch.Exception(() => _validator.Validate(new VisitorSession(),
-                new AddSample(Guid.Empty, "Name")).Await());
+                new AddSample("Name")).Await());
 
         It should_return_expected_failures =
             () => _exception.ShouldBeOfExactType(typeof(ArgumentException));

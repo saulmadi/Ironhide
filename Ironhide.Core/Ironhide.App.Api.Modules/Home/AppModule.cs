@@ -33,7 +33,7 @@ namespace Ironhide.App.Api.Modules.Home
                 async (a, ct) =>
                       {
                           var sampleRequest = this.Bind<SampleRequest>();
-                          var command = new AddSample(sampleRequest.Id, sampleRequest.Name);
+                          var command = new AddSample(sampleRequest.Name);
 
                           await commandDispatcher.Dispatch(userSessionFactory.Create(Context.CurrentUser), command);
 

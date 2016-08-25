@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using Ironhide.App.Domain.Application.Commands;
@@ -18,9 +19,9 @@ namespace Ironhide.App.Domain.Application.CommandHandlers
 
         public async Task Handle(IUserSession userIssuingCommand, AddSample command)
         {
-            Sample sample = new Sample(command.Id, command.Name);
-            await _repo.Create(sample);
-            NotifyObservers(new SampleUpdated(sample.Id));
+            Sample sample = new Sample(Guid.NewGuid(), command.Name);
+            var sampleCreated = await _repo.Create(sample);
+            NotifyObservers(new SampleUpdated(sampleCreated.Id));
         }
 
         public event DomainEvent NotifyObservers;
