@@ -1,7 +1,7 @@
 using System;
-using Ironhide.Users.Domain.ValueObjects;
+using Ironhide.Login.Domain.ValueObjects;
 
-namespace Ironhide.Users.Domain.Entities
+namespace Ironhide.Login.Domain.Entities
 {
     public class UserEmailLogin : User
     {

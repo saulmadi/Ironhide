@@ -1,6 +1,6 @@
-using Ironhide.Users.Domain.ValueObjects;
+using Ironhide.Login.Domain.ValueObjects;
 
-namespace Ironhide.Users.Domain.Services
+namespace Ironhide.Login.Domain.Services
 {
     public interface IPasswordEncryptor
     {

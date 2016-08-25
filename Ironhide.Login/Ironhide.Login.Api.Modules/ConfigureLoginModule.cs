@@ -10,14 +10,13 @@ using Ironhide.Api.Infrastructure;
 using Ironhide.Api.Infrastructure.Authentication;
 using Ironhide.Api.Infrastructure.Authentication.Roles;
 using Ironhide.Api.Infrastructure.Properties;
-using Ironhide.Users.Data;
-using Ironhide.Users.Data.Repositories;
-using Ironhide.Users.Domain;
-using Ironhide.Users.Domain.Entities;
-using Ironhide.Users.Domain.Services;
+using Ironhide.Login.Data;
+using Ironhide.Login.Data.Repositories;
+using Ironhide.Login.Domain;
+using Ironhide.Login.Domain.Services;
 using Newtonsoft.Json;
 
-namespace Ironhide.Api.Modules
+namespace Ironhide.Login.Api.Modules
 {
     public class ConfigureLoginModule : IBootstrapperTask<ContainerBuilder>
     {

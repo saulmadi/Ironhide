@@ -87,10 +87,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ironhide.Api.Host\Ironhide.Api.Host.csproj">
-      <Project>{EFD8559C-290D-45F6-A090-0ADE554A9065}</Project>
-      <Name>Ironhide.Api.Host</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ironhide.Api.Infrastructure\Ironhide.Api.Infrastructure.csproj">
       <Project>{B3B743A1-FFF7-4EAF-80FA-2327AFE47D71}</Project>
       <Name>Ironhide.Api.Infrastructure</Name>

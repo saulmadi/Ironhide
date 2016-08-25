@@ -1,10 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Threading.Tasks;
 using Ironhide.Login.Domain.Entities;
-using Ironhide.Users.Domain;
-using Ironhide.Users.Domain.Entities;
 
-namespace Ironhide.Users.Data
+namespace Ironhide.Login.Data
 {
     public class LoginDataContext : DbContext, ILoginDataContext
     {

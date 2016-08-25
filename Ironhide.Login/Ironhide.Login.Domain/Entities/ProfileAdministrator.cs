@@ -1,4 +1,4 @@
-namespace Ironhide.Users.Domain.Entities
+namespace Ironhide.Login.Domain.Entities
 {
     public class ProfileAdministrator : IProfile
     {

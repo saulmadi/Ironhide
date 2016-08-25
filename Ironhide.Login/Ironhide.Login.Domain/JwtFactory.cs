@@ -5,10 +5,10 @@ using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
 using Ironhide.Common;
-using Ironhide.Users.Domain.Entities;
-using Ironhide.Users.Domain.Services;
+using Ironhide.Login.Domain.Entities;
+using Ironhide.Login.Domain.Services;
 
-namespace Ironhide.Users.Domain
+namespace Ironhide.Login.Domain
 {
     public class JwtFactory : ITokenFactory
     {

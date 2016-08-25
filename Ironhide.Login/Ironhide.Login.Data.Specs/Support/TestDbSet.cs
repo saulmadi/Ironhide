@@ -8,9 +8,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
-using Ironhide.Users.Domain;
+using Ironhide.Login.Domain;
 
-namespace Ironhide.Users.Data.Specs.Support
+namespace Ironhide.Login.Data.Specs.Support
 {
     public class TestDbSet<TEntity> : DbSet<TEntity>, IQueryable, IEnumerable<TEntity>, IDbAsyncEnumerable<TEntity>
         where TEntity : class, IEntity

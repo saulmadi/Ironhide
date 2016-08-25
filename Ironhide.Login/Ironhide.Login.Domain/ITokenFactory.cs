@@ -1,6 +1,6 @@
-using Ironhide.Users.Domain.Entities;
+using Ironhide.Login.Domain.Entities;
 
-namespace Ironhide.Users.Domain
+namespace Ironhide.Login.Domain
 {
     public interface ITokenFactory
     {

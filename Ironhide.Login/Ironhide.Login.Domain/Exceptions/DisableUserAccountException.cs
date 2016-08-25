@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ironhide.Users.Domain.Exceptions
+namespace Ironhide.Login.Domain.Exceptions
 {
     public class DisableUserAccountException : Exception
     {

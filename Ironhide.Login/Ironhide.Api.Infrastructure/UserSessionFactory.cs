@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using AcklenAvenue.Commands;
 using Ironhide.Api.Infrastructure.Authentication;
-using Ironhide.Users.Domain;
+using Ironhide.Login.Domain;
 using Nancy.Security;
 
 namespace Ironhide.Api.Infrastructure

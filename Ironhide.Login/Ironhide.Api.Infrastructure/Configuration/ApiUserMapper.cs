@@ -6,7 +6,7 @@ using System.Security.Claims;
 using Ironhide.Api.Infrastructure.Authentication;
 using Ironhide.Api.Infrastructure.RestExceptions;
 using Ironhide.Common;
-using Ironhide.Users.Domain;
+using Ironhide.Login.Domain;
 using Nancy.Security;
 
 namespace Ironhide.Api.Infrastructure.Configuration

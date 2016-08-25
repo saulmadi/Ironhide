@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Ironhide.Users.Data.Specs.Support
+namespace Ironhide.Login.Data.Specs.Support
 {
     public static class AsyncTestHelper
     {

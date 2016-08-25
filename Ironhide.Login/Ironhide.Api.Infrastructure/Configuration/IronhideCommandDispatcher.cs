@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AcklenAvenue.Commands;
 using BlingBag;
-using Ironhide.Users.Domain.Application.Commands;
+using Ironhide.Login.Domain.Application.Commands;
 
 namespace Ironhide.Api.Infrastructure.Configuration
 {

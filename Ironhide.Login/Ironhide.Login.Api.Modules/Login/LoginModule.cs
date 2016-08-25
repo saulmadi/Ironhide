@@ -1,17 +1,16 @@
 ﻿using System;
 using Ironhide.Api.Infrastructure;
 using Ironhide.Api.Infrastructure.RestExceptions;
+using Ironhide.Login.Domain;
 using Ironhide.Login.Domain.Entities;
-using Ironhide.Users.Domain;
-using Ironhide.Users.Domain.Entities;
-using Ironhide.Users.Domain.Exceptions;
-using Ironhide.Users.Domain.Services;
-using Ironhide.Users.Domain.ValueObjects;
+using Ironhide.Login.Domain.Exceptions;
+using Ironhide.Login.Domain.Services;
+using Ironhide.Login.Domain.ValueObjects;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 
-namespace Ironhide.Api.Modules.Login
+namespace Ironhide.Login.Api.Modules.Login
 {
     public class LoginModule : NancyModule
     {

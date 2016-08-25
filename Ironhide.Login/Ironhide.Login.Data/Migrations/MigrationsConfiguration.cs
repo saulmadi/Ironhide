@@ -1,6 +1,6 @@
 using System.Data.Entity.Migrations;
 
-namespace Ironhide.Users.Data.Migrations
+namespace Ironhide.Login.Data.Migrations
 {
     sealed class MigrationsConfiguration : DbMigrationsConfiguration<LoginDataContext>
     {

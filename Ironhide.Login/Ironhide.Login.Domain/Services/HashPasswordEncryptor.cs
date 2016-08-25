@@ -1,9 +1,9 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using Ironhide.Users.Domain.ValueObjects;
+using Ironhide.Login.Domain.ValueObjects;
 
-namespace Ironhide.Users.Domain.Services
+namespace Ironhide.Login.Domain.Services
 {
     public class HashPasswordEncryptor : IPasswordEncryptor
     {

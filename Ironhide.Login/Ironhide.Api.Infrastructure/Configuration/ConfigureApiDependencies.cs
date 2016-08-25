@@ -3,7 +3,7 @@ using AcklenAvenue.Commands;
 using Autofac;
 using BlingBag;
 using Ironhide.Api.Infrastructure.Authentication;
-using Ironhide.Users.Domain.Application.Commands;
+using Ironhide.Login.Domain.Application.Commands;
 using log4net;
 using log4net.Config;
 

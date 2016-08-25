@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity.Infrastructure;
 
-namespace Ironhide.Users.Data
+namespace Ironhide.Login.Data
 {
     public class IronhideUsersDbContextFactory : IDbContextFactory<LoginDataContext>
     {

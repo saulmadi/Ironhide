@@ -3,7 +3,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Ironhide.Users.Data.Specs.Support
+namespace Ironhide.Login.Data.Specs.Support
 {
     class TestDbAsyncEnumerable<T> : EnumerableQuery<T>, IDbAsyncEnumerable<T>, IQueryable<T>
     {

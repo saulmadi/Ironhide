@@ -1,5 +1,5 @@
 ﻿using System;
-using Ironhide.Api.Modules.Login;
+using Ironhide.Login.Api.Modules.Login;
 using Topshelf;
 
 namespace Ironhide.Host

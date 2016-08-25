@@ -1,5 +1,4 @@
 using System;
-using Ironhide.Users.Domain.Entities;
 
 namespace Ironhide.Login.Domain.Entities
 {

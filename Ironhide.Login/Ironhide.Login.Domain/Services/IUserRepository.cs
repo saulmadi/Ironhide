@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Ironhide.Users.Domain.Entities;
+using Ironhide.Login.Domain.Entities;
 
-namespace Ironhide.Users.Domain.Services
+namespace Ironhide.Login.Domain.Services
 {
     public interface IUserRepository
     {

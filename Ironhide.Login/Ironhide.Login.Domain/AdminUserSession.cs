@@ -1,7 +1,7 @@
 using System;
 using AcklenAvenue.Commands;
 
-namespace Ironhide.Users.Domain
+namespace Ironhide.Login.Domain
 {
     public class AdminUserSession : IUserSession
     {

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ironhide.Users.Data.Specs.Support
+namespace Ironhide.Login.Data.Specs.Support
 {
     class TestDbAsyncQueryProvider<TEntity> : IDbAsyncQueryProvider
     {

@@ -1,4 +1,4 @@
-﻿namespace Ironhide.Users.Domain.Services
+﻿namespace Ironhide.Login.Domain.Services
 {
     public interface IEmailSender
     {

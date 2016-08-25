@@ -4,11 +4,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Ironhide.Users.Domain;
-using Ironhide.Users.Domain.Entities;
-using Ironhide.Users.Domain.Services;
+using Ironhide.Login.Domain.Entities;
+using Ironhide.Login.Domain.Services;
 
-namespace Ironhide.Users.Data.Repositories
+namespace Ironhide.Login.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace Ironhide.Users.Domain
+﻿namespace Ironhide.Login.Domain
 {
     public enum ValidationFailureType
     {

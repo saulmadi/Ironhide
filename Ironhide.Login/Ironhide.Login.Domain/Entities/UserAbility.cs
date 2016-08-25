@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ironhide.Users.Domain.Entities
+namespace Ironhide.Login.Domain.Entities
 {
     public class UserAbility : Entity
     {

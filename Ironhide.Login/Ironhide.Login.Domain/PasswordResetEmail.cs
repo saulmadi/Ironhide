@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ironhide.Users.Domain
+namespace Ironhide.Login.Domain
 {
     public class PasswordResetEmail
     {

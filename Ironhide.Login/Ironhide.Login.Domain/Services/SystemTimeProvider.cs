@@ -1,7 +1,7 @@
 using System;
 using Ironhide.Common;
 
-namespace Ironhide.Users.Domain.Services
+namespace Ironhide.Login.Domain.Services
 {
     public class SystemTimeProvider : ITimeProvider
     {

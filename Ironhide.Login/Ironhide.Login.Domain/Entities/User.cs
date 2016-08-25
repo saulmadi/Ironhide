@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Ironhide.Login.Domain.Entities;
 
-namespace Ironhide.Users.Domain.Entities
+namespace Ironhide.Login.Domain.Entities
 {
     public class User : Entity
     {

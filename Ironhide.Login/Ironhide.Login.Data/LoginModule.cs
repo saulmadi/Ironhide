@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 
-namespace Ironhide.Users.Data
+namespace Ironhide.Login.Data
 {
     public static class LoginModule
     {

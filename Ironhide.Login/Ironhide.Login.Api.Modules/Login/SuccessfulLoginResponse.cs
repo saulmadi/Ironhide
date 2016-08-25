@@ -1,4 +1,4 @@
-namespace Ironhide.Api.Modules.Login
+namespace Ironhide.Login.Api.Modules.Login
 {
     public class SuccessfulLoginResponse<T>
     {

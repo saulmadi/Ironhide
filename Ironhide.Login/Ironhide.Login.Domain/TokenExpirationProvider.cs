@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 
-namespace Ironhide.Users.Domain
+namespace Ironhide.Login.Domain
 {
     public class TokenExpirationProvider : ITokenExpirationProvider
     {
