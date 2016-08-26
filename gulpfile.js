@@ -14,17 +14,43 @@ var merge = require('merge-stream');
 var rename = require('gulp-rename');
 var glob = require('glob');
 
-var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
+var sonarQubeCore = require('./sonarQubeAppVeyorUtil')(shell, {
         sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
         sonarMSRunnerFolderName: config.sonarRunnerFolderName,
         sonarRunner: config.sonarRunner,
         sonarServerURL: 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
         msCoverageReportPath: 'coverage.xml',
-        projectName: 'Ironhide',
-        projectKey: 'Ironhide',
+        projectName: '"Ironhide Core"',
+        projectKey: 'Ironhide-core',
         projectVersion: '1.0',
         projectRepo: 'AcklenAvenue/Ironhide',
-        projectSolutionPath:'src\\Ironhide.sln'
+        projectSolutionPath:'Ironhide.Core\\Ironhide.Core.sln'
+    });
+
+var sonarQubeLogin = require('./sonarQubeAppVeyorUtil')(shell, {
+        sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
+        sonarMSRunnerFolderName: config.sonarRunnerFolderName,
+        sonarRunner: config.sonarRunner,
+        sonarServerURL: 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
+        msCoverageReportPath: 'coverage.xml',
+        projectName: '"Ironhide Login"',
+        projectKey: 'Ironhide-login',
+        projectVersion: '1.0',
+        projectRepo: 'AcklenAvenue/Ironhide',
+        projectSolutionPath:'Ironhide.Login\\Ironhide.Login.sln'
+    });
+
+var sonarQubeUsers = require('./sonarQubeAppVeyorUtil')(shell, {
+        sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
+        sonarMSRunnerFolderName: config.sonarRunnerFolderName,
+        sonarRunner: config.sonarRunner,
+        sonarServerURL: 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
+        msCoverageReportPath: 'coverage.xml',
+        projectName: '"Ironhide Users"',
+        projectKey: 'Ironhide-users',
+        projectVersion: '1.0',
+        projectRepo: 'AcklenAvenue/Ironhide',
+        projectSolutionPath:'Ironhide.Users\\Ironhide.Users.sln'
     });
 
 gulp.task('copy-local-config',function(callback){
@@ -40,7 +66,7 @@ gulp.task('copy-local-config',function(callback){
 });
 
 gulp.task('set-local-env', function(callback){
-	return gulp.src('setLocalEnv.ps1')		
+	return gulp.src('setLocalEnv.ps1')
 		.pipe(shell(['powershell.exe -File setLocalEnv.ps1'], { cwd: '<%= file.folder %>'}));
 });
 
@@ -53,9 +79,11 @@ gulp.task('build', ['reftroll'], function(callback) {
   	'restore-nuget-packages', 'compile-apps', callback);
 });
 
-gulp.task('reftroll', function(){
-	return gulp.src('').pipe(shell('node_modules\\reftroll\\RefTroll.exe src'));
-});
+gulp.task('reftroll', shell.task([
+  'node_modules\\reftroll\\RefTroll.exe Ironhide.Core',
+  'node_modules\\reftroll\\RefTroll.exe Ironhide.Login',
+  'node_modules\\reftroll\\RefTroll.exe Ironhide.Users'
+]))
 
 gulp.task('build-with-coverage-report', function(callback) {
   runSequence(
@@ -63,29 +91,19 @@ gulp.task('build-with-coverage-report', function(callback) {
 });
 
 gulp.task('restore-nuget-packages', function (taskDone) {
-	return gulp.src('src/**/*.sln')
+	return gulp.src('/**/*.sln')
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 		}))
 		.pipe(shell(['nuget.exe restore -verbosity detailed'], { cwd: '<%= file.folder %>'}));
 });
 
-gulp.task('init', ['copy-connection-string', 'copy-logging-config', 'restore-nuget-packages']);
+gulp.task('init', ['copy-logging-config', 'restore-nuget-packages']);
 
-gulp.task('copy-connection-string', function(){
-	fs.stat('src/connectionStrings.config', function(doesNotExist, stat) {
-		if(doesNotExist) {
-			return gulp.src('connectionStrings.config.default')
-	    		.pipe(rename("connectionStrings.config"))
-	    		.pipe(gulp.dest('src'));
-	    }else{
-			return;
-	    }
-	});
-});
+gulp.task('copy-logging-config', ['copy-logging-config-core', 'copy-logging-config-users', 'copy-logging-config-login']);
 
-gulp.task('copy-logging-config', function(){
-	fs.stat('src/logging.config', function(doesNotExist, stat) {
+gulp.task('copy-logging-config-core', function(){
+	fs.stat('Ironhide.Core/logging.config', function(doesNotExist, stat) {
 		if(doesNotExist) {
 			return gulp.src('logging.config.default')
 	    		.pipe(rename("logging.config"))
@@ -96,9 +114,33 @@ gulp.task('copy-logging-config', function(){
 	});
 });
 
-gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-logging-config'], function () {
+gulp.task('copy-logging-config-users', function(){
+	fs.stat('Ironhide.Users/logging.config', function(doesNotExist, stat) {
+		if(doesNotExist) {
+			return gulp.src('logging.config.default')
+	    		.pipe(rename("logging.config"))
+	    		.pipe(gulp.dest('src'));
+	    }else{
+			return;
+	    }
+	});
+});
 
-	return gulp.src(['src/**/.deployable'])
+gulp.task('copy-logging-config-login', function(){
+	fs.stat('Ironhide.Login/logging.config', function(doesNotExist, stat) {
+		if(doesNotExist) {
+			return gulp.src('logging.config.default')
+	    		.pipe(rename("logging.config"))
+	    		.pipe(gulp.dest('src'));
+	    }else{
+			return;
+	    }
+	});
+});
+
+gulp.task('compile-apps', ['clean-build', 'copy-logging-config'], function () {
+
+	return gulp.src(['**/.deployable'])
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 			var pathParts = file.folder.split("\\");
@@ -116,7 +158,7 @@ gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-loggin
 
 gulp.task('compile-specs', ['restore-nuget-packages', 'clean-spec'], function () {
 
-	return gulp.src('src/**/*.Specs.csproj')
+	return gulp.src('**/*.Specs.csproj')
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 			var pathParts = file.folder.split("\\");
@@ -131,7 +173,7 @@ gulp.task('compile-specs', ['restore-nuget-packages', 'clean-spec'], function ()
 });
 
 gulp.task('create-nuget-packages', function(){
-	return gulp.src('src/**/*.nuspec')
+	return gulp.src('/**/*.nuspec')
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 		}))
@@ -141,12 +183,12 @@ gulp.task('create-nuget-packages', function(){
 });
 
 gulp.task('copy-nuget-packages', function(){
-	return gulp.src('src/**/*.nupkg')
+	return gulp.src('/**/*.nupkg')
 		.pipe(gulp.dest('deploy'));
 });
 
 gulp.task('deploy-nuget', function(){
-	return gulp.src('src//**/*.nupkg')
+	return gulp.src('/**/*.nupkg')
 		.pipe(shell(['nuget push <%= file.path %> -ApiKey 1w9s9pgveu1ruy5onxo9ko02 -Source https://ci.appveyor.com/nuget/acklenavenue/api/v2/package']));
 });
 
@@ -231,6 +273,10 @@ gulp.task('clean-spec', function(){
 });
 
 
-gulp.task('download-sonar-scanner', sonarQubeUtil.downloadMSBuildScanner());
+gulp.task('download-sonar-scanner', sonarQubeCore.downloadMSBuildScanner());
 
-gulp.task('run-sonar-analysis', sonarQubeUtil.runMsBuildScanner());
+gulp.task('run-sonar-analysis-core', sonarQubeCore.runMsBuildScanner());
+
+gulp.task('run-sonar-analysis-login', sonarQubeLogin.runMsBuildScanner());
+
+gulp.task('run-sonar-analysis-users', sonarQubeUsers.runMsBuildScanner());
