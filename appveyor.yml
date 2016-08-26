@@ -28,7 +28,9 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
 after_build:
-  - gulp run-sonar-analysis
+  - gulp run-sonar-analysis-core
+  - gulp run-sonar-analysis-login
+  - gulp run-sonar-analysis-users
   - gulp package
 build_script:
   - gulp build-with-coverage-report

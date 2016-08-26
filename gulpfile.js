@@ -14,19 +14,43 @@ var merge = require('merge-stream');
 var rename = require('gulp-rename');
 var glob = require('glob');
 
-var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
+var sonarQubeCore = require('./sonarQubeAppVeyorUtil')(shell, {
         sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
         sonarMSRunnerFolderName: config.sonarRunnerFolderName,
         sonarRunner: config.sonarRunner,
         sonarServerURL: 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
         msCoverageReportPath: 'coverage.xml',
-        projectName: 'Ironhide',
-        projectKey: 'Ironhide',
+        projectName: 'Ironhide Core',
+        projectKey: 'Ironhide-core',
         projectVersion: '1.0',
         projectRepo: 'AcklenAvenue/Ironhide',
-        projectSolutionPath:['Ironhide.Core\\Ironhide.Core.sln',
-							 'Ironhide.Login\\Ironhide.Login.sln',
-							 'Ironhide.Users\\Ironhide.Users.sln']
+        projectSolutionPath:'Ironhide.Core\\Ironhide.Core.sln'
+    });
+
+var sonarQubeLogin = require('./sonarQubeAppVeyorUtil')(shell, {
+        sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
+        sonarMSRunnerFolderName: config.sonarRunnerFolderName,
+        sonarRunner: config.sonarRunner,
+        sonarServerURL: 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
+        msCoverageReportPath: 'coverage.xml',
+        projectName: 'Ironhide Login',
+        projectKey: 'Ironhide-login',
+        projectVersion: '1.0',
+        projectRepo: 'AcklenAvenue/Ironhide',
+        projectSolutionPath:'Ironhide.Login\\Ironhide.Login.sln'
+    });
+
+var sonarQubeLogin = require('./sonarQubeAppVeyorUtil')(shell, {
+        sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
+        sonarMSRunnerFolderName: config.sonarRunnerFolderName,
+        sonarRunner: config.sonarRunner,
+        sonarServerURL: 'http://ec2-54-218-88-140.us-west-2.compute.amazonaws.com:9000/',
+        msCoverageReportPath: 'coverage.xml',
+        projectName: 'Ironhide Users',
+        projectKey: 'Ironhide-users',
+        projectVersion: '1.0',
+        projectRepo: 'AcklenAvenue/Ironhide',
+        projectSolutionPath:'Ironhide.Users\\Ironhide.Users.sln'
     });
 
 gulp.task('copy-local-config',function(callback){
@@ -249,6 +273,10 @@ gulp.task('clean-spec', function(){
 });
 
 
-gulp.task('download-sonar-scanner', sonarQubeUtil.downloadMSBuildScanner());
+gulp.task('download-sonar-scanner', sonarQubeCore.downloadMSBuildScanner());
 
-gulp.task('run-sonar-analysis', sonarQubeUtil.runMsBuildScanner());
+gulp.task('run-sonar-analysis-core', sonarQubeCore.runMsBuildScanner());
+
+gulp.task('run-sonar-analysis-login', sonarQubeLogin.runMsBuildScanner());
+
+gulp.task('run-sonar-analysis-users', sonarQubeUsers.runMsBuildScanner());
