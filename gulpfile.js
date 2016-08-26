@@ -24,7 +24,9 @@ var sonarQubeUtil = require('./sonarQubeAppVeyorUtil')(shell, {
         projectKey: 'Ironhide',
         projectVersion: '1.0',
         projectRepo: 'AcklenAvenue/Ironhide',
-        projectSolutionPath:'Ironhide.Core\\Ironhide.Core.sln Ironhide.Login\\Ironhide.Login.sln Ironhide.Users\\Ironhide.Users.sln'
+        projectSolutionPath:['Ironhide.Core\\Ironhide.Core.sln',
+							 'Ironhide.Login\\Ironhide.Login.sln',
+							 'Ironhide.Users\\Ironhide.Users.sln']
     });
 
 gulp.task('copy-local-config',function(callback){

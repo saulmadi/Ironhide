@@ -64,19 +64,34 @@ module.exports = function(shell,
                 throw 'Project version is required.'
             }
 
-            return shell.task([
-                (process.env.APPVEYOR_PULL_REQUEST_NUMBER) ?
-                '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
+            var solutionPath = undefined;
+            if( typeof defaultOptions.projectSolutionPath === 'string' ) {
+                solutionPath = [ defaultOptions.projectSolutionPath ];
+            }
+            else {
+                solutionPath = defaultOptions.projectSolutionPath
+            }
+            var commands = [];
+
+            if (process.env.APPVEYOR_PULL_REQUEST_NUMBER) {
+                commands.push('%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
                 ' /d:sonar.cs.opencover.reportsPaths='+ defaultOptions.msCoverageReportPath + ' /d:sonar.host.url=' + defaultOptions.sonarServerURL +
                 ' /k:' + defaultOptions.projectKey + ' /n:' + defaultOptions.projectName + ' /v:' + defaultOptions.projectVersion +
                 ' /d:sonar.analysis.mode=preview /d:sonar.github.pullRequest=' + process.env.APPVEYOR_PULL_REQUEST_NUMBER +
-                ' /d:sonar.github.repository=' + defaultOptions.projectRepo + ' /d:sonar.github.oauth=' +process.env.GITHUB_SONAR_TOKEN
-                : '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
+                ' /d:sonar.github.repository=' + defaultOptions.projectRepo + ' /d:sonar.github.oauth=' +process.env.GITHUB_SONAR_TOKEN);
+            } else {
+                commands.push('%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' begin' +
                 ' /d:sonar.cs.opencover.reportsPaths='+ defaultOptions.msCoverageReportPath + ' /d:sonar.host.url=' + defaultOptions.sonarServerURL +
-                ' /k:' + defaultOptions.projectKey + ' /n:' + defaultOptions.projectName + ' /v:' + defaultOptions.projectVersion,
-                '"C:/Program Files (x86)/MSBuild/14.0/Bin/MSBuild.exe" %APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.projectSolutionPath,
-                '%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' end'
-            ]);
+                ' /k:' + defaultOptions.projectKey + ' /n:' + defaultOptions.projectName + ' /v:' + defaultOptions.projectVersion);
+            }
+
+            solutionPath.forEach(function(value, index, array) {
+                commands.push('"C:/Program Files (x86)/MSBuild/14.0/Bin/MSBuild.exe" %APPVEYOR_BUILD_FOLDER%\\' + value)
+            });
+
+            commands.push('%APPVEYOR_BUILD_FOLDER%\\' + defaultOptions.sonarMSRunnerFolderName + '\\' + defaultOptions.sonarRunner + ' end');
+
+            return shell.task(commands);
         },
         downloadSonarScanner: function() {
             return shell.task([
