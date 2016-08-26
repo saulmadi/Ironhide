@@ -40,7 +40,7 @@ var sonarQubeLogin = require('./sonarQubeAppVeyorUtil')(shell, {
         projectSolutionPath:'Ironhide.Login\\Ironhide.Login.sln'
     });
 
-var sonarQubeLogin = require('./sonarQubeAppVeyorUtil')(shell, {
+var sonarQubeUsers = require('./sonarQubeAppVeyorUtil')(shell, {
         sonarRunnerDownloadPath: config.sonarRunnerDownloadPath,
         sonarMSRunnerFolderName: config.sonarRunnerFolderName,
         sonarRunner: config.sonarRunner,
