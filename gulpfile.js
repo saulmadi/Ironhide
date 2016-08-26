@@ -40,7 +40,7 @@ gulp.task('copy-local-config',function(callback){
 });
 
 gulp.task('set-local-env', function(callback){
-	return gulp.src('setLocalEnv.ps1')		
+	return gulp.src('setLocalEnv.ps1')
 		.pipe(shell(['powershell.exe -File setLocalEnv.ps1'], { cwd: '<%= file.folder %>'}));
 });
 
@@ -53,9 +53,11 @@ gulp.task('build', ['reftroll'], function(callback) {
   	'restore-nuget-packages', 'compile-apps', callback);
 });
 
-gulp.task('reftroll', function(){
-	return gulp.src('').pipe(shell('node_modules\\reftroll\\RefTroll.exe src'));
-});
+gulp.task('reftroll', shell.task([
+  'node_modules\\reftroll\\RefTroll.exe Ironhide.Core',
+  'node_modules\\reftroll\\RefTroll.exe Ironhide.Login',
+  'node_modules\\reftroll\\RefTroll.exe Ironhide.Users'
+]))
 
 gulp.task('build-with-coverage-report', function(callback) {
   runSequence(
@@ -70,22 +72,12 @@ gulp.task('restore-nuget-packages', function (taskDone) {
 		.pipe(shell(['nuget.exe restore -verbosity detailed'], { cwd: '<%= file.folder %>'}));
 });
 
-gulp.task('init', ['copy-connection-string', 'copy-logging-config', 'restore-nuget-packages']);
+gulp.task('init', ['copy-logging-config', 'restore-nuget-packages']);
 
-gulp.task('copy-connection-string', function(){
-	fs.stat('src/connectionStrings.config', function(doesNotExist, stat) {
-		if(doesNotExist) {
-			return gulp.src('connectionStrings.config.default')
-	    		.pipe(rename("connectionStrings.config"))
-	    		.pipe(gulp.dest('src'));
-	    }else{
-			return;
-	    }
-	});
-});
+gulp.task('copy-logging-config', ['copy-logging-config-core', 'copy-logging-config-users', 'copy-logging-config-login']);
 
-gulp.task('copy-logging-config', function(){
-	fs.stat('src/logging.config', function(doesNotExist, stat) {
+gulp.task('copy-logging-config-core', function(){
+	fs.stat('Ironhide.Core/logging.config', function(doesNotExist, stat) {
 		if(doesNotExist) {
 			return gulp.src('logging.config.default')
 	    		.pipe(rename("logging.config"))
@@ -96,9 +88,33 @@ gulp.task('copy-logging-config', function(){
 	});
 });
 
-gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-logging-config'], function () {
+gulp.task('copy-logging-config-users', function(){
+	fs.stat('Ironhide.Users/logging.config', function(doesNotExist, stat) {
+		if(doesNotExist) {
+			return gulp.src('logging.config.default')
+	    		.pipe(rename("logging.config"))
+	    		.pipe(gulp.dest('src'));
+	    }else{
+			return;
+	    }
+	});
+});
 
-	return gulp.src(['/**/.deployable'])
+gulp.task('copy-logging-config-login', function(){
+	fs.stat('Ironhide.Login/logging.config', function(doesNotExist, stat) {
+		if(doesNotExist) {
+			return gulp.src('logging.config.default')
+	    		.pipe(rename("logging.config"))
+	    		.pipe(gulp.dest('src'));
+	    }else{
+			return;
+	    }
+	});
+});
+
+gulp.task('compile-apps', ['clean-build', 'copy-logging-config'], function () {
+
+	return gulp.src(['**/.deployable'])
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 			var pathParts = file.folder.split("\\");
@@ -116,7 +132,7 @@ gulp.task('compile-apps', ['clean-build', 'copy-connection-string', 'copy-loggin
 
 gulp.task('compile-specs', ['restore-nuget-packages', 'clean-spec'], function () {
 
-	return gulp.src('/**/*.Specs.csproj')
+	return gulp.src('**/*.Specs.csproj')
 		.pipe(tap(function(file){
 			file.folder = file.path.substring(0,file.path.lastIndexOf("\\")+1);
 			var pathParts = file.folder.split("\\");
