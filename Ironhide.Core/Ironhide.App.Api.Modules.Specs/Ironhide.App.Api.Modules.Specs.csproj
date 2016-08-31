@@ -26,6 +26,10 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -35,8 +39,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AcklenAvenue.Commands, Version=1.0.2.59, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\AcklenAvenue.Commands.1.0.2.59\lib\net45\AcklenAvenue.Commands.dll</HintPath>
+    </Reference>
     <Reference Include="AcklenAvenue.Testing.Moq.ExpectedObjects">
       <HintPath>..\..\lib\AcklenAvenue.Testing.Moq.ExpectedObjects.1.1.0.9\lib\net45\AcklenAvenue.Testing.Moq.ExpectedObjects.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="BlingBag, Version=1.4.0.14, Culture=neutral, processorArchitecture=MSIL">
@@ -47,12 +59,23 @@
       <HintPath>..\..\lib\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsQuery">
+      <HintPath>..\..\lib\CsQuery.1.3.3\lib\net40\CsQuery.dll</HintPath>
+    </Reference>
     <Reference Include="ExpectedObjects">
       <HintPath>..\..\lib\ExpectedObjects.1.2.3\lib\net40\ExpectedObjects.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FizzWare.NBuilder">
       <HintPath>..\..\lib\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions, Version=4.13.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\FluentAssertions.4.13.0\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=4.13.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\FluentAssertions.4.13.0\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\lib\Machine.Specifications.0.9.3\lib\net45\Machine.Specifications.dll</HintPath>
@@ -70,6 +93,13 @@
       <HintPath>..\..\lib\Moq.4.5.16\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nancy, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Nancy.1.4.1\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Testing">
+      <HintPath>..\..\lib\Nancy.Testing.1.4.1\lib\net40\Nancy.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -79,7 +109,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BodyExtensions.cs" />
+    <Compile Include="Home\when_successfully_adding_a_sample.cs" />
+    <Compile Include="Home\when_getting_all_samples.cs" />
+    <Compile Include="Home\when_successfully_deleting_a_sample.cs" />
+    <Compile Include="Home\when_successfully_updating_a_sample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestIdentity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -4,10 +4,6 @@ namespace Ironhide.App.Domain.Application.Commands
 {
     public class UpdateSample
     {
-        protected UpdateSample()
-        {
-        }
-
         public UpdateSample(Guid id, string name)
         {
             Id = id;

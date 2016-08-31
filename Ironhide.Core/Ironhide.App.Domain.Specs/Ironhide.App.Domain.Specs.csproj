@@ -26,6 +26,10 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -94,6 +98,8 @@
     <Compile Include="CastExtentions.cs" />
     <Compile Include="CommandHandlers\when_deleting_a_sample.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Services\when_generating_a_new_guid_identity.cs" />
+    <Compile Include="Services\when_providing_system_time.cs" />
     <Compile Include="Validation\when_validating_an_invalid_sample_add_command.cs" />
     <Compile Include="CommandHandlers\when_creating_a_new_sample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
