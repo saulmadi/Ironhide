@@ -60,8 +60,6 @@
     <Compile Include="DomainEvents\SampleUpdated.cs" />
     <Compile Include="Entities\Sample.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="Exceptions\ItemNotFoundException.cs" />
-    <Compile Include="Exceptions\NoAvailableHandlerException.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IKeyProvider.cs" />
     <Compile Include="Services\IEmailSender.cs" />
@@ -75,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DomainEventHandlers\" />
+    <Folder Include="Exceptions\" />
     <Folder Include="ValueObjects\" />
   </ItemGroup>
   <ItemGroup>

@@ -4,10 +4,6 @@ namespace Ironhide.App.Domain.Application.Commands
 {
     public class AddSample
     {
-        protected AddSample()
-        {
-        }
-
         public AddSample(string name)
         {
             Name = name;

@@ -15,12 +15,6 @@ namespace Ironhide.App.Api.Modules.Home
         public AppModule(ISampleRepository readOnlyRepository, IMapper mapper, ICommandDispatcher commandDispatcher,
             IUserSessionFactory userSessionFactory)
         {
-            Get["/"] =
-            _ =>
-            {
-                return "Ironhide";
-            };
-
             Get["/sample", true] =
             async (a, ct) =>
             {
